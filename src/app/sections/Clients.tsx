@@ -1,69 +1,100 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
-const clients = [
-  {
-    name: "Datalize",
-    logo: "/assets/logos/clients/datalize.png",
-  },
-  {
-    name: "Henko",
-    logo: "/assets/logos/clients/henko.png",
-  },
+type Client = { name: string; logo: string };
+
+const clients: Client[] = [
+  { name: "Datalize", logo: "/assets/logos/clients/datalize.png" },
+  { name: "Henko", logo: "/assets/logos/clients/henko.png" },
+  // { name: "Otra Marca", logo: "/assets/logos/clients/otra.png" },
 ];
 
 export default function Clients() {
-  return (
-    <section className="relative py-28 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 border-t border-slate-200/40 dark:border-slate-800/50 overflow-hidden">
-      {/* fondo suave con brillo */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent_70%)]" />
+  const prefersReduced = useReducedMotion();
 
-      <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
+  return (
+    <section
+      id="clientes"
+      className="relative py-24 sm:py-28 overflow-hidden border-t border-slate-200/60"
+      aria-labelledby="clients-title"
+    >
+      {/* Fondo elegante con glow radial sutil */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-slate-50" />
+        <div className="absolute inset-0 [mask-image:radial-gradient(55%_40%_at_50%_0%,black,transparent)] bg-[radial-gradient(600px_360px_at_50%_-60px,rgba(16,185,129,0.10),transparent)]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 text-center relative">
         {/* Título */}
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          id="clients-title"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6"
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: prefersReduced ? 0 : 0.55 }}
+          className="text-[clamp(28px,4.8vw,40px)] font-extrabold tracking-tight text-slate-900"
         >
-          Nuestros <span className="text-emerald-500">Clientes</span>
+          Nuestros <span className="text-emerald-600">Clientes</span>
         </motion.h2>
 
         {/* Descripción */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          viewport={{ once: true }}
-          className="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 mb-20"
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ delay: prefersReduced ? 0 : 0.12, duration: prefersReduced ? 0 : 0.55 }}
+          className="mt-3 max-w-2xl mx-auto text-[15.5px] leading-relaxed text-slate-600"
         >
-          Empresas que confían en{" "}
-          <span className="text-emerald-500 font-semibold">AutomIQ</span> para
-          impulsar su transformación digital y automatizar sus procesos con
-          inteligencia y precisión.
+          Empresas que confían en <span className="text-emerald-600 font-semibold">AutomIQ</span> para
+          impulsar su transformación digital con soluciones medibles y de alto impacto.
         </motion.p>
 
-        {/* Logos */}
-        <div className="flex flex-wrap justify-center items-center gap-20 md:gap-28">
+        {/* Grid de logos */}
+        <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8">
           {clients.map((c, i) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
+              key={c.name}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className="relative bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/60 dark:border-slate-700 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 flex items-center justify-center p-10 md:p-12 w-64 md:w-80"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: prefersReduced ? 0 : 0.5, delay: i * 0.08 }}
+              className="group relative flex items-center justify-center rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md transition-all p-8 sm:p-10"
+              aria-label={`Cliente: ${c.name}`}
             >
+              {/* Glow fino en hover */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition
+                           [background:radial-gradient(80%_60%_at_50%_10%,rgba(16,185,129,0.18),transparent)]"
+              />
               <img
                 src={c.logo}
                 alt={c.name}
-                className="h-16 md:h-20 object-contain opacity-85 hover:opacity-100 transition duration-300"
+                loading="lazy"
+                className="h-12 sm:h-14 md:h-16 object-contain opacity-90 group-hover:opacity-100
+                           grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}
         </div>
+
+        {/* CTA opcional (elimínalo si no lo quieres) */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: prefersReduced ? 0 : 0.2, duration: prefersReduced ? 0 : 0.5 }}
+          className="mt-14"
+        >
+          <a
+            href="#contacto"
+            className="inline-flex items-center justify-center rounded-full bg-gradient-to-tr from-emerald-500 to-sky-500
+                       px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 hover:opacity-95 transition"
+          >
+            ¿Hablamos de tu proyecto?
+          </a>
+        </motion.div>
       </div>
     </section>
   );
