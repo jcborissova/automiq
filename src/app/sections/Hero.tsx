@@ -19,7 +19,8 @@ export default function Hero() {
       <img
         src="/assets/FondoCode.png"
         alt=""
-        className="hidden md:block absolute inset-0 -z-10 h-full w-full object-cover opacity-10 mix-blend-soft-light"
+        aria-hidden
+        className="hidden md:block absolute inset-0 -z-10 h-full w-full object-cover opacity-10 mix-blend-soft-light select-none pointer-events-none"
       />
 
       <div className="mx-auto w-full max-w-7xl px-4 md:px-8 pt-24 md:pt-36 pb-12 md:pb-16">
@@ -46,9 +47,10 @@ export default function Hero() {
             optimizar procesos y reducir costos.
           </p>
 
-          {/* CTA stack en mobile, inline en desktop */}
+          {/* CTAs */}
           <div className="mt-7 flex w-full max-w-[34rem] flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4">
             <button
+              type="button"
               onClick={() => setOpenDemo(true)}
               className="w-full sm:w-auto inline-flex items-center justify-center rounded-full
                          px-8 py-3 text-[15px] font-semibold text-white
@@ -61,6 +63,7 @@ export default function Hero() {
             </button>
 
             <button
+              type="button"
               onClick={() => scrollTo("#servicios")}
               className="w-full sm:w-auto inline-flex items-center justify-center rounded-full
                          px-8 py-3 text-[15px] font-semibold
@@ -76,14 +79,14 @@ export default function Hero() {
           {/* Línea sutil separadora en mobile para dar estructura visual */}
           <div className="mt-8 h-px w-28 bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
 
-          {/* Mini “confianza” (opcional, sin logos para mantenerlo limpio) */}
+          {/* Mini “confianza” */}
           <p className="mt-4 text-center text-xs text-slate-400">
             Implementaciones ágiles, medibles y escalables.
           </p>
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal (portal + z-[9999] ya manejado dentro del componente) */}
       <Modal open={openDemo} onClose={() => setOpenDemo(false)} title="Solicitar demo gratuita">
         <DemoForm />
       </Modal>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// components/DemoForm.tsx
 "use client";
-
 import { useState } from "react";
 import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
@@ -13,24 +13,21 @@ export default function DemoForm() {
     email: "",
     company: "",
     message: "",
-    _trap: "", // honeypot
+    _trap: "",
   });
-
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setForm({ ...form, [e.target.name]: e.target.value });
-
   const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
-
   const canSubmit =
     form.name.trim().length >= 2 &&
     isValidEmail(form.email) &&
     form.message.trim().length >= 10 &&
-    !form._trap && // si el bot llena este campo, no enviamos
+    !form._trap &&
     state !== "loading";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,8 +38,8 @@ export default function DemoForm() {
 
     try {
       const res = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,   // ej. "service_g07v1u3"
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,  // ej. "template_dns3aha"
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
           name: form.name,
           email: form.email,
@@ -52,15 +49,13 @@ export default function DemoForm() {
           time: new Date().toLocaleString(),
           reply_to: form.email,
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!    // ej. "xYz123..."
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
       if (res.status !== 200) throw new Error("No se pudo enviar el mensaje");
 
       setState("success");
       setForm({ name: "", email: "", company: "", message: "", _trap: "" });
-
-      // volver a idle para permitir otro envío
       setTimeout(() => setState("idle"), 2800);
     } catch (err: any) {
       setError(err?.message ?? "Ocurrió un error inesperado");
@@ -76,16 +71,13 @@ export default function DemoForm() {
           <CheckCircle2 className="h-5 w-5" />
           Solicitud enviada con éxito
         </div>
-        <p className="text-slate-500 dark:text-slate-400">
-          Gracias por tu interés. Te contactaremos muy pronto.
-        </p>
+        <p className="text-slate-500 dark:text-slate-400">Gracias por tu interés. Te contactaremos muy pronto.</p>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      {/* Estados */}
       {state === "error" && (
         <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-red-700 ring-1 ring-red-200">
           <AlertCircle className="h-5 w-5" />
@@ -93,22 +85,11 @@ export default function DemoForm() {
         </div>
       )}
 
-      {/* Honeypot (oculto) */}
-      <input
-        type="text"
-        name="_trap"
-        value={form._trap}
-        onChange={handleChange}
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-      />
+      <input type="text" name="_trap" value={form._trap} onChange={handleChange} className="hidden" tabIndex={-1} autoComplete="off" />
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
-            Nombre completo
-          </label>
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">Nombre completo</label>
           <input
             type="text"
             name="name"
@@ -122,9 +103,7 @@ export default function DemoForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
-            Correo electrónico
-          </label>
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">Correo electrónico</label>
           <input
             type="email"
             name="email"
@@ -141,9 +120,7 @@ export default function DemoForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
-          Empresa (opcional)
-        </label>
+        <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">Empresa (opcional)</label>
         <input
           type="text"
           name="company"
@@ -155,9 +132,7 @@ export default function DemoForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
-          Describe brevemente tu necesidad
-        </label>
+        <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">Describe brevemente tu necesidad</label>
         <textarea
           name="message"
           rows={4}
@@ -169,9 +144,7 @@ export default function DemoForm() {
           className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 resize-none"
         />
         {form.message.length > 0 && form.message.length < 10 && (
-          <p className="mt-1 text-xs text-red-600">
-            Escribe un poco más de detalle (mín. 10 caracteres).
-          </p>
+          <p className="mt-1 text-xs text-red-600">Escribe un poco más de detalle (mín. 10 caracteres).</p>
         )}
       </div>
 
@@ -193,9 +166,7 @@ export default function DemoForm() {
         )}
       </button>
 
-      <p className="text-xs text-slate-500">
-        Al enviar aceptas ser contactado para dar seguimiento a tu solicitud. No compartimos tus datos.
-      </p>
+      <p className="text-xs text-slate-500">Al enviar aceptas ser contactado para dar seguimiento a tu solicitud. No compartimos tus datos.</p>
     </form>
   );
 }
