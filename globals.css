@@ -1,18 +1,175 @@
+/* ===============================
+   globals.css — AutomIQ
+   (reemplazo completo sugerido)
+   =============================== */
+
+/* Tailwind layers */
+@import "tailwindcss/preflight";
 @tailwind utilities;
+
+/* -------------------------------
+   Base & theming
+-------------------------------- */
+html {
+  transition: background-color .3s ease, color .3s ease;
+}
 
 /* Helpers de marca */
 .text-grad {
   background: linear-gradient(45deg, #0EA5E9, #22C55E);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
-/* Animación usada en el menú móvil */
+/* -------------------------------
+   Keyframes
+-------------------------------- */
+
+/* Fade-in vertical (menú móvil, etc.) */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fade-in 0.2s ease-out; }
 
-/* Transición suave entre temas (opcional) */
-html { transition: background-color .3s ease, color .3s ease; }
+/* Gradiente horizontal continuo (titular mobile) */
+@keyframes gradient-x {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Revelado por palabra */
+@keyframes word-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pop sutil de palabras (opcional, para variantes) */
+@keyframes wordPop {
+  0%   { opacity: 0; transform: translateY(10px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Subrayado con brillo (decorativo para links) */
+@keyframes underlineShine {
+  0%   { background-position: -120% 100%; }
+  100% { background-position: 220% 100%; }
+}
+
+/* Aro pulsante (para indicadores/CTAs secundarios) */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,.35); }
+  100% { box-shadow: 0 0 0 18px rgba(16,185,129,0); }
+}
+
+/* Giro lento (íconos/ornamentos) */
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+/* -------------------------------
+   Clases de animación
+-------------------------------- */
+.animate-fade-in        { animation: fade-in .2s ease-out; }
+.animate-gradient-x     { animation: gradient-x 9s linear infinite; } /* usa keyframes gradient-x */
+.animate-word-fade      { animation: word-fade 700ms cubic-bezier(.2,.65,.25,1) both; }
+.animate-word-pop       { animation: wordPop .66s cubic-bezier(.22,1,.36,1) both; }
+.animate-underline-shine{
+  background-image: linear-gradient(90deg, transparent, rgba(56,189,248,.65), transparent);
+  background-repeat: no-repeat;
+  background-size: 140% 2px;
+  background-position: -120% 100%;
+  animation: underlineShine 1.8s ease-in-out infinite;
+}
+.animate-pulse-ring     { animation: pulseRing 1.8s ease-out infinite; }
+.animate-spin-slow      { animation: spinSlow 18s linear infinite; }
+
+/* Respeto de reduce-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient-x,
+  .animate-word-fade,
+  .animate-word-pop,
+  .animate-underline-shine,
+  .animate-pulse-ring,
+  .animate-fade-in,
+  .animate-spin-slow { animation: none !important; }
+}
+
+/* -------------------------------
+   Text effects para títulos
+-------------------------------- */
+
+/* “Faux stroke” oscuro sutil para mejorar legibilidad sobre fondos vivos */
+.text-outline-20 {
+  text-shadow:
+    0 1px 0 rgba(15,23,42,0.22),
+    0 -1px 0 rgba(15,23,42,0.22),
+    1px 0 0 rgba(15,23,42,0.22),
+    -1px 0 0 rgba(15,23,42,0.22);
+}
+
+/* Glow controlado (usa con moderación) */
+.text-glow-emerald {
+  text-shadow:
+    0 0 8px rgba(16,185,129,.22),
+    0 0 18px rgba(16,185,129,.12);
+}
+.text-glow-sky {
+  text-shadow:
+    0 0 8px rgba(56,189,248,.22),
+    0 0 18px rgba(56,189,248,.12);
+}
+
+/* -------------------------------
+   Fondos decorativos hero
+-------------------------------- */
+
+/* Puntitos brillantes con máscara radial */
+.hero-dots{
+  background-image:
+    radial-gradient(rgba(255,255,255,0.10) 1px, transparent 1.5px),
+    radial-gradient(rgba(34,211,238,0.08) 1px, transparent 1.5px);
+  background-size: 26px 26px, 22px 22px;
+  background-position: 0 0, 8px 12px;
+  -webkit-mask-image: radial-gradient(60% 55% at 50% 40%, #000 60%, transparent 100%);
+          mask-image: radial-gradient(60% 55% at 50% 40%, #000 60%, transparent 100%);
+}
+
+/* Rejilla sutil para dar textura */
+.hero-grid{
+  background-image:
+    linear-gradient(to right, rgba(226,232,240,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226,232,240,0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(65% 60% at 50% 40%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(65% 60% at 50% 40%, #000 55%, transparent 100%);
+}
+
+/* -------------------------------
+   Utilidades opcionales de UI
+-------------------------------- */
+
+/* Botón “glass” sutil (por si lo necesitas en CTAs secundarios) */
+.btn-glass {
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  border: 1px solid rgba(148,163,184,.22);
+  backdrop-filter: blur(6px);
+}
+
+/* Borde con gradiente (para cards o CTA destacado) */
+.border-grad {
+  position: relative;
+}
+.border-grad::before{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(56,189,248,.55), rgba(34,197,94,.55));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events:none;
+}

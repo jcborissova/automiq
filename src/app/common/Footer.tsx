@@ -1,8 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { Mail, Phone, MapPin, Linkedin, Github, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Instagram } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+
+  // 🔗 Reemplaza estas URLs por tus perfiles reales
+  const LINKEDIN_URL = "https://www.linkedin.com/"; // ej: https://www.linkedin.com/company/automiq
+  const INSTAGRAM_URL = "https://www.instagram.com/"; // ej: https://www.instagram.com/automiq
 
   return (
     <footer className="relative mt-24 border-t border-slate-200 bg-gradient-to-b from-white via-white to-slate-50">
@@ -44,10 +48,10 @@ export default function Footer() {
               medibles, con foco en eficiencia y escalabilidad.
             </p>
 
-            {/* Redes */}
+            {/* Redes (solo LinkedIn e Instagram) */}
             <div className="mt-5 flex items-center gap-3">
               <a
-                href="https://www.linkedin.com"
+                href={LINKEDIN_URL}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
@@ -56,22 +60,13 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="GitHub"
+                aria-label="Instagram"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition"
               >
-                <Github className="h-5 w-5" />
-              </a>
-              <a
-                href="https://wa.me/18297071293"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition"
-              >
-                <MessageCircle className="h-5 w-5" />
+                <Instagram className="h-5 w-5" />
               </a>
             </div>
           </div>
