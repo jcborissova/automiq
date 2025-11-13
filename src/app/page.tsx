@@ -1,7 +1,7 @@
 import Hero from "./sections/Hero";
 import Services from "./sections/Services";
 import Cases from "./sections/Cases";
-import Clients from "./sections/Clients";
+import Stack from "./sections/Stack";
 import Contact from "./sections/Contact";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <Hero />
       <Services />
       <Cases />
-      <Clients />
+      <Stack />
       <Contact />
     </>
   );

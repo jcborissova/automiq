@@ -19,16 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           transition-colors duration-300
           antialiased overflow-x-hidden
         "
-      >
-        {/* Skip link */}
-        <a
-          href="#__main"
-          className="sr-only focus:not-sr-only focus:fixed focus:z-[1000] focus:top-3 focus:left-3
-                     focus:bg-slate-900 focus:text-white focus:px-3 focus:py-2 focus:rounded-md"
-        >
-          Saltar al contenido
-        </a>
-
+      > 
         <Navbar />
         <main id="__main" className="flex-1 pt-16 md:pt-20">
           {children}
