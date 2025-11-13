@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://automiq.click
+
+# Sitemaps
+Sitemap: https://automiq.click/sitemap.xml
