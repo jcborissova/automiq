@@ -1,17 +1,11 @@
-import Hero from "./sections/Hero";
-import Services from "./sections/Services";
-import Cases from "./sections/Cases";
-import Stack from "./sections/Stack";
-import Contact from "./sections/Contact";
+import type { Metadata } from "next";
+import SitePage from "./components/site/SitePage";
+import { buildMetadata } from "./lib/site-metadata";
+
+export function generateMetadata(): Metadata {
+  return buildMetadata("es");
+}
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <Services />
-      <Cases />
-      <Stack />
-      <Contact />
-    </>
-  );
+  return <SitePage locale="es" />;
 }

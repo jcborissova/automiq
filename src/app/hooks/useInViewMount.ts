@@ -16,7 +16,7 @@ export function useInViewMount<T extends HTMLElement>(rootMargin = "0px 0px -10%
     }, { root: null, rootMargin, threshold: 0.01 });
     io.observe(el);
     return () => io.disconnect();
-  }, [mounted]);
+  }, [mounted, rootMargin]);
 
   return { ref, mounted };
 }

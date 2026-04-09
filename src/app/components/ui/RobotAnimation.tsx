@@ -29,7 +29,6 @@ export default function RobotAnimation({
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const [data, setData] = useState<any | null>(null);
-  const [ready, setReady] = useState(false);
 
   // ⚡ Carga el JSON en tiempo de ejecución (no entra al bundle)
   useEffect(() => {
@@ -103,7 +102,6 @@ export default function RobotAnimation({
           }}
           // Renderiza en SVG (default). Si tu JSON es muy pesado, prueba con canvas:
           // renderer="canvas"
-          onDOMLoaded={() => setReady(true)}
           onComplete={() => {/* puedes pausar aquí si no quieres loop infinito */}}
           style={{ mixBlendMode: "screen" }}
         />
