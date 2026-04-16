@@ -1,193 +1,237 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* components/DemoForm.tsx */
 "use client";
 
-import { useState } from "react";
-import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
+import { useState } from "react";
+import Button from "./ui/Button";
+import { fieldBase, fieldHint, fieldHintError, fieldLabel } from "./ui/field";
+import type { LeadFormLabels, Locale } from "../lib/site-content";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-export default function DemoForm() {
+type DemoFormProps = {
+  locale: Locale;
+  labels: LeadFormLabels;
+  source: string;
+  compact?: boolean;
+};
+
+type DemoFormData = {
+  name: string;
+  email: string;
+  message: string;
+  _trap: string;
+};
+
+const INITIAL_FORM: DemoFormData = {
+  name: "",
+  email: "",
+  message: "",
+  _trap: "",
+};
+
+export default function DemoForm({
+  locale,
+  labels,
+  source,
+  compact = false,
+}: DemoFormProps) {
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", _trap: "" });
+  const [form, setForm] = useState<DemoFormData>(INITIAL_FORM);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  };
 
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  const messageValid = form.message.trim().length >= 10;
   const canSubmit =
-    form.name.trim().length >= 2 && validEmail && form.message.trim().length >= 10 && !form._trap && state !== "loading";
+    form.name.trim().length >= 2 &&
+    validEmail &&
+    messageValid &&
+    !form._trap &&
+    state !== "loading";
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (!canSubmit) return;
-    setState("loading"); setError(null);
+
+    setState("loading");
+    setError(null);
+
     try {
       const res = await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
+          source,
+          title: labels.emailSubject,
           name: form.name,
           email: form.email,
-          company: form.company || "N/D",
           message: form.message,
-          title: "Solicitud de demo - AutomIQ",
-          time: new Date().toLocaleString(),
+          time: new Date().toLocaleString(locale === "es" ? "es-DO" : "en-US"),
           reply_to: form.email,
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
-      if (res.status !== 200) throw new Error("No se pudo enviar el mensaje.");
+
+      if (res.status !== 200) {
+        throw new Error(labels.errorFallback);
+      }
+
       setState("success");
-      setForm({ name: "", email: "", company: "", message: "", _trap: "" });
-      setTimeout(() => setState("idle"), 2600);
-    } catch (err: any) {
-      setError(err?.message ?? "Ocurrió un error inesperado");
+      setForm(INITIAL_FORM);
+      window.setTimeout(() => setState("idle"), 3200);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : labels.errorFallback
+      );
       setState("error");
-      setTimeout(() => setState("idle"), 3200);
+      window.setTimeout(() => {
+        setState("idle");
+        setError(null);
+      }, 3200);
     }
   };
 
-  if (state === "success") {
-    return (
-      <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-6 text-emerald-800 shadow-sm
-                      dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-200">
-        <p className="flex items-center gap-2 font-semibold"><CheckCircle2 className="h-5 w-5" />
-          Solicitud enviada con éxito
-        </p>
-        <p className="mt-1 text-sm text-emerald-700/80 dark:text-emerald-200/80">Te contactaremos muy pronto.</p>
-      </div>
-    );
-  }
+  const messagePlaceholder =
+    locale === "es"
+      ? "Cuentanos en pocas palabras que necesitas"
+      : "Tell us briefly what you need";
+  const messageValidation =
+    locale === "es"
+      ? "Minimo 10 caracteres"
+      : "At least 10 characters";
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-5">
-      {state === "error" && (
-        <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700
-                        dark:border-red-400/30 dark:bg-red-400/10 dark:text-red-300">
-          <AlertCircle className="h-5 w-5" />
-          <p className="text-sm font-medium">{error}</p>
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className={compact ? "space-y-4" : "space-y-4 sm:space-y-5"}
+    >
+      <div>
+        <h3 className="text-lg font-semibold tracking-tight text-[var(--ink-950)] sm:text-xl">
+          {labels.title}
+        </h3>
+        <p className="mt-1.5 text-sm leading-6 text-[var(--ink-500)]">
+          {labels.description}
+        </p>
+      </div>
+
+      {state === "success" && (
+        <div className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-3 text-emerald-900">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+          <div className="min-w-0">
+            <p className="text-sm font-semibold">{labels.successTitle}</p>
+            <p className="mt-0.5 text-sm text-emerald-700">
+              {labels.successBody}
+            </p>
+          </div>
         </div>
       )}
 
-      <input type="text" name="_trap" value={form._trap} onChange={onChange} className="hidden" tabIndex={-1} autoComplete="off" />
+      {state === "error" && (
+        <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-3.5 py-3 text-red-900">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+          <p className="text-sm font-medium">{error ?? labels.errorFallback}</p>
+        </div>
+      )}
 
-      {/* Nombre / Email */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Field label="Nombre completo">
-          <input
-            name="name"
-            value={form.name}
-            onChange={onChange}
-            required
-            minLength={2}
-            autoComplete="name"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none
-                       transition placeholder:text-slate-400
-                       focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/30
-                       dark:border-slate-700 dark:bg-transparent dark:text-slate-100
-                       dark:focus:border-emerald-500 dark:focus:ring-emerald-500/35"
-            placeholder="Juan Carlos Borissova"
-          />
-          {form.name.length > 0 && form.name.trim().length < 2 && <Hint error>Mínimo 2 caracteres.</Hint>}
-        </Field>
+      <input
+        type="text"
+        name="_trap"
+        value={form._trap}
+        onChange={onChange}
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+      />
 
-        <Field label="Correo electrónico">
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={onChange}
-            autoComplete="email"
-            required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none
-                       transition placeholder:text-slate-400
-                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30
-                       dark:border-slate-700 dark:bg-transparent dark:text-slate-100
-                       dark:focus:border-sky-400 dark:focus:ring-sky-400/35"
-            placeholder="tucorreo@empresa.com"
-          />
-          {!validEmail && form.email.length > 0 && <Hint error>Ingresa un correo válido.</Hint>}
-        </Field>
-      </div>
-
-      {/* Empresa */}
-      <Field label="Empresa (opcional)">
+      <Field label={labels.fields.name.label}>
         <input
-          name="company"
-          value={form.company}
+          name="name"
+          value={form.name}
           onChange={onChange}
-          autoComplete="organization"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none
-                     transition placeholder:text-slate-400
-                     focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/30
-                     dark:border-slate-700 dark:bg-transparent dark:text-slate-100
-                     dark:focus:border-emerald-500 dark:focus:ring-emerald-500/35"
-          placeholder="Banco Caribe"
+          placeholder={labels.fields.name.placeholder}
+          required
+          minLength={2}
+          autoComplete="name"
+          className={fieldBase}
         />
       </Field>
 
-      {/* Mensaje */}
-      <Field label="Describe brevemente tu necesidad">
+      <Field label={labels.fields.email.label}>
+        <input
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={onChange}
+          placeholder={labels.fields.email.placeholder}
+          required
+          autoComplete="email"
+          className={fieldBase}
+        />
+        {!validEmail && form.email.length > 0 && (
+          <p className={`${fieldHint} ${fieldHintError}`}>
+            {labels.validation.email}
+          </p>
+        )}
+      </Field>
+
+      <Field label={labels.fields.message.label}>
         <textarea
           name="message"
-          rows={4}
+          rows={compact ? 3 : 4}
           value={form.message}
           onChange={onChange}
+          placeholder={messagePlaceholder}
           required
           minLength={10}
-          placeholder="¿Qué necesitas automatizar o mejorar?"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none
-                     transition placeholder:text-slate-400 resize-none
-                     focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/30
-                     dark:border-slate-700 dark:bg-transparent dark:text-slate-100
-                     dark:focus:border-emerald-500 dark:focus:ring-emerald-500/35"
+          className={`${fieldBase} resize-none`}
         />
-        {form.message.length > 0 && form.message.length < 10 && <Hint error>Mín. 10 caracteres.</Hint>}
+        {form.message.length > 0 && !messageValid && (
+          <p className={`${fieldHint} ${fieldHintError}`}>{messageValidation}</p>
+        )}
       </Field>
 
-      {/* Botón: sólido (brand) */}
-      <button
+      <Button
         type="submit"
         disabled={!canSubmit}
-        className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5
-                   font-semibold text-white shadow-sm transition active:scale-[0.99]
-                   hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40
-                   disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {state === "loading" ? (
-          <>
+        size="lg"
+        full
+        leftIcon={
+          state === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
-            Enviando…
-          </>
-        ) : (
-          <>
-            <Send className="h-4 w-4 transition-transform group-hover:-translate-y-[1px]" />
-            Enviar solicitud
-          </>
-        )}
-      </button>
+          ) : (
+            <Send className="h-4 w-4" />
+          )
+        }
+      >
+        {state === "loading" ? labels.submitting : labels.submit}
+      </Button>
 
-      <p className="text-xs text-slate-500 dark:text-slate-400">
-        Al enviar aceptas ser contactado para dar seguimiento a tu solicitud. No compartimos tus datos.
-      </p>
+      <p className="text-xs leading-5 text-[var(--ink-500)]">{labels.privacy}</p>
     </form>
   );
 }
 
-/* ——— Subcomponentes minimalistas ——— */
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-slate-800 dark:text-slate-200">{label}</span>
+      <span className={fieldLabel}>{label}</span>
       {children}
     </label>
   );
-}
-
-function Hint({ children, error }: { children: React.ReactNode; error?: boolean }) {
-  return <p className={`mt-1 text-xs ${error ? "text-red-600" : "text-slate-500 dark:text-slate-400"}`}>{children}</p>;
 }

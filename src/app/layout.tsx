@@ -41,7 +41,7 @@ export default function RootLayout({
       >
         <LocaleHtmlController />
         <Navbar />
-        <main id="__main" className="flex-1 pt-16 md:pt-20">
+        <main id="__main" className="flex-1">
           {children}
         </main>
         <Footer />

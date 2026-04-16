@@ -1,17 +1,8 @@
-export const SECTION_IDS = {
-  services: "services",
-  useCases: "use-cases",
-  process: "process",
-  cases: "cases",
-  contact: "contact",
-} as const;
-
 export type Locale = "es" | "en";
-export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 
 export type NavItem = {
   label: string;
-  href: `#${SectionId}`;
+  href: `#${string}`;
 };
 
 export type Metric = {
@@ -20,34 +11,12 @@ export type Metric = {
 };
 
 export type ServiceCard = {
-  id: string;
+  id: "agents" | "automation" | "apps" | "knowledge";
   eyebrow: string;
   title: string;
   description: string;
   outcomes: string[];
   tags: string[];
-};
-
-export type UseCaseCard = {
-  title: string;
-  audience: string;
-  description: string;
-  impact: string;
-};
-
-export type ProcessStep = {
-  title: string;
-  description: string;
-  detail: string;
-};
-
-export type CaseStudy = {
-  title: string;
-  sector: string;
-  summary: string;
-  outcomes: string[];
-  technologies: string[];
-  image: string;
 };
 
 export type CapabilityGroup = {
@@ -56,9 +25,10 @@ export type CapabilityGroup = {
   items: string[];
 };
 
-export type FAQItem = {
-  question: string;
-  answer: string;
+export type ArchitectureBlock = {
+  label: string;
+  title: string;
+  detail: string;
 };
 
 export type LeadOption = {
@@ -103,7 +73,6 @@ export type LeadFormLabels = {
 };
 
 export type SiteContent = {
-  localeLabel: string;
   meta: {
     title: string;
     description: string;
@@ -139,32 +108,11 @@ export type SiteContent = {
       footer: string;
     };
   };
-  trustBar: {
-    items: string[];
-  };
   services: {
     eyebrow: string;
     title: string;
     description: string;
     cards: ServiceCard[];
-  };
-  useCases: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    cards: UseCaseCard[];
-  };
-  process: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    steps: ProcessStep[];
-  };
-  cases: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    cards: CaseStudy[];
   };
   capabilities: {
     eyebrow: string;
@@ -173,11 +121,23 @@ export type SiteContent = {
     groups: CapabilityGroup[];
     footer: string;
   };
-  faq: {
+  tools: {
     eyebrow: string;
     title: string;
     description: string;
-    items: FAQItem[];
+    note: string;
+    architecture: {
+      context: ArchitectureBlock;
+      input: ArchitectureBlock;
+      core: ArchitectureBlock & {
+        modules: {
+          title: string;
+          detail: string;
+        }[];
+      };
+      output: ArchitectureBlock;
+      control: ArchitectureBlock;
+    };
   };
   contact: {
     eyebrow: string;
@@ -205,72 +165,55 @@ export type SiteContent = {
   leadForm: LeadFormLabels;
 };
 
-export function isLocale(value: string): value is Locale {
-  return value === "es" || value === "en";
-}
-
-export function getLocaleFromPathname(pathname?: string | null): Locale {
-  return pathname?.startsWith("/en") ? "en" : "es";
-}
-
-export function getLocalizedPath(locale: Locale): string {
-  return locale === "es" ? "/" : "/en";
-}
-
 const siteContent: Record<Locale, SiteContent> = {
   es: {
-    localeLabel: "ES",
     meta: {
-      title: "AutomIQ | Estudio IA para automatización, agentes y apps inteligentes",
+      title: "AutomIQ | Software, automatizacion e IA para operacion real",
       description:
-        "AutomIQ diseña agentes, automatizaciones, copilotos y aplicaciones con IA para equipos de LatAm y US. Menos trabajo manual, mejor operación y una hoja de ruta clara para convertir IA en resultados.",
+        "AutomIQ construye software a medida, automatizaciones e IA aplicada para equipos de LatAm y US. Desarrollo, integraciones y agentes enfocados en resolver la operacion real, no en presentaciones bonitas.",
       keywords: [
         "AutomIQ",
-        "estudio IA",
-        "agentes de inteligencia artificial",
-        "automatización con IA",
+        "desarrollo de software",
+        "automatizacion de procesos",
+        "integraciones y APIs",
+        "agentes IA",
+        "apps a medida",
         "copilotos empresariales",
-        "apps con IA",
-        "integraciones IA",
-        "AI automation studio",
-        "LatAm AI agency",
-        "IA para empresas",
+        "IA aplicada a operacion",
       ],
     },
     nav: {
-      brandTagline: "AI systems for real operations",
+      brandTagline: "Software, automatizacion e IA para operacion real",
       items: [
+        { label: "Inicio", href: "#home" },
         { label: "Servicios", href: "#services" },
-        { label: "Casos de uso", href: "#use-cases" },
-        { label: "Proceso", href: "#process" },
-        { label: "Casos", href: "#cases" },
+        { label: "Arquitectura", href: "#tools" },
         { label: "Contacto", href: "#contact" },
       ],
-      primaryCta: "Agenda un diagnóstico",
+      primaryCta: "Agenda un diagnostico",
       localeLabel: "Idioma",
     },
     hero: {
-      badge: "Estudio IA integral para LatAm + US",
-      title: "Diseñamos sistemas de IA que",
-      highlight: "mejoran la operación de verdad",
+      badge: "Software, automatizacion e IA, todo lo que tu operacion necesita",
+      title: "Construimos software y automatizacion para equipos que buscan",
+      highlight: "ejecucion, no ruido",
       description:
-        "Creamos agentes, automatizaciones, copilotos y aplicaciones inteligentes conectadas a tus procesos. La meta no es “tener IA”, sino reducir fricción, acelerar decisiones y liberar a tu equipo del trabajo repetitivo.",
-      primaryCta: "Agenda un diagnóstico",
+        "Combinamos desarrollo a medida, automatizacion e IA aplicada para conectar tu operacion real. Menos tareas manuales, mejores tiempos de respuesta y una capa tecnica que el equipo si puede usar.",
+      primaryCta: "Agenda un diagnostico",
       secondaryCta: "Ver servicios",
       stats: [
         { value: "2-4 semanas", label: "de discovery a piloto funcional" },
         { value: "Human-in-the-loop", label: "para pasos sensibles y aprobaciones" },
-        { value: "LatAm + US", label: "operación bilingüe y entregables claros" },
       ],
       highlights: [
-        "Agentes conectados a correo, CRM, documentos y APIs internas",
-        "Automatizaciones con trazabilidad, validaciones y escalamiento humano",
-        "Interfaces claras para operar, aprobar y medir cada flujo",
+        "Agentes conectados a correo, CRM, documentos y APIs internas.",
+        "Automatizaciones con trazabilidad, validaciones y escalamiento humano.",
+        "Interfaces claras para operar, aprobar y medir cada flujo.",
       ],
       panel: {
         eyebrow: "Capa operativa",
         title: "Centro de control IA",
-        subtitle: "Agentes, colas, aprobaciones y métricas en una misma vista.",
+        subtitle: "Agentes, colas, aprobaciones y metricas en una misma vista.",
         status: "Pilotos activos",
         metrics: [
           { value: "37%", label: "menos tickets manuales" },
@@ -281,61 +224,53 @@ const siteContent: Record<Locale, SiteContent> = {
         workflowItems: [
           {
             label: "Intake inteligente",
-            detail: "Clasifica solicitudes, identifica prioridad y enruta el caso.",
+            detail: "Clasifica solicitudes, identifica prioridad y enruta cada caso.",
             status: "Live",
           },
           {
             label: "Copiloto interno",
-            detail: "Consulta SOPs, políticas y documentación operativa.",
+            detail: "Consulta SOPs, politicas y documentacion operativa con contexto.",
             status: "QA",
           },
           {
-            label: "Aprobación humana",
-            detail: "Mantiene control en pagos, cambios críticos y respuestas delicadas.",
+            label: "Aprobacion humana",
+            detail: "Mantiene control en pagos, cambios criticos y respuestas delicadas.",
             status: "Required",
           },
         ],
         footer:
-          "La IA ejecuta lo repetible. Tu equipo conserva criterio, supervisión y contexto.",
+          "La IA ejecuta lo repetible. Tu equipo conserva criterio, supervision y contexto.",
       },
     },
-    trustBar: {
-      items: [
-        "Agentes y copilotos orientados a negocio, no demos aisladas",
-        "Arquitectura con APIs, RPA, automatización y frontends operables",
-        "Pilotos rápidos con priorización clara y roadmap de escalado",
-        "Entrega bilingüe para equipos en español e inglés",
-      ],
-    },
     services: {
-      eyebrow: "Servicios IA",
-      title: "Cuatro formas de convertir IA en capacidad operativa",
+      eyebrow: "Que hacemos",
+      title: "Desarrollo, automatizacion e IA aplicada a tu operacion",
       description:
-        "La oferta se organiza alrededor de resultados concretos. Diseñamos el sistema, conectamos datos y herramientas, y dejamos una experiencia que el equipo puede usar sin fricción.",
+        "No vendemos una categoria abstracta. Combinamos software a medida, automatizaciones y agentes IA para que la tecnologia aterrice en procesos concretos y con impacto visible.",
       cards: [
         {
           id: "agents",
           eyebrow: "Agentes y copilotos",
           title: "Asistentes que responden, analizan y ejecutan tareas reales",
           description:
-            "Construimos agentes para soporte, ventas, operaciones y uso interno, conectados a tus fuentes de verdad y con reglas claras de cuándo escalar a una persona.",
+            "Construimos agentes para soporte, ventas, operaciones y uso interno, conectados a tus fuentes de verdad y con reglas claras de cuando escalar a una persona.",
           outcomes: [
-            "Respuestas más rápidas con contexto de negocio",
-            "Menos carga manual para equipos operativos",
-            "Mejor calidad en clasificación, seguimiento y resolución",
+            "Respuestas mas rapidas con contexto de negocio.",
+            "Menos carga manual para equipos operativos.",
+            "Mejor calidad en clasificacion, seguimiento y resolucion.",
           ],
           tags: ["Chat", "Voice", "CRM", "Knowledge"],
         },
         {
           id: "automation",
-          eyebrow: "Automatización e integraciones",
+          eyebrow: "Automatizacion e integraciones",
           title: "Flujos inteligentes entre tus herramientas y equipos",
           description:
-            "Orquestamos procesos con IA, APIs y plataformas de automatización para mover información, generar acciones y evitar cuellos de botella invisibles.",
+            "Orquestamos procesos con IA, APIs y plataformas de automatizacion para mover informacion, generar acciones y evitar cuellos de botella invisibles.",
           outcomes: [
-            "Menos pasos repetitivos y menos errores de coordinación",
-            "Trazabilidad completa de eventos, aprobaciones y excepciones",
-            "Capacidad de escalar procesos sin crecer linealmente el equipo",
+            "Menos pasos repetitivos y menos errores de coordinacion.",
+            "Trazabilidad completa de eventos, aprobaciones y excepciones.",
+            "Capacidad de escalar procesos sin crecer linealmente el equipo.",
           ],
           tags: ["n8n", "Make", "Power Platform", "APIs"],
         },
@@ -344,272 +279,190 @@ const siteContent: Record<Locale, SiteContent> = {
           eyebrow: "Apps y portales con IA",
           title: "Interfaces claras para operar la inteligencia, no solo verla",
           description:
-            "Diseñamos portales, dashboards y productos web donde la IA se integra en el flujo de trabajo: revisión, aprobación, priorización, análisis y seguimiento.",
+            "Disenamos portales, dashboards y productos web donde la IA se integra en el flujo de trabajo: revision, aprobacion, priorizacion, analisis y seguimiento.",
           outcomes: [
-            "Experiencias útiles para equipos no técnicos",
-            "Mejor adopción interna de nuevas capacidades",
-            "Capas de control, métricas y feedback sobre el comportamiento de la IA",
+            "Experiencias utiles para equipos no tecnicos.",
+            "Mejor adopcion interna de nuevas capacidades.",
+            "Capas de control, metricas y feedback sobre el comportamiento de la IA.",
           ],
           tags: ["Next.js", "React", "Dashboards", "UX"],
         },
         {
           id: "knowledge",
-          eyebrow: "Conocimiento y analítica asistida",
-          title: "Sistemas que convierten información dispersa en decisiones útiles",
+          eyebrow: "Conocimiento y analitica asistida",
+          title: "Sistemas que convierten informacion dispersa en decisiones utiles",
           description:
-            "Organizamos documentación, procesos y señales operativas para que la IA ayude a responder, detectar riesgo, resumir contexto y priorizar acciones.",
+            "Organizamos documentacion, procesos y senales operativas para que la IA ayude a responder, detectar riesgo, resumir contexto y priorizar acciones.",
           outcomes: [
-            "Acceso más rápido a SOPs, políticas y documentación",
-            "Menos dependencia de expertos para preguntas repetidas",
-            "Lectura operativa de datos con foco en decisiones",
+            "Acceso mas rapido a SOPs, politicas y documentacion.",
+            "Menos dependencia de expertos para preguntas repetidas.",
+            "Lectura operativa de datos con foco en decisiones.",
           ],
           tags: ["RAG", "Docs", "Analytics", "Internal Ops"],
         },
       ],
     },
-    useCases: {
-      eyebrow: "Casos de uso",
-      title: "IA aplicada a puntos donde el negocio siente el cambio",
-      description:
-        "No vendemos una categoría abstracta. Entramos en procesos donde el impacto es visible en tiempo, capacidad de respuesta y calidad operativa.",
-      cards: [
-        {
-          title: "Ventas y revenue operations",
-          audience: "Lead qualification · follow-up · handoff",
-          description:
-            "Agentes que califican leads, resumen llamadas, preparan handoffs y mantienen limpio el flujo entre marketing, SDRs y account teams.",
-          impact: "Menos fuga entre etapas y mejor velocidad comercial.",
-        },
-        {
-          title: "Soporte y service desk",
-          audience: "Triage · base de conocimiento · escalamiento",
-          description:
-            "Copilotos y asistentes que entienden intención, buscan contexto y derivan correctamente cuando un caso requiere revisión humana.",
-          impact: "Mejor SLA sin sobrecargar a los equipos de soporte.",
-        },
-        {
-          title: "Backoffice y finanzas",
-          audience: "Validación · documentación · aprobaciones",
-          description:
-            "Flujos para recopilar documentos, revisar consistencia, generar resúmenes y mantener trazabilidad en procesos sensibles.",
-          impact: "Menos retrabajo y más control en tareas críticas.",
-        },
-        {
-          title: "Conocimiento interno y operaciones",
-          audience: "SOPs · onboarding · decisiones recurrentes",
-          description:
-            "Sistemas que convierten documentos dispersos y experiencia tácita en respuestas útiles para equipos que necesitan actuar rápido.",
-          impact: "Respuesta consistente incluso cuando el experto no está disponible.",
-        },
-      ],
-    },
-    process: {
-      eyebrow: "Proceso de trabajo",
-      title: "Diseño, piloto y escalado con foco en claridad operacional",
-      description:
-        "Trabajamos en tres etapas para que cada iniciativa tenga un objetivo medible, un piloto útil y una base técnica lista para crecer.",
-      steps: [
-        {
-          title: "Diagnóstico y priorización",
-          description:
-            "Mapeamos procesos, puntos de fricción, fuentes de datos y restricciones reales.",
-          detail:
-            "El entregable es una hipótesis de impacto clara, con dónde usar IA y dónde no.",
-        },
-        {
-          title: "Piloto funcional",
-          description:
-            "Construimos una primera versión utilizable con métricas, validaciones y revisión humana.",
-          detail:
-            "Buscamos aprendizaje operativo, adopción y resultados visibles antes de escalar.",
-        },
-        {
-          title: "Hardening y expansión",
-          description:
-            "Optimizamos la experiencia, conectamos más sistemas y definimos observabilidad y ownership.",
-          detail:
-            "La solución pasa de experimento prometedor a capacidad integrada del negocio.",
-        },
-      ],
-    },
-    cases: {
-      eyebrow: "Casos destacados",
-      title: "Ejemplos del tipo de sistemas que construimos",
-      description:
-        "Los casos combinan interfaz, automatización y lógica asistida por IA para resolver trabajo operativo real. En esta versión priorizamos un before/after cualitativo sobre claims inflados.",
-      cards: [
-        {
-          title: "Portal operativo para priorización y seguimiento",
-          sector: "Operaciones internas · Web app",
-          summary:
-            "Una interfaz centralizó solicitudes, estados y handoffs entre áreas, reduciendo la dependencia de hojas dispersas y comunicación fragmentada.",
-          outcomes: [
-            "Una sola vista para intake, prioridad y seguimiento",
-            "Más claridad para equipos que compartían contexto por correo",
-            "Base lista para sumar copilotos y reglas de automatización",
-          ],
-          technologies: ["Next.js", "TypeScript", "Dashboards", "APIs"],
-          image: "/assets/cases/Case1.png",
-        },
-        {
-          title: "Flujo asistido para validación documental y coordinación",
-          sector: "Backoffice · Automatización",
-          summary:
-            "El proceso pasó de secuencias manuales y revisiones repetidas a un flujo con validaciones, alertas y puntos explícitos de aprobación humana.",
-          outcomes: [
-            "Menos trabajo manual en recopilación y control",
-            "Escalamiento claro para excepciones",
-            "Mejor trazabilidad para auditoría interna y seguimiento",
-          ],
-          technologies: ["Power Automate", "Documents", "Alerts", "Approvals"],
-          image: "/assets/cases/Case2.png",
-        },
-        {
-          title: "Pipeline cognitivo para intake y clasificación",
-          sector: "IA operativa · Integraciones",
-          summary:
-            "Se estructuró la entrada de formularios y mensajes para clasificar, resumir y enrutar casos con reglas de negocio y supervisión humana.",
-          outcomes: [
-            "Más consistencia en cómo se reciben y entienden los casos",
-            "Menos dependencia del criterio manual en la primera lectura",
-            "Infraestructura lista para agentes y reporting posterior",
-          ],
-          technologies: ["AI Models", "Classification", "RPA", "APIs"],
-          image: "/assets/cases/Case3.png",
-        },
-      ],
-    },
     capabilities: {
       eyebrow: "Capacidades",
-      title: "La mezcla técnica cambia según el problema, no al revés",
+      title: "La mezcla tecnica cambia segun el problema, no al reves",
       description:
-        "Elegimos la arquitectura mínima que haga el trabajo bien: modelos, automatización, interfaz, observabilidad y puntos de control humano.",
+        "Elegimos la arquitectura minima que haga el trabajo bien: modelos, automatizacion, interfaz, observabilidad y puntos de control humano.",
       groups: [
         {
-          title: "Orquestación y ejecución",
+          title: "Orquestacion y ejecucion",
           description:
             "Flujos, disparadores, integraciones y trabajo entre sistemas.",
           items: [
-            "n8n, Make, Power Platform, webhooks y APIs",
-            "RPA cuando el contexto lo exige",
-            "Colas, retries, aprobaciones y handoff explícito",
+            "n8n, Make, Power Platform, webhooks y APIs.",
+            "RPA cuando el contexto lo exige.",
+            "Colas, retries, aprobaciones y handoff explicito.",
           ],
         },
         {
           title: "Inteligencia y contexto",
           description:
-            "Modelos, reglas, recuperación de conocimiento y evaluación.",
+            "Modelos, reglas, recuperacion de conocimiento y evaluacion.",
           items: [
-            "Agentes con acceso a documentación y datos de negocio",
-            "RAG, clasificación, extracción y síntesis",
-            "Supervisión humana y guardrails por flujo",
+            "Agentes con acceso a documentacion y datos de negocio.",
+            "RAG, clasificacion, extraccion y sintesis.",
+            "Supervision humana y guardrails por flujo.",
           ],
         },
         {
-          title: "Interfaz y adopción",
+          title: "Interfaz y adopcion",
           description:
-            "La capa donde el equipo usa, aprueba y mide la solución.",
+            "La capa donde el equipo usa, aprueba y mide la solucion.",
           items: [
-            "Apps en Next.js y React para operar el sistema",
-            "Dashboards, estados, métricas y audit trail",
-            "Experiencias bilingües orientadas a claridad y velocidad",
+            "Apps en Next.js y React para operar el sistema.",
+            "Dashboards, estados, metricas y audit trail.",
+            "Experiencias bilingues orientadas a claridad y velocidad.",
           ],
         },
       ],
       footer:
-        "No hacemos demos sueltas. Diseñamos sistemas que conviven con la operación y pueden crecer con ella.",
+        "No hacemos demos sueltas. Disenamos sistemas que conviven con la operacion y pueden crecer con ella.",
     },
-    faq: {
-      eyebrow: "FAQ",
-      title: "Preguntas que suelen aparecer antes de arrancar",
+    tools: {
+      eyebrow: "Arquitectura lista para operar",
+      title: "Un sistema claro por fuera, controlado por dentro",
       description:
-        "Queremos que la conversación empiece en claridad: dónde aporta la IA, cómo se mide y qué se necesita para que funcione bien.",
-      items: [
-        {
-          question: "¿Trabajan solo proyectos de IA o también la capa de producto y automatización?",
-          answer:
-            "Sí. Nuestra propuesta une IA, automatización, integraciones y la interfaz donde el equipo opera. Esa combinación es la que hace que la solución sea usable y medible.",
+        "La IA funciona cuando el flujo se entiende rapido: contexto confiable, entradas ordenadas, ejecucion auditada y salidas que el equipo puede usar.",
+      note:
+        "Cada bloque se conecta con tu stack actual y conserva aprobaciones humanas cuando el riesgo, la ambiguedad o el impacto del negocio lo exigen.",
+      architecture: {
+        context: {
+          label: "Contexto",
+          title: "Memoria operativa y conocimiento vivo",
+          detail:
+            "Documentacion, CRM, politicas, estados y datos internos para responder con criterio y no con suposiciones.",
         },
-        {
-          question: "¿Necesito tener los datos perfectos antes de empezar?",
-          answer:
-            "No. En el diagnóstico identificamos qué señales ya existen, qué se puede conectar rápido y qué supuestos hay que validar en el piloto antes de escalar.",
+        input: {
+          label: "Entrada",
+          title: "Correo, formularios, WhatsApp y tickets",
+          detail:
+            "Estandarizamos intake desde los canales donde hoy ya llegan solicitudes, leads y tareas.",
         },
-        {
-          question: "¿La IA reemplaza a las personas dentro del flujo?",
-          answer:
-            "No planteamos la solución así. Diseñamos automatización con puntos claros de aprobación, revisión y escalamiento humano cuando el riesgo o la ambigüedad lo requieren.",
+        core: {
+          label: "Core",
+          title: "Orquestacion IA con reglas y aprobaciones",
+          detail:
+            "Modelos, prompts, herramientas, validaciones y handoffs humanos conviviendo en un flujo que el equipo puede auditar.",
+          modules: [
+            {
+              title: "Clasificacion",
+              detail: "Entiende intencion, prioridad y tipo de solicitud.",
+            },
+            {
+              title: "Accion",
+              detail: "Crea tareas, actualiza CRM, responde o escala el caso.",
+            },
+            {
+              title: "Control",
+              detail: "Bloquea pasos sensibles y solicita aprobacion cuando toca.",
+            },
+            {
+              title: "Metricas",
+              detail: "Registra tiempos, decisiones y excepciones para mejorar.",
+            },
+          ],
         },
-        {
-          question: "¿Pueden trabajar con equipos en español e inglés?",
-          answer:
-            "Sí. La web, la documentación, la experiencia y los entregables pueden plantearse en ambos idiomas para operar con equipos de LatAm y US.",
+        output: {
+          label: "Salida",
+          title: "CRM, tareas, dashboards y respuestas",
+          detail:
+            "La automatizacion no termina en una respuesta bonita; termina en sistemas actualizados y trabajo siguiente claro.",
         },
-      ],
+        control: {
+          label: "Gobierno",
+          title: "Observabilidad, alertas y revision humana",
+          detail:
+            "Logs, estados, SLA y puntos de aprobacion para operar con confianza desde el dia uno.",
+        },
+      },
     },
     contact: {
       eyebrow: "Contacto",
-      title: "Agenda un diagnóstico y definamos dónde la IA sí mueve la aguja",
+      title: "Conversemos sobre el cuello de botella que quieres resolver",
       description:
-        "Cuéntanos tu contexto y te respondemos con una lectura inicial de oportunidad, alcance y siguiente paso recomendado.",
-      panelTitle: "Qué pasa después",
+        "Comparte tu contexto y te devolvemos una lectura concreta de oportunidad, alcance inicial y el siguiente paso que mas sentido tenga.",
+      panelTitle: "Que pasa despues",
       panelDescription:
-        "No enviamos una respuesta genérica. Revisamos el caso, priorizamos impacto y proponemos una conversación útil para tomar decisión.",
+        "No enviamos una respuesta generica. Revisamos el caso, priorizamos impacto y proponemos una conversacion util para tomar decision.",
       nextSteps: [
-        "Revisamos tu proceso, punto de fricción y nivel de urgencia.",
-        "Te devolvemos una hipótesis de solución, piloto o roadmap inicial.",
+        "Revisamos tu proceso, punto de friccion y nivel de urgencia.",
+        "Te devolvemos una hipotesis de solucion, piloto o roadmap inicial.",
         "Si hay fit, avanzamos a discovery o a un piloto con alcance definido.",
       ],
       details: [
         { label: "Email", value: "info@automiq.dev", href: "mailto:info@automiq.dev" },
-        { label: "Teléfono", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
-        { label: "Base", value: "Santo Domingo, República Dominicana" },
+        { label: "Telefono", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
+        { label: "Base", value: "Santo Domingo, Republica Dominicana" },
       ],
-      responseTime: "Respuesta inicial usual: dentro de 1 día hábil.",
+      responseTime: "Respuesta inicial usual: dentro de 1 dia habil.",
     },
     footer: {
       title: "AutomIQ",
       summary:
-        "Estudio IA bilingüe para agentes, automatización, copilotos y aplicaciones inteligentes.",
+        "Estudio bilingue de software, automatizacion e IA aplicada, enfocado en resolver la operacion real.",
       secondarySummary:
-        "Diseñamos sistemas que reducen trabajo manual y convierten IA en capacidad operativa.",
-      cta: "Agenda un diagnóstico",
+        "Disenamos sistemas que reducen trabajo manual combinando desarrollo, automatizacion e IA.",
+      cta: "Agenda un diagnostico",
       navTitle: "Explorar",
-      localeCta: "Ver versión en inglés",
+      localeCta: "View English version",
       rights: "Todos los derechos reservados.",
     },
     leadForm: {
-      title: "Cuéntanos qué necesitas",
+      title: "Cuentanos que necesitas",
       description:
-        "Mientras más contexto nos compartas, más precisa será la respuesta inicial.",
+        "Mientras mas contexto nos compartas, mas precisa sera la respuesta inicial.",
       submit: "Enviar solicitud",
-      submitting: "Enviando…",
+      submitting: "Enviando...",
       successTitle: "Solicitud enviada",
       successBody: "Te contactaremos con un siguiente paso claro lo antes posible.",
-      errorFallback: "No pudimos enviar el formulario. Inténtalo de nuevo en unos minutos.",
+      errorFallback: "No pudimos enviar el formulario. Intentalo de nuevo en unos minutos.",
       privacy:
-        "Al enviar aceptas que usemos tus datos para responder a esta solicitud. No compartimos información con terceros.",
-      emailSubject: "Nuevo diagnóstico solicitado desde AutomIQ",
+        "Al enviar aceptas que usemos tus datos para responder a esta solicitud. No compartimos informacion con terceros.",
+      emailSubject: "Nuevo diagnostico solicitado desde AutomIQ",
       fields: {
         name: { label: "Nombre completo", placeholder: "Tu nombre" },
-        email: { label: "Correo electrónico", placeholder: "tu@empresa.com" },
+        email: { label: "Correo electronico", placeholder: "tu@empresa.com" },
         company: { label: "Empresa", placeholder: "Nombre de la empresa" },
         role: { label: "Cargo", placeholder: "Ej. Operaciones, Producto, Founder" },
-        primaryNeed: { label: "Necesidad principal", placeholder: "Selecciona una opción" },
-        teamSize: { label: "Tamaño del equipo", placeholder: "Selecciona una opción" },
-        timeframe: { label: "Plazo deseado", placeholder: "Selecciona una opción" },
+        primaryNeed: { label: "Necesidad principal", placeholder: "Selecciona una opcion" },
+        teamSize: { label: "Tamano del equipo", placeholder: "Selecciona una opcion" },
+        timeframe: { label: "Plazo deseado", placeholder: "Selecciona una opcion" },
         message: {
           label: "Contexto y objetivo",
           placeholder:
-            "Describe el proceso, el cuello de botella actual y qué resultado quieres conseguir.",
+            "Describe el proceso, el cuello de botella actual y que resultado quieres conseguir.",
         },
       },
       options: {
         primaryNeed: [
           { value: "agents", label: "Agentes o copilotos" },
-          { value: "automation", label: "Automatización e integraciones" },
+          { value: "automation", label: "Automatizacion e integraciones" },
           { value: "app", label: "App o portal con IA" },
-          { value: "knowledge", label: "Conocimiento o analítica asistida" },
+          { value: "knowledge", label: "Conocimiento o analitica asistida" },
           { value: "other", label: "Otro / no estoy seguro" },
         ],
         teamSize: [
@@ -620,65 +473,60 @@ const siteContent: Record<Locale, SiteContent> = {
         ],
         timeframe: [
           { value: "asap", label: "Lo antes posible" },
-          { value: "30-days", label: "En los próximos 30 días" },
+          { value: "30-days", label: "En los proximos 30 dias" },
           { value: "quarter", label: "Este trimestre" },
           { value: "exploring", label: "Estoy explorando opciones" },
         ],
       },
       validation: {
-        email: "Ingresa un correo válido.",
-        message: "Describe un poco más el contexto (mín. 20 caracteres).",
+        email: "Ingresa un correo valido.",
+        message: "Describe un poco mas el contexto (min. 20 caracteres).",
       },
     },
   },
   en: {
-    localeLabel: "EN",
     meta: {
-      title: "AutomIQ | AI studio for automation, agents, and intelligent apps",
+      title: "AutomIQ | Software, automation, and applied AI for real operations",
       description:
-        "AutomIQ builds AI agents, copilots, automations, and intelligent applications for LatAm and US teams. Less manual work, better operations, and a clear path from pilot to rollout.",
+        "AutomIQ builds custom software, automations, and applied AI for LatAm and US teams. Development, integrations, and agents focused on solving real operations, not pretty presentations.",
       keywords: [
         "AutomIQ",
-        "AI studio",
+        "custom software development",
+        "process automation",
+        "API integrations",
         "AI agents",
-        "AI automation",
+        "custom apps",
         "enterprise copilots",
-        "AI apps",
-        "AI integrations",
-        "LatAm AI agency",
-        "operational AI systems",
-        "workflow automation studio",
+        "applied AI",
       ],
     },
     nav: {
-      brandTagline: "AI systems for real operations",
+      brandTagline: "Software, automation, and AI for real operations",
       items: [
+        { label: "Home", href: "#home" },
         { label: "Services", href: "#services" },
-        { label: "Use cases", href: "#use-cases" },
-        { label: "Process", href: "#process" },
-        { label: "Cases", href: "#cases" },
+        { label: "Architecture", href: "#tools" },
         { label: "Contact", href: "#contact" },
       ],
       primaryCta: "Book a diagnostic",
       localeLabel: "Language",
     },
     hero: {
-      badge: "Full-stack AI studio for LatAm + US teams",
-      title: "We design AI systems that",
-      highlight: "improve real operations",
+      badge: "Software, automation, and AI, whatever your operation needs",
+      title: "We build software and automation for teams that need",
+      highlight: "execution, not noise",
       description:
-        "We build agents, automations, copilots, and intelligent applications connected to your workflows. The goal is not to “add AI,” but to remove friction, speed up decisions, and free teams from repetitive work.",
+        "We combine custom development, automation, and applied AI to connect your real workflows. Less manual work, faster response times, and a technical layer teams can actually operate.",
       primaryCta: "Book a diagnostic",
       secondaryCta: "See services",
       stats: [
         { value: "2-4 weeks", label: "from discovery to working pilot" },
         { value: "Human-in-the-loop", label: "for sensitive steps and approvals" },
-        { value: "LatAm + US", label: "bilingual delivery and collaboration" },
       ],
       highlights: [
-        "Agents connected to email, CRM, documents, and internal APIs",
-        "Automations with traceability, validations, and human escalation",
-        "Clear interfaces to operate, approve, and measure every workflow",
+        "Agents connected to email, CRM, documents, and internal APIs.",
+        "Automations with traceability, validations, and human escalation.",
+        "Clear interfaces to operate, approve, and measure every workflow.",
       ],
       panel: {
         eyebrow: "Operating layer",
@@ -712,19 +560,11 @@ const siteContent: Record<Locale, SiteContent> = {
           "AI executes the repeatable parts. Your team keeps judgment, oversight, and context.",
       },
     },
-    trustBar: {
-      items: [
-        "Agents and copilots designed for business workflows, not isolated demos",
-        "Architecture that combines APIs, RPA, automation, and usable frontends",
-        "Fast pilots with clear prioritization and a rollout path",
-        "Bilingual delivery for Spanish and English speaking teams",
-      ],
-    },
     services: {
-      eyebrow: "AI services",
-      title: "Four ways to turn AI into operational capacity",
+      eyebrow: "What we do",
+      title: "Software development, automation, and applied AI for your operation",
       description:
-        "We organize the offer around outcomes. We design the system, connect the tools and data, and deliver an experience teams can actually use.",
+        "We do not sell an abstract category. We combine custom software, automations, and AI agents so technology lands in concrete workflows with visible impact.",
       cards: [
         {
           id: "agents",
@@ -733,9 +573,9 @@ const siteContent: Record<Locale, SiteContent> = {
           description:
             "We build agents for support, revenue, operations, and internal teams, connected to your sources of truth and with explicit rules for when humans step in.",
           outcomes: [
-            "Faster responses with business context",
-            "Less manual load for operational teams",
-            "Higher consistency in triage, follow-up, and resolution",
+            "Faster responses with business context.",
+            "Less manual load for operational teams.",
+            "Higher consistency in triage, follow-up, and resolution.",
           ],
           tags: ["Chat", "Voice", "CRM", "Knowledge"],
         },
@@ -746,9 +586,9 @@ const siteContent: Record<Locale, SiteContent> = {
           description:
             "We orchestrate processes with AI, APIs, and automation platforms so information moves correctly and friction stops hiding in handoffs.",
           outcomes: [
-            "Fewer repetitive steps and coordination errors",
-            "Full traceability for events, approvals, and exceptions",
-            "The ability to scale process volume without linearly scaling headcount",
+            "Fewer repetitive steps and coordination errors.",
+            "Full traceability for events, approvals, and exceptions.",
+            "The ability to scale volume without linearly scaling headcount.",
           ],
           tags: ["n8n", "Make", "Power Platform", "APIs"],
         },
@@ -759,9 +599,9 @@ const siteContent: Record<Locale, SiteContent> = {
           description:
             "We design portals, dashboards, and products where AI is part of the workflow: review, approval, prioritization, analysis, and follow-up.",
           outcomes: [
-            "Useful experiences for non-technical teams",
-            "Better internal adoption of new AI capabilities",
-            "Control layers, metrics, and feedback over system behavior",
+            "Useful experiences for non-technical teams.",
+            "Better internal adoption of new AI capabilities.",
+            "Control layers, metrics, and feedback over system behavior.",
           ],
           tags: ["Next.js", "React", "Dashboards", "UX"],
         },
@@ -772,123 +612,11 @@ const siteContent: Record<Locale, SiteContent> = {
           description:
             "We organize documentation, processes, and operational signals so AI can answer, detect risk, summarize context, and surface priorities.",
           outcomes: [
-            "Faster access to SOPs, policies, and operational docs",
-            "Less dependency on experts for repeated questions",
-            "Better decision support from messy operational data",
+            "Faster access to SOPs, policies, and operational docs.",
+            "Less dependency on experts for repeated questions.",
+            "Better decision support from messy operational data.",
           ],
           tags: ["RAG", "Docs", "Analytics", "Internal Ops"],
-        },
-      ],
-    },
-    useCases: {
-      eyebrow: "Use cases",
-      title: "Applied AI for places where the business feels the change",
-      description:
-        "We do not sell an abstract category. We work on workflows where the impact is visible in time, response capacity, and operating quality.",
-      cards: [
-        {
-          title: "Revenue operations and sales",
-          audience: "Lead qualification · follow-up · handoff",
-          description:
-            "Agents that qualify leads, summarize calls, prepare handoffs, and keep the funnel cleaner across marketing, SDRs, and account teams.",
-          impact: "Less leakage between stages and better commercial velocity.",
-        },
-        {
-          title: "Support and service desk",
-          audience: "Triage · knowledge access · escalation",
-          description:
-            "Copilots and assistants that understand intent, find context, and route properly when a human needs to take over.",
-          impact: "Stronger SLAs without overwhelming the support team.",
-        },
-        {
-          title: "Back office and finance",
-          audience: "Validation · documentation · approvals",
-          description:
-            "Workflows for collecting documents, checking consistency, generating summaries, and keeping traceability in sensitive processes.",
-          impact: "Less rework and more control in critical tasks.",
-        },
-        {
-          title: "Internal knowledge and operations",
-          audience: "SOPs · onboarding · recurring decisions",
-          description:
-            "Systems that turn scattered documents and tribal knowledge into useful answers for teams that need to act fast.",
-          impact: "Consistent answers even when the expert is unavailable.",
-        },
-      ],
-    },
-    process: {
-      eyebrow: "Working process",
-      title: "Design, pilot, and scale with operational clarity",
-      description:
-        "We work in three stages so every initiative has a measurable objective, a useful pilot, and a technical base ready to grow.",
-      steps: [
-        {
-          title: "Diagnostic and prioritization",
-          description:
-            "We map workflows, friction points, data sources, and real constraints.",
-          detail:
-            "The output is a clear impact hypothesis, including where AI should help and where it should not.",
-        },
-        {
-          title: "Functional pilot",
-          description:
-            "We build a usable first version with metrics, validations, and human review.",
-          detail:
-            "The goal is operational learning, adoption, and visible results before scaling.",
-        },
-        {
-          title: "Hardening and expansion",
-          description:
-            "We improve the experience, connect more systems, and define observability and ownership.",
-          detail:
-            "The solution moves from promising experiment to integrated business capability.",
-        },
-      ],
-    },
-    cases: {
-      eyebrow: "Selected cases",
-      title: "Examples of the systems we build",
-      description:
-        "These examples combine interface, automation, and AI-assisted logic to solve real operational work. In this version we prioritize honest before/after narratives over inflated claims.",
-      cards: [
-        {
-          title: "Operational portal for prioritization and follow-up",
-          sector: "Internal operations · Web app",
-          summary:
-            "A single interface centralized requests, statuses, and handoffs across teams, replacing fragmented spreadsheets and disconnected communication.",
-          outcomes: [
-            "One place for intake, priority, and follow-up",
-            "More clarity for teams sharing context by email before",
-            "A strong base to add copilots and automation rules",
-          ],
-          technologies: ["Next.js", "TypeScript", "Dashboards", "APIs"],
-          image: "/assets/cases/Case1.png",
-        },
-        {
-          title: "Assisted workflow for document validation and coordination",
-          sector: "Back office · Automation",
-          summary:
-            "The process moved from repetitive manual review to a workflow with validations, alerts, and explicit human approval points.",
-          outcomes: [
-            "Less manual work in collection and control",
-            "Clear escalation paths for exceptions",
-            "Better traceability for audit and internal follow-up",
-          ],
-          technologies: ["Power Automate", "Documents", "Alerts", "Approvals"],
-          image: "/assets/cases/Case2.png",
-        },
-        {
-          title: "Cognitive intake and classification pipeline",
-          sector: "Operational AI · Integrations",
-          summary:
-            "Forms and messages were structured so cases could be classified, summarized, and routed with business rules and human oversight.",
-          outcomes: [
-            "More consistent intake and case understanding",
-            "Less dependency on manual first-pass review",
-            "Infrastructure ready for agents and downstream reporting",
-          ],
-          technologies: ["AI Models", "Classification", "RPA", "APIs"],
-          image: "/assets/cases/Case3.png",
         },
       ],
     },
@@ -900,75 +628,108 @@ const siteContent: Record<Locale, SiteContent> = {
       groups: [
         {
           title: "Orchestration and execution",
-          description: "Workflows, triggers, integrations, and system-to-system movement.",
+          description:
+            "Workflows, triggers, integrations, and cross-system execution.",
           items: [
-            "n8n, Make, Power Platform, webhooks, and APIs",
-            "RPA when the business context actually requires it",
-            "Queues, retries, approvals, and explicit handoff paths",
+            "n8n, Make, Power Platform, webhooks, and APIs.",
+            "RPA when the context requires it.",
+            "Queues, retries, approvals, and explicit handoffs.",
           ],
         },
         {
           title: "Intelligence and context",
-          description: "Models, rules, knowledge retrieval, and evaluation.",
+          description:
+            "Models, rules, knowledge retrieval, and evaluation.",
           items: [
-            "Agents with access to business docs and data",
-            "RAG, classification, extraction, and summarization",
-            "Human supervision and guardrails by workflow",
+            "Agents connected to documentation and business data.",
+            "RAG, classification, extraction, and synthesis.",
+            "Human oversight and guardrails for each workflow.",
           ],
         },
         {
           title: "Interface and adoption",
-          description: "The layer where teams use, approve, and measure the system.",
+          description:
+            "The layer where teams use, approve, and measure the system.",
           items: [
-            "Next.js and React apps to operate the solution",
-            "Dashboards, states, metrics, and audit trails",
-            "Bilingual experiences designed for clarity and speed",
+            "Next.js and React apps to operate the system.",
+            "Dashboards, statuses, metrics, and audit trails.",
+            "Bilingual experiences optimized for clarity and speed.",
           ],
         },
       ],
       footer:
-        "We do not build isolated demos. We design systems that can live inside real operations and grow with them.",
+        "We do not ship isolated demos. We design systems that can live inside real operations and grow with them.",
     },
-    faq: {
-      eyebrow: "FAQ",
-      title: "Questions that usually come up before kickoff",
+    tools: {
+      eyebrow: "Production-ready architecture",
+      title: "Clear on the surface, controlled underneath",
       description:
-        "We want the conversation to start with clarity: where AI helps, how it gets measured, and what is needed for it to work well.",
-      items: [
-        {
-          question: "Do you only handle AI, or also the product and automation layers around it?",
-          answer:
-            "We handle the full operating layer: AI, automation, integrations, and the interface where the team actually uses the solution. That combination is what makes the system usable and measurable.",
+        "AI works when the workflow is easy to understand: trusted context, structured intake, audited execution, and outputs the team can actually use.",
+      note:
+        "Each block plugs into your current stack while keeping human approvals where risk, ambiguity, or business impact require them.",
+      architecture: {
+        context: {
+          label: "Context",
+          title: "Operational memory and living knowledge",
+          detail:
+            "Documentation, CRM, policies, statuses, and internal data so responses are grounded in how the business actually works.",
         },
-        {
-          question: "Do we need perfect data before starting?",
-          answer:
-            "No. During the diagnostic we identify what signals already exist, what can be connected quickly, and which assumptions must be validated during the pilot.",
+        input: {
+          label: "Input",
+          title: "Email, forms, WhatsApp, and ticketing",
+          detail:
+            "We standardize intake from the channels where requests, leads, and tasks already arrive today.",
         },
-        {
-          question: "Does AI replace people inside the workflow?",
-          answer:
-            "That is not how we design it. We build automation with explicit approval, review, and human escalation points when risk or ambiguity require it.",
+        core: {
+          label: "Core",
+          title: "AI orchestration with rules and approvals",
+          detail:
+            "Models, prompts, tools, validations, and human handoffs working inside a flow the team can audit.",
+          modules: [
+            {
+              title: "Classification",
+              detail: "Understands intent, priority, and request type.",
+            },
+            {
+              title: "Action",
+              detail: "Creates tasks, updates CRM, responds, or escalates the case.",
+            },
+            {
+              title: "Control",
+              detail: "Blocks sensitive steps and requests approval when needed.",
+            },
+            {
+              title: "Metrics",
+              detail: "Captures timing, decisions, and exceptions to keep improving.",
+            },
+          ],
         },
-        {
-          question: "Can you work with Spanish and English speaking teams?",
-          answer:
-            "Yes. The website, the documentation, the user experience, and the deliverables can all be structured in both languages for LatAm and US teams.",
+        output: {
+          label: "Output",
+          title: "CRM, tasks, dashboards, and responses",
+          detail:
+            "Automation does not end in a nice answer. It ends in updated systems and a clear next action for the team.",
         },
-      ],
+        control: {
+          label: "Governance",
+          title: "Observability, alerts, and human review",
+          detail:
+            "Logs, statuses, SLAs, and approval checkpoints so the system can be trusted from day one.",
+        },
+      },
     },
     contact: {
       eyebrow: "Contact",
-      title: "Book a diagnostic and let us identify where AI can move the needle",
+      title: "Let us focus on the bottleneck you want to remove",
       description:
-        "Share your context and we will reply with an initial view on opportunity, scope, and the most sensible next step.",
+        "Share the context and we will answer with a concrete view of opportunity, initial scope, and the next step that makes the most sense.",
       panelTitle: "What happens next",
       panelDescription:
-        "You will not get a generic reply. We review the situation, prioritize impact, and propose a conversation that is useful for decision making.",
+        "We do not send a generic response. We review the case, prioritize impact, and propose a conversation that helps you make a decision.",
       nextSteps: [
-        "We review your workflow, friction point, and level of urgency.",
-        "We come back with an initial hypothesis, pilot idea, or roadmap direction.",
-        "If there is a fit, we move into discovery or a tightly scoped pilot.",
+        "We review your workflow, friction point, and urgency level.",
+        "We send back an initial solution hypothesis, pilot, or roadmap.",
+        "If there is a fit, we move into discovery or a clearly scoped pilot.",
       ],
       details: [
         { label: "Email", value: "info@automiq.dev", href: "mailto:info@automiq.dev" },
@@ -980,38 +741,38 @@ const siteContent: Record<Locale, SiteContent> = {
     footer: {
       title: "AutomIQ",
       summary:
-        "Bilingual AI studio for agents, automation, copilots, and intelligent applications.",
+        "Bilingual studio for software, automation, and applied AI focused on solving real operations.",
       secondarySummary:
-        "We design systems that reduce manual work and turn AI into operational capacity.",
+        "We design systems that cut manual work by combining custom development, automation, and AI.",
       cta: "Book a diagnostic",
       navTitle: "Explore",
-      localeCta: "View Spanish version",
+      localeCta: "Ver version en espanol",
       rights: "All rights reserved.",
     },
     leadForm: {
       title: "Tell us what you need",
       description:
-        "The more context you share, the sharper our initial response will be.",
+        "The more context you share, the more precise our first response will be.",
       submit: "Send request",
-      submitting: "Sending…",
+      submitting: "Sending...",
       successTitle: "Request sent",
-      successBody: "We will get back to you with a clear next step as soon as possible.",
+      successBody: "We will follow up with a clear next step as soon as possible.",
       errorFallback: "We could not send the form. Please try again in a few minutes.",
       privacy:
-        "By sending this form you agree that we may use your information to respond to your request. We do not share it with third parties.",
+        "By sending this form you agree that we may use your data to reply to this request. We do not share information with third parties.",
       emailSubject: "New diagnostic request from AutomIQ",
       fields: {
         name: { label: "Full name", placeholder: "Your name" },
-        email: { label: "Email", placeholder: "you@company.com" },
+        email: { label: "Work email", placeholder: "you@company.com" },
         company: { label: "Company", placeholder: "Company name" },
         role: { label: "Role", placeholder: "Ex. Operations, Product, Founder" },
         primaryNeed: { label: "Primary need", placeholder: "Select an option" },
         teamSize: { label: "Team size", placeholder: "Select an option" },
-        timeframe: { label: "Desired timeline", placeholder: "Select an option" },
+        timeframe: { label: "Desired timing", placeholder: "Select an option" },
         message: {
           label: "Context and goal",
           placeholder:
-            "Describe the workflow, the current bottleneck, and the result you want to achieve.",
+            "Describe the workflow, the current bottleneck, and the outcome you want to achieve.",
         },
       },
       options: {
@@ -1030,18 +791,26 @@ const siteContent: Record<Locale, SiteContent> = {
         ],
         timeframe: [
           { value: "asap", label: "As soon as possible" },
-          { value: "30-days", label: "Within the next 30 days" },
+          { value: "30-days", label: "In the next 30 days" },
           { value: "quarter", label: "This quarter" },
-          { value: "exploring", label: "Just exploring" },
+          { value: "exploring", label: "Still exploring options" },
         ],
       },
       validation: {
         email: "Enter a valid email address.",
-        message: "Share a bit more context (min. 20 characters).",
+        message: "Please add a bit more context (min. 20 characters).",
       },
     },
   },
 };
+
+export function getLocaleFromPathname(pathname?: string | null): Locale {
+  return pathname?.startsWith("/en") ? "en" : "es";
+}
+
+export function getLocalizedPath(locale: Locale): string {
+  return locale === "es" ? "/es" : "/en";
+}
 
 export function getSiteContent(locale: Locale): SiteContent {
   return siteContent[locale];

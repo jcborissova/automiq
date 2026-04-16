@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import SitePage from "./components/site/SitePage";
-import { buildMetadata } from "./lib/site-metadata";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export function generateMetadata(): Metadata {
-  return buildMetadata("es");
-}
+export default async function Home() {
+  const acceptLanguage = (await headers()).get("accept-language") ?? "";
+  const primaryLanguage = acceptLanguage.toLowerCase().split(",")[0]?.trim() ?? "";
 
-export default function Home() {
-  return <SitePage locale="es" />;
+  redirect(primaryLanguage.startsWith("es") ? "/es" : "/en");
 }

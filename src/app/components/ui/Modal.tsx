@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* components/ui/Modal.tsx */
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -11,7 +10,6 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
-  /** Si quieres forzar fullscreen en móvil (opcional) */
   mobileFullscreen?: boolean;
 }
 
@@ -20,12 +18,11 @@ export default function Modal({
   onClose,
   title,
   children,
-  mobileFullscreen = false, // ⬅️ por defecto NO fullscreen
+  mobileFullscreen = false,
 }: ModalProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // Cerrar con Escape
   useEffect(() => {
     if (!open) return;
     const esc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -33,7 +30,6 @@ export default function Modal({
     return () => document.removeEventListener("keydown", esc);
   }, [open, onClose]);
 
-  // Bloquear scroll del documento
   useEffect(() => {
     if (!open) return;
     const html = document.documentElement;
@@ -50,16 +46,13 @@ export default function Modal({
   if (!mounted) return null;
 
   const panelBase =
-    "relative pointer-events-auto w-full max-w-xl mx-4 rounded-3xl " +
-    "bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.15)] " +
-    "border border-slate-200 dark:border-slate-700";
+    "relative pointer-events-auto w-full max-w-xl mx-4 rounded-xl " +
+    "bg-[var(--surface)] p-5 sm:p-7 shadow-[var(--shadow-xl)] " +
+    "border border-[var(--border)]";
 
-  // Variante altura:
-  // - Por defecto: altura automática con límite máx. y scroll interno si hace falta
-  // - Si alguien pasa mobileFullscreen=true, se usa el modo anterior
   const sizeClasses = mobileFullscreen
     ? "h-[92svh] max-h-[92svh] sm:h-auto sm:max-h-[85vh] overflow-y-auto"
-    : "h-auto max-h-[85vh] overflow-y-auto"; // ⬅️ esta es la que querías
+    : "h-auto max-h-[88vh] overflow-y-auto";
 
   const modalNode = (
     <AnimatePresence>
@@ -67,46 +60,42 @@ export default function Modal({
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={title || "Diálogo"}
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          aria-label={title || "Dialog"}
+          className="fixed inset-0 z-[9999] flex items-center justify-center px-2 py-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* Backdrop */}
           <button
             aria-hidden
             onClick={onClose}
-            className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-md"
             tabIndex={-1}
           />
 
-          {/* Panel */}
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            initial={{ y: 36, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 18, opacity: 0 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
+            initial={{ y: 24, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 12, opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
             className={`${panelBase} ${sizeClasses}`}
           >
-            {/* Header */}
-            <div className="flex justify-between items-center mb-5 sm:mb-6">
+            <div className="mb-4 flex items-start justify-between gap-4 sm:mb-5">
               {title && (
-                <h2 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">
+                <h2 className="text-lg font-semibold tracking-tight text-[var(--ink-950)] sm:text-xl">
                   {title}
                 </h2>
               )}
               <button
                 onClick={onClose}
-                aria-label="Cerrar"
-                className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Close"
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--ink-500)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-raised)] hover:text-[var(--ink-950)]"
               >
-                <X className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Body (solo scrollea si el contenido lo requiere) */}
             <div>{children}</div>
           </motion.div>
         </motion.div>

@@ -16,10 +16,11 @@ export function buildMetadata(locale: Locale): Metadata {
     alternates: {
       canonical: pathname,
       languages: {
-        es: "/",
-        "es-DO": "/",
+        es: "/es",
+        "es-DO": "/es",
         en: "/en",
         "en-US": "/en",
+        "x-default": "/",
       },
     },
     openGraph: {

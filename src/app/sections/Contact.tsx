@@ -1,5 +1,7 @@
-import { Clock3, Mail, MapPin, Phone } from "lucide-react";
-import LeadForm from "../components/LeadForm";
+import { Clock3, Mail, MapPin, Phone, Sparkles } from "lucide-react";
+import DemoForm from "../components/DemoForm";
+import Eyebrow from "../components/ui/Eyebrow";
+import { SectionHeader } from "../components/ui/Section";
 import type { LeadFormLabels, Locale, SiteContent } from "../lib/site-content";
 
 type ContactProps = {
@@ -11,7 +13,7 @@ type ContactProps = {
 const detailIcons = {
   Email: Mail,
   Phone: Phone,
-  Teléfono: Phone,
+  Telefono: Phone,
   Base: MapPin,
   default: Clock3,
 };
@@ -20,54 +22,65 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-28 overflow-hidden bg-white py-20 sm:py-24 lg:py-28"
+      className="relative scroll-mt-24 overflow-hidden bg-[var(--background)] py-16 sm:py-24 lg:py-28"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.12),transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(16,185,129,0.12),transparent_36%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(8,145,178,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(249,115,22,0.06),transparent_32%)]"
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="inline-flex rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">
-            {content.eyebrow}
-          </p>
-          <h2 className="mt-5 text-[clamp(2rem,4vw,3.3rem)] font-semibold tracking-[-0.04em] text-slate-950">
-            {content.title}
-          </h2>
-          <p className="mt-4 text-base leading-8 text-slate-600">
-            {content.description}
-          </p>
-        </div>
+        <SectionHeader
+          align="center"
+          className="mx-auto"
+          eyebrow={
+            <Eyebrow icon={<Sparkles className="h-3 w-3" />}>
+              {content.eyebrow}
+            </Eyebrow>
+          }
+          title={content.title}
+          description={content.description}
+        />
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_-46px_rgba(15,23,42,0.34)] sm:p-8">
-            <LeadForm locale={locale} labels={leadForm} source="contact-section" />
+        <div className="mt-10 grid gap-5 sm:mt-14 sm:gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-md)] sm:p-8">
+            <DemoForm
+              locale={locale}
+              labels={leadForm}
+              source="contact-section"
+            />
           </div>
 
-          <aside className="rounded-[2rem] bg-slate-950 p-6 text-white shadow-[0_24px_80px_-46px_rgba(15,23,42,0.5)] sm:p-8">
-            <h3 className="text-2xl font-semibold tracking-tight text-white">
+          <aside className="relative overflow-hidden rounded-2xl bg-[var(--surface-inverse)] p-5 text-white shadow-[var(--shadow-lg)] sm:p-8">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-24 -right-24 h-60 w-60 rounded-full bg-[var(--accent)]/20 blur-3xl"
+            />
+
+            <h3 className="relative text-xl font-semibold tracking-tight text-white sm:text-2xl">
               {content.panelTitle}
             </h3>
-            <p className="mt-4 text-sm leading-7 text-slate-300">
+            <p className="relative mt-3 text-sm leading-6 text-slate-300 sm:mt-4 sm:leading-7">
               {content.panelDescription}
             </p>
 
-            <ol className="mt-6 space-y-4">
+            <ol className="relative mt-5 space-y-3 sm:mt-6 sm:space-y-3">
               {content.nextSteps.map((step, index) => (
                 <li
                   key={step}
-                  className="grid grid-cols-[42px_1fr] gap-4 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-4"
+                  className="grid grid-cols-[36px_1fr] gap-3 rounded-lg border border-white/10 bg-white/5 px-3.5 py-3 sm:grid-cols-[40px_1fr] sm:gap-4 sm:px-4 sm:py-4"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/10 text-sm font-semibold text-cyan-200">
-                    0{index + 1}
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-[var(--accent)]/15 text-xs font-mono font-semibold text-[var(--accent)] sm:h-9 sm:w-9 sm:rounded-lg sm:text-sm">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-sm leading-7 text-slate-200">{step}</span>
+                  <span className="self-center text-sm leading-6 text-slate-200 sm:leading-7">
+                    {step}
+                  </span>
                 </li>
               ))}
             </ol>
 
-            <div className="mt-6 space-y-4 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+            <div className="relative mt-5 space-y-3 border-t border-white/10 pt-5 sm:mt-6 sm:pt-6">
               {content.details.map((detail) => {
                 const Icon =
                   detailIcons[detail.label as keyof typeof detailIcons] ??
@@ -76,7 +89,7 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
                 const value = detail.href ? (
                   <a
                     href={detail.href}
-                    className="text-slate-100 transition hover:text-cyan-200"
+                    className="text-slate-100 transition hover:text-[var(--accent)]"
                   >
                     {detail.value}
                   </a>
@@ -86,21 +99,23 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
 
                 return (
                   <div key={`${detail.label}-${detail.value}`} className="flex gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-cyan-200">
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/8 text-cyan-200 sm:h-10 sm:w-10 sm:rounded-lg">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:text-[11px]">
                         {detail.label}
                       </p>
-                      <div className="mt-1 text-sm leading-6">{value}</div>
+                      <div className="mt-0.5 text-sm leading-6 sm:mt-1">
+                        {value}
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-emerald-400/20 bg-emerald-400/10 px-4 py-4 text-sm leading-7 text-emerald-100">
+            <div className="relative mt-5 rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-3.5 py-3 text-sm leading-6 text-emerald-100 sm:mt-6 sm:px-4 sm:py-3.5 sm:leading-7">
               {content.responseTime}
             </div>
           </aside>

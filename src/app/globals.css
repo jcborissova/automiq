@@ -1,27 +1,106 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
-  background: var(--background);
-  color-scheme: light;
-}
-
 :root {
+  /* Surfaces */
   --background: #f6f8fb;
-  --foreground: #07111f;
-  --muted: #5d6878;
-  --panel: rgba(255, 255, 255, 0.84);
-  --line: rgba(148, 163, 184, 0.18);
-  --accent-cyan: #0891b2;
-  --accent-emerald: #10b981;
-  --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  --surface: #ffffff;
+  --surface-raised: #f8fafc;
+  --surface-inverse: #020617;
+  --surface-inverse-raised: #0f172a;
+
+  /* Ink */
+  --ink-950: #020617;
+  --ink-900: #0f172a;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --ink-400: #94a3b8;
+  --ink-300: #cbd5e1;
+
+  /* Borders */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-subtle: rgba(148, 163, 184, 0.28);
+
+  /* Accent — brand action */
+  --accent: #f97316;
+  --accent-hover: #fb923c;
+  --accent-soft: rgba(249, 115, 22, 0.1);
+  --accent-ring: rgba(249, 115, 22, 0.22);
+
+  /* Support — tech/data */
+  --support: #0891b2;
+  --support-soft: rgba(8, 145, 178, 0.1);
+  --support-ring: rgba(8, 145, 178, 0.22);
+
+  /* States */
+  --success: #059669;
+  --success-soft: rgba(5, 150, 105, 0.1);
+  --error: #dc2626;
+  --error-soft: rgba(220, 38, 38, 0.08);
+
+  /* Radii */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.06), 0 1px 3px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 24px -12px rgba(15, 23, 42, 0.18);
+  --shadow-lg: 0 24px 48px -24px rgba(15, 23, 42, 0.22);
+  --shadow-xl: 0 40px 80px -32px rgba(15, 23, 42, 0.3);
+  --shadow-accent: 0 20px 40px -18px rgba(249, 115, 22, 0.45);
+
+  /* Typography */
+  --font-display: "Space Grotesk", "Inter", "Segoe UI", sans-serif;
   --font-body: "Manrope", "Inter", system-ui, sans-serif;
+
+  /* Foreground alias kept for layout */
+  --foreground: var(--ink-950);
+  --muted: var(--ink-500);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-ink: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-700: var(--ink-700);
+  --color-ink-500: var(--ink-500);
+  --color-ink-400: var(--ink-400);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-support: var(--support);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-accent: var(--shadow-accent);
+
   --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
+  color-scheme: light;
 }
 
 * {
@@ -34,6 +113,8 @@ body {
   font-family: var(--font-body);
   min-height: 100vh;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -43,6 +124,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 a {
@@ -51,16 +133,22 @@ a {
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.22);
-  color: var(--foreground);
+  background: var(--accent-soft);
+  color: var(--ink-950);
 }
 
 summary::-webkit-details-marker {
   display: none;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 .text-grad {
-  background: linear-gradient(120deg, var(--accent-cyan), var(--accent-emerald));
+  background: linear-gradient(120deg, var(--support), var(--accent));
   -webkit-background-clip: text;
   color: transparent;
 }
