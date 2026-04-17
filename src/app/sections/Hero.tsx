@@ -35,7 +35,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
       <section
         id="home"
         aria-label={locale === "es" ? "Hero de AutomIQ" : "AutomIQ hero"}
-        className="relative isolate scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] py-16 text-white sm:py-24 lg:py-28"
+        className="relative isolate scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] pt-12 pb-10 text-white sm:py-24 lg:py-28"
       >
         <Image
           src="/assets/FondoCode.png"
@@ -78,7 +78,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
                 {hero.badge}
               </Eyebrow>
 
-              <h1 className="mt-5 text-[2rem] font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:mt-6 sm:text-[3rem] lg:text-[3.5rem] xl:text-[4rem]">
+              <h1 className="mt-5 text-[2.25rem] font-semibold leading-[1.02] tracking-normal text-white sm:mt-6 sm:text-[3rem] lg:text-[3.5rem] xl:text-[4rem]">
                 {hero.title}{" "}
                 <span className="bg-gradient-to-r from-cyan-200 via-cyan-300 to-cyan-100 bg-clip-text text-transparent">
                   {hero.highlight}

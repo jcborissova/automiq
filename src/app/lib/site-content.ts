@@ -414,7 +414,7 @@ const siteContent: Record<Locale, SiteContent> = {
         "Si hay fit, avanzamos a discovery o a un piloto con alcance definido.",
       ],
       details: [
-        { label: "Email", value: "info@automiq.dev", href: "mailto:info@automiq.dev" },
+        { label: "Email", value: "automiq@hotmail.com", href: "mailto:automiq@hotmail.com" },
         { label: "Telefono", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
         { label: "Base", value: "Santo Domingo, Republica Dominicana" },
       ],
@@ -480,7 +480,7 @@ const siteContent: Record<Locale, SiteContent> = {
       },
       validation: {
         email: "Ingresa un correo valido.",
-        message: "Describe un poco mas el contexto (min. 20 caracteres).",
+        message: "Describe un poco mas el contexto (min. 10 caracteres).",
       },
     },
   },
@@ -732,7 +732,7 @@ const siteContent: Record<Locale, SiteContent> = {
         "If there is a fit, we move into discovery or a clearly scoped pilot.",
       ],
       details: [
-        { label: "Email", value: "info@automiq.dev", href: "mailto:info@automiq.dev" },
+        { label: "Email", value: "automiq@hotmail.com", href: "mailto:automiq@hotmail.com" },
         { label: "Phone", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
         { label: "Base", value: "Santo Domingo, Dominican Republic" },
       ],
@@ -798,7 +798,7 @@ const siteContent: Record<Locale, SiteContent> = {
       },
       validation: {
         email: "Enter a valid email address.",
-        message: "Please add a bit more context (min. 20 characters).",
+        message: "Please add a bit more context (min. 10 characters).",
       },
     },
   },

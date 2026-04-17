@@ -30,6 +30,75 @@ const INITIAL_FORM: DemoFormData = {
   _trap: "",
 };
 
+const CONTACT_EMAIL = "automiq@hotmail.com";
+const MESSAGE_MIN_LENGTH = 10;
+
+function getEmailJsConfig() {
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+  if (!serviceId || !templateId || !publicKey) {
+    return null;
+  }
+
+  return { serviceId, templateId, publicKey };
+}
+
+function buildMailtoHref({
+  form,
+  labels,
+  locale,
+  source,
+}: {
+  form: DemoFormData;
+  labels: LeadFormLabels;
+  locale: Locale;
+  source: string;
+}) {
+  const lines = [
+    `${labels.fields.name.label}: ${form.name.trim()}`,
+    `${labels.fields.email.label}: ${form.email.trim()}`,
+    "",
+    labels.fields.message.label,
+    form.message.trim(),
+    "",
+    `Source: ${source}`,
+    `Locale: ${locale}`,
+  ].filter((line): line is string => line !== null);
+
+  const params = new URLSearchParams({
+    subject: labels.emailSubject,
+    body: lines.join("\n"),
+  });
+
+  return `mailto:${CONTACT_EMAIL}?${params.toString()}`;
+}
+
+function getSubmissionErrorMessage(
+  submissionError: unknown,
+  fallback: string
+) {
+  if (submissionError instanceof Error && submissionError.message) {
+    return submissionError.message;
+  }
+
+  if (typeof submissionError === "string") {
+    return submissionError;
+  }
+
+  if (
+    typeof submissionError === "object" &&
+    submissionError !== null &&
+    "text" in submissionError &&
+    typeof submissionError.text === "string"
+  ) {
+    return submissionError.text;
+  }
+
+  return fallback;
+}
+
 export default function DemoForm({
   locale,
   labels,
@@ -38,6 +107,7 @@ export default function DemoForm({
 }: DemoFormProps) {
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fallbackHref, setFallbackHref] = useState<string | null>(null);
   const [form, setForm] = useState<DemoFormData>(INITIAL_FORM);
 
   const onChange = (
@@ -45,10 +115,15 @@ export default function DemoForm({
   ) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
+    if (state === "error") {
+      setState("idle");
+      setError(null);
+      setFallbackHref(null);
+    }
   };
 
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
-  const messageValid = form.message.trim().length >= 10;
+  const messageValid = form.message.trim().length >= MESSAGE_MIN_LENGTH;
   const canSubmit =
     form.name.trim().length >= 2 &&
     validEmail &&
@@ -62,21 +137,54 @@ export default function DemoForm({
 
     setState("loading");
     setError(null);
+    setFallbackHref(null);
+
+    const mailtoHref = buildMailtoHref({ form, labels, locale, source });
+    const emailJsConfig = getEmailJsConfig();
 
     try {
+      if (!emailJsConfig) {
+        throw new Error(labels.errorFallback);
+      }
+
+      const name = form.name.trim();
+      const email = form.email.trim();
+      const message = form.message.trim();
+      const time = new Date().toLocaleString(locale === "es" ? "es-DO" : "en-US");
+      const formattedMessage = [
+        `${labels.fields.name.label}: ${name}`,
+        `${labels.fields.email.label}: ${email}`,
+        "",
+        labels.fields.message.label,
+        message,
+        "",
+        `Source: ${source}`,
+        `Time: ${time}`,
+      ].join("\n");
+
       const res = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        emailJsConfig.serviceId,
+        emailJsConfig.templateId,
         {
           source,
           title: labels.emailSubject,
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          time: new Date().toLocaleString(locale === "es" ? "es-DO" : "en-US"),
-          reply_to: form.email,
+          subject: labels.emailSubject,
+          name,
+          user_name: name,
+          from_name: name,
+          email,
+          user_email: email,
+          reply_to: email,
+          message: formattedMessage,
+          raw_message: message,
+          time,
+          to_email: CONTACT_EMAIL,
+          recipient_email: CONTACT_EMAIL,
+          to_name: "AutomIQ",
+          from_email: CONTACT_EMAIL,
+          website_email: CONTACT_EMAIL,
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        { publicKey: emailJsConfig.publicKey }
       );
 
       if (res.status !== 200) {
@@ -84,30 +192,23 @@ export default function DemoForm({
       }
 
       setState("success");
+      setFallbackHref(null);
       setForm(INITIAL_FORM);
       window.setTimeout(() => setState("idle"), 3200);
     } catch (submissionError) {
-      setError(
-        submissionError instanceof Error
-          ? submissionError.message
-          : labels.errorFallback
-      );
+      setError(getSubmissionErrorMessage(submissionError, labels.errorFallback));
+      setFallbackHref(mailtoHref);
       setState("error");
-      window.setTimeout(() => {
-        setState("idle");
-        setError(null);
-      }, 3200);
     }
   };
 
   const messagePlaceholder =
-    locale === "es"
+    labels.fields.message.placeholder ||
+    (locale === "es"
       ? "Cuentanos en pocas palabras que necesitas"
-      : "Tell us briefly what you need";
-  const messageValidation =
-    locale === "es"
-      ? "Minimo 10 caracteres"
-      : "At least 10 characters";
+      : "Tell us briefly what you need");
+  const fallbackLabel =
+    locale === "es" ? "Enviar por correo" : "Send by email";
 
   return (
     <form
@@ -125,7 +226,10 @@ export default function DemoForm({
       </div>
 
       {state === "success" && (
-        <div className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-3 text-emerald-900">
+        <div
+          role="status"
+          className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-3 text-emerald-900"
+        >
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
           <div className="min-w-0">
             <p className="text-sm font-semibold">{labels.successTitle}</p>
@@ -137,9 +241,24 @@ export default function DemoForm({
       )}
 
       {state === "error" && (
-        <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-3.5 py-3 text-red-900">
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-3.5 py-3 text-red-900"
+        >
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
-          <p className="text-sm font-medium">{error ?? labels.errorFallback}</p>
+          <div className="min-w-0">
+            <p className="text-sm font-medium">
+              {error ?? labels.errorFallback}
+            </p>
+            {fallbackHref ? (
+              <a
+                href={fallbackHref}
+                className="mt-1.5 inline-flex text-sm font-semibold text-red-700 underline-offset-4 hover:underline"
+              >
+                {fallbackLabel}
+              </a>
+            ) : null}
+          </div>
         </div>
       )}
 
@@ -192,11 +311,13 @@ export default function DemoForm({
           onChange={onChange}
           placeholder={messagePlaceholder}
           required
-          minLength={10}
+          minLength={MESSAGE_MIN_LENGTH}
           className={`${fieldBase} resize-none`}
         />
         {form.message.length > 0 && !messageValid && (
-          <p className={`${fieldHint} ${fieldHintError}`}>{messageValidation}</p>
+          <p className={`${fieldHint} ${fieldHintError}`}>
+            {labels.validation.message}
+          </p>
         )}
       </Field>
 

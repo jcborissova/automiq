@@ -70,8 +70,8 @@ export default function Footer() {
             <FooterDetail
               icon={<Mail className="h-4 w-4" />}
               label="Email"
-              value="info@automiq.dev"
-              href="mailto:info@automiq.dev"
+              value="automiq@hotmail.com"
+              href="mailto:automiq@hotmail.com"
             />
             <FooterDetail
               icon={<Phone className="h-4 w-4" />}
