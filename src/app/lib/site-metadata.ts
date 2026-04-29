@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getLocalizedPath, getSiteContent, type Locale } from "./site-content";
 
-const OG_IMAGE = "/og-image.svg";
+const OG_IMAGE = "/og-image.png";
 
 export function buildMetadata(locale: Locale): Metadata {
   const content = getSiteContent(locale);

@@ -13,7 +13,7 @@ type ContactProps = {
 const detailIcons = {
   Email: Mail,
   Phone: Phone,
-  Telefono: Phone,
+  "Teléfono": Phone,
   Base: MapPin,
   default: Clock3,
 };

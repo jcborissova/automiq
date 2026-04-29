@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import Button from "../components/ui/Button";
+import BrandLogo from "../components/BrandLogo";
 import { getLocaleFromPathname, getSiteContent } from "../lib/site-content";
 
 export default function Footer() {
@@ -21,12 +22,11 @@ export default function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 sm:gap-12 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <p className="text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
-                {content.footer.title}
-              </p>
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-            </div>
+            <BrandLogo
+              theme="light"
+              className="h-auto w-[168px] sm:w-[184px]"
+              sizes="(max-width: 640px) 168px, 184px"
+            />
             <p className="mt-3 max-w-md text-sm leading-6 text-slate-300 sm:mt-4 sm:leading-7">
               {content.footer.summary}
             </p>
@@ -75,7 +75,7 @@ export default function Footer() {
             />
             <FooterDetail
               icon={<Phone className="h-4 w-4" />}
-              label={locale === "es" ? "Telefono" : "Phone"}
+              label={locale === "es" ? "Teléfono" : "Phone"}
               value="+1 (829) 707-1293"
               href="tel:+18297071293"
             />
@@ -84,7 +84,7 @@ export default function Footer() {
               label="Base"
               value={
                 locale === "es"
-                  ? "Santo Domingo, Republica Dominicana"
+                  ? "Santo Domingo, República Dominicana"
                   : "Santo Domingo, Dominican Republic"
               }
             />

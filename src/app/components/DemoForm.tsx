@@ -205,7 +205,7 @@ export default function DemoForm({
   const messagePlaceholder =
     labels.fields.message.placeholder ||
     (locale === "es"
-      ? "Cuentanos en pocas palabras que necesitas"
+      ? "Cuéntanos en pocas palabras qué necesitas"
       : "Tell us briefly what you need");
   const fallbackLabel =
     locale === "es" ? "Enviar por correo" : "Send by email";

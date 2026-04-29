@@ -168,38 +168,38 @@ export type SiteContent = {
 const siteContent: Record<Locale, SiteContent> = {
   es: {
     meta: {
-      title: "AutomIQ | Software, automatizacion e IA para operacion real",
+      title: "AutomIQ | Software, automatización e IA para operación real",
       description:
-        "AutomIQ construye software a medida, automatizaciones e IA aplicada para equipos de LatAm y US. Desarrollo, integraciones y agentes enfocados en resolver la operacion real, no en presentaciones bonitas.",
+        "AutomIQ construye software a medida, automatizaciones e IA aplicada para equipos de LatAm y US. Desarrollo, integraciones y agentes enfocados en resolver la operación real, no en presentaciones bonitas.",
       keywords: [
         "AutomIQ",
         "desarrollo de software",
-        "automatizacion de procesos",
+        "automatización de procesos",
         "integraciones y APIs",
         "agentes IA",
         "apps a medida",
         "copilotos empresariales",
-        "IA aplicada a operacion",
+        "IA aplicada a operación",
       ],
     },
     nav: {
-      brandTagline: "Software, automatizacion e IA para operacion real",
+      brandTagline: "Software, automatización e IA para operación real",
       items: [
         { label: "Inicio", href: "#home" },
         { label: "Servicios", href: "#services" },
         { label: "Arquitectura", href: "#tools" },
         { label: "Contacto", href: "#contact" },
       ],
-      primaryCta: "Agenda un diagnostico",
+      primaryCta: "Agenda un diagnóstico",
       localeLabel: "Idioma",
     },
     hero: {
-      badge: "Software, automatizacion e IA, todo lo que tu operacion necesita",
-      title: "Construimos software y automatizacion para equipos que buscan",
-      highlight: "ejecucion, no ruido",
+      badge: "Software, automatización e IA, todo lo que tu operación necesita",
+      title: "Construimos software y automatización para equipos que buscan",
+      highlight: "ejecución, no ruido",
       description:
-        "Combinamos desarrollo a medida, automatizacion e IA aplicada para conectar tu operacion real. Menos tareas manuales, mejores tiempos de respuesta y una capa tecnica que el equipo si puede usar.",
-      primaryCta: "Agenda un diagnostico",
+        "Combinamos desarrollo a medida, automatización e IA aplicada para conectar tu operación real. Menos tareas manuales, mejores tiempos de respuesta y una capa técnica que el equipo sí puede usar.",
+      primaryCta: "Agenda un diagnóstico",
       secondaryCta: "Ver servicios",
       stats: [
         { value: "2-4 semanas", label: "de discovery a piloto funcional" },
@@ -213,7 +213,7 @@ const siteContent: Record<Locale, SiteContent> = {
       panel: {
         eyebrow: "Capa operativa",
         title: "Centro de control IA",
-        subtitle: "Agentes, colas, aprobaciones y metricas en una misma vista.",
+        subtitle: "Agentes, colas, aprobaciones y métricas en una misma vista.",
         status: "Pilotos activos",
         metrics: [
           { value: "37%", label: "menos tickets manuales" },
@@ -229,46 +229,46 @@ const siteContent: Record<Locale, SiteContent> = {
           },
           {
             label: "Copiloto interno",
-            detail: "Consulta SOPs, politicas y documentacion operativa con contexto.",
+            detail: "Consulta SOPs, políticas y documentación operativa con contexto.",
             status: "QA",
           },
           {
-            label: "Aprobacion humana",
-            detail: "Mantiene control en pagos, cambios criticos y respuestas delicadas.",
+            label: "Aprobación humana",
+            detail: "Mantiene control en pagos, cambios críticos y respuestas delicadas.",
             status: "Required",
           },
         ],
         footer:
-          "La IA ejecuta lo repetible. Tu equipo conserva criterio, supervision y contexto.",
+          "La IA ejecuta lo repetible. Tu equipo conserva criterio, supervisión y contexto.",
       },
     },
     services: {
-      eyebrow: "Que hacemos",
-      title: "Desarrollo, automatizacion e IA aplicada a tu operacion",
+      eyebrow: "Qué hacemos",
+      title: "Desarrollo, automatización e IA aplicada a tu operación",
       description:
-        "No vendemos una categoria abstracta. Combinamos software a medida, automatizaciones y agentes IA para que la tecnologia aterrice en procesos concretos y con impacto visible.",
+        "No vendemos una categoría abstracta. Combinamos software a medida, automatizaciones y agentes IA para que la tecnología aterrice en procesos concretos y con impacto visible.",
       cards: [
         {
           id: "agents",
           eyebrow: "Agentes y copilotos",
           title: "Asistentes que responden, analizan y ejecutan tareas reales",
           description:
-            "Construimos agentes para soporte, ventas, operaciones y uso interno, conectados a tus fuentes de verdad y con reglas claras de cuando escalar a una persona.",
+            "Construimos agentes para soporte, ventas, operaciones y uso interno, conectados a tus fuentes de verdad y con reglas claras de cuándo escalar a una persona.",
           outcomes: [
-            "Respuestas mas rapidas con contexto de negocio.",
+            "Respuestas más rápidas con contexto de negocio.",
             "Menos carga manual para equipos operativos.",
-            "Mejor calidad en clasificacion, seguimiento y resolucion.",
+            "Mejor calidad en clasificación, seguimiento y resolución.",
           ],
           tags: ["Chat", "Voice", "CRM", "Knowledge"],
         },
         {
           id: "automation",
-          eyebrow: "Automatizacion e integraciones",
+          eyebrow: "Automatización e integraciones",
           title: "Flujos inteligentes entre tus herramientas y equipos",
           description:
-            "Orquestamos procesos con IA, APIs y plataformas de automatizacion para mover informacion, generar acciones y evitar cuellos de botella invisibles.",
+            "Orquestamos procesos con IA, APIs y plataformas de automatización para mover información, generar acciones y evitar cuellos de botella invisibles.",
           outcomes: [
-            "Menos pasos repetitivos y menos errores de coordinacion.",
+            "Menos pasos repetitivos y menos errores de coordinación.",
             "Trazabilidad completa de eventos, aprobaciones y excepciones.",
             "Capacidad de escalar procesos sin crecer linealmente el equipo.",
           ],
@@ -279,22 +279,22 @@ const siteContent: Record<Locale, SiteContent> = {
           eyebrow: "Apps y portales con IA",
           title: "Interfaces claras para operar la inteligencia, no solo verla",
           description:
-            "Disenamos portales, dashboards y productos web donde la IA se integra en el flujo de trabajo: revision, aprobacion, priorizacion, analisis y seguimiento.",
+            "Diseñamos portales, dashboards y productos web donde la IA se integra en el flujo de trabajo: revisión, aprobación, priorización, análisis y seguimiento.",
           outcomes: [
-            "Experiencias utiles para equipos no tecnicos.",
-            "Mejor adopcion interna de nuevas capacidades.",
-            "Capas de control, metricas y feedback sobre el comportamiento de la IA.",
+            "Experiencias útiles para equipos no técnicos.",
+            "Mejor adopción interna de nuevas capacidades.",
+            "Capas de control, métricas y feedback sobre el comportamiento de la IA.",
           ],
           tags: ["Next.js", "React", "Dashboards", "UX"],
         },
         {
           id: "knowledge",
-          eyebrow: "Conocimiento y analitica asistida",
-          title: "Sistemas que convierten informacion dispersa en decisiones utiles",
+          eyebrow: "Conocimiento y analítica asistida",
+          title: "Sistemas que convierten información dispersa en decisiones útiles",
           description:
-            "Organizamos documentacion, procesos y senales operativas para que la IA ayude a responder, detectar riesgo, resumir contexto y priorizar acciones.",
+            "Organizamos documentación, procesos y señales operativas para que la IA ayude a responder, detectar riesgo, resumir contexto y priorizar acciones.",
           outcomes: [
-            "Acceso mas rapido a SOPs, politicas y documentacion.",
+            "Acceso más rápido a SOPs, políticas y documentación.",
             "Menos dependencia de expertos para preguntas repetidas.",
             "Lectura operativa de datos con foco en decisiones.",
           ],
@@ -304,57 +304,57 @@ const siteContent: Record<Locale, SiteContent> = {
     },
     capabilities: {
       eyebrow: "Capacidades",
-      title: "La mezcla tecnica cambia segun el problema, no al reves",
+      title: "La mezcla técnica cambia según el problema, no al revés",
       description:
-        "Elegimos la arquitectura minima que haga el trabajo bien: modelos, automatizacion, interfaz, observabilidad y puntos de control humano.",
+        "Elegimos la arquitectura mínima que haga el trabajo bien: modelos, automatización, interfaz, observabilidad y puntos de control humano.",
       groups: [
         {
-          title: "Orquestacion y ejecucion",
+          title: "Orquestación y ejecución",
           description:
             "Flujos, disparadores, integraciones y trabajo entre sistemas.",
           items: [
             "n8n, Make, Power Platform, webhooks y APIs.",
             "RPA cuando el contexto lo exige.",
-            "Colas, retries, aprobaciones y handoff explicito.",
+            "Colas, retries, aprobaciones y handoff explícito.",
           ],
         },
         {
           title: "Inteligencia y contexto",
           description:
-            "Modelos, reglas, recuperacion de conocimiento y evaluacion.",
+            "Modelos, reglas, recuperación de conocimiento y evaluación.",
           items: [
-            "Agentes con acceso a documentacion y datos de negocio.",
-            "RAG, clasificacion, extraccion y sintesis.",
-            "Supervision humana y guardrails por flujo.",
+            "Agentes con acceso a documentación y datos de negocio.",
+            "RAG, clasificación, extracción y síntesis.",
+            "Supervisión humana y guardrails por flujo.",
           ],
         },
         {
-          title: "Interfaz y adopcion",
+          title: "Interfaz y adopción",
           description:
-            "La capa donde el equipo usa, aprueba y mide la solucion.",
+            "La capa donde el equipo usa, aprueba y mide la solución.",
           items: [
             "Apps en Next.js y React para operar el sistema.",
-            "Dashboards, estados, metricas y audit trail.",
-            "Experiencias bilingues orientadas a claridad y velocidad.",
+            "Dashboards, estados, métricas y audit trail.",
+            "Experiencias bilingües orientadas a claridad y velocidad.",
           ],
         },
       ],
       footer:
-        "No hacemos demos sueltas. Disenamos sistemas que conviven con la operacion y pueden crecer con ella.",
+        "No hacemos demos sueltas. Diseñamos sistemas que conviven con la operación y pueden crecer con ella.",
     },
     tools: {
       eyebrow: "Arquitectura lista para operar",
       title: "Un sistema claro por fuera, controlado por dentro",
       description:
-        "La IA funciona cuando el flujo se entiende rapido: contexto confiable, entradas ordenadas, ejecucion auditada y salidas que el equipo puede usar.",
+        "La IA funciona cuando el flujo se entiende rápido: contexto confiable, entradas ordenadas, ejecución auditada y salidas que el equipo puede usar.",
       note:
-        "Cada bloque se conecta con tu stack actual y conserva aprobaciones humanas cuando el riesgo, la ambiguedad o el impacto del negocio lo exigen.",
+        "Cada bloque se conecta con tu stack actual y conserva aprobaciones humanas cuando el riesgo, la ambigüedad o el impacto del negocio lo exigen.",
       architecture: {
         context: {
           label: "Contexto",
           title: "Memoria operativa y conocimiento vivo",
           detail:
-            "Documentacion, CRM, politicas, estados y datos internos para responder con criterio y no con suposiciones.",
+            "Documentación, CRM, políticas, estados y datos internos para responder con criterio y no con suposiciones.",
         },
         input: {
           label: "Entrada",
@@ -364,24 +364,24 @@ const siteContent: Record<Locale, SiteContent> = {
         },
         core: {
           label: "Core",
-          title: "Orquestacion IA con reglas y aprobaciones",
+          title: "Orquestación IA con reglas y aprobaciones",
           detail:
             "Modelos, prompts, herramientas, validaciones y handoffs humanos conviviendo en un flujo que el equipo puede auditar.",
           modules: [
             {
-              title: "Clasificacion",
-              detail: "Entiende intencion, prioridad y tipo de solicitud.",
+              title: "Clasificación",
+              detail: "Entiende intención, prioridad y tipo de solicitud.",
             },
             {
-              title: "Accion",
+              title: "Acción",
               detail: "Crea tareas, actualiza CRM, responde o escala el caso.",
             },
             {
               title: "Control",
-              detail: "Bloquea pasos sensibles y solicita aprobacion cuando toca.",
+              detail: "Bloquea pasos sensibles y solicita aprobación cuando toca.",
             },
             {
-              title: "Metricas",
+              title: "Métricas",
               detail: "Registra tiempos, decisiones y excepciones para mejorar.",
             },
           ],
@@ -390,13 +390,13 @@ const siteContent: Record<Locale, SiteContent> = {
           label: "Salida",
           title: "CRM, tareas, dashboards y respuestas",
           detail:
-            "La automatizacion no termina en una respuesta bonita; termina en sistemas actualizados y trabajo siguiente claro.",
+            "La automatización no termina en una respuesta bonita; termina en sistemas actualizados y trabajo siguiente claro.",
         },
         control: {
           label: "Gobierno",
-          title: "Observabilidad, alertas y revision humana",
+          title: "Observabilidad, alertas y revisión humana",
           detail:
-            "Logs, estados, SLA y puntos de aprobacion para operar con confianza desde el dia uno.",
+            "Logs, estados, SLA y puntos de aprobación para operar con confianza desde el día uno.",
         },
       },
     },
@@ -404,65 +404,65 @@ const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "Contacto",
       title: "Conversemos sobre el cuello de botella que quieres resolver",
       description:
-        "Comparte tu contexto y te devolvemos una lectura concreta de oportunidad, alcance inicial y el siguiente paso que mas sentido tenga.",
-      panelTitle: "Que pasa despues",
+        "Comparte tu contexto y te devolvemos una lectura concreta de oportunidad, alcance inicial y el siguiente paso que más sentido tenga.",
+      panelTitle: "Qué pasa después",
       panelDescription:
-        "No enviamos una respuesta generica. Revisamos el caso, priorizamos impacto y proponemos una conversacion util para tomar decision.",
+        "No enviamos una respuesta genérica. Revisamos el caso, priorizamos impacto y proponemos una conversación útil para tomar una decisión.",
       nextSteps: [
-        "Revisamos tu proceso, punto de friccion y nivel de urgencia.",
-        "Te devolvemos una hipotesis de solucion, piloto o roadmap inicial.",
+        "Revisamos tu proceso, punto de fricción y nivel de urgencia.",
+        "Te devolvemos una hipótesis de solución, piloto o roadmap inicial.",
         "Si hay fit, avanzamos a discovery o a un piloto con alcance definido.",
       ],
       details: [
         { label: "Email", value: "automiq@hotmail.com", href: "mailto:automiq@hotmail.com" },
-        { label: "Telefono", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
-        { label: "Base", value: "Santo Domingo, Republica Dominicana" },
+        { label: "Teléfono", value: "+1 (829) 707-1293", href: "tel:+18297071293" },
+        { label: "Base", value: "Santo Domingo, República Dominicana" },
       ],
-      responseTime: "Respuesta inicial usual: dentro de 1 dia habil.",
+      responseTime: "Respuesta inicial usual: dentro de 1 día hábil.",
     },
     footer: {
       title: "AutomIQ",
       summary:
-        "Estudio bilingue de software, automatizacion e IA aplicada, enfocado en resolver la operacion real.",
+        "Estudio bilingüe de software, automatización e IA aplicada, enfocado en resolver la operación real.",
       secondarySummary:
-        "Disenamos sistemas que reducen trabajo manual combinando desarrollo, automatizacion e IA.",
-      cta: "Agenda un diagnostico",
+        "Diseñamos sistemas que reducen trabajo manual combinando desarrollo, automatización e IA.",
+      cta: "Agenda un diagnóstico",
       navTitle: "Explorar",
       localeCta: "View English version",
       rights: "Todos los derechos reservados.",
     },
     leadForm: {
-      title: "Cuentanos que necesitas",
+      title: "Cuéntanos qué necesitas",
       description:
-        "Mientras mas contexto nos compartas, mas precisa sera la respuesta inicial.",
+        "Mientras más contexto nos compartas, más precisa será la respuesta inicial.",
       submit: "Enviar solicitud",
       submitting: "Enviando...",
       successTitle: "Solicitud enviada",
       successBody: "Te contactaremos con un siguiente paso claro lo antes posible.",
-      errorFallback: "No pudimos enviar el formulario. Intentalo de nuevo en unos minutos.",
+      errorFallback: "No pudimos enviar el formulario. Inténtalo de nuevo en unos minutos.",
       privacy:
-        "Al enviar aceptas que usemos tus datos para responder a esta solicitud. No compartimos informacion con terceros.",
-      emailSubject: "Nuevo diagnostico solicitado desde AutomIQ",
+        "Al enviar aceptas que usemos tus datos para responder a esta solicitud. No compartimos información con terceros.",
+      emailSubject: "Nuevo diagnóstico solicitado desde AutomIQ",
       fields: {
         name: { label: "Nombre completo", placeholder: "Tu nombre" },
-        email: { label: "Correo electronico", placeholder: "tu@empresa.com" },
+        email: { label: "Correo electrónico", placeholder: "tu@empresa.com" },
         company: { label: "Empresa", placeholder: "Nombre de la empresa" },
         role: { label: "Cargo", placeholder: "Ej. Operaciones, Producto, Founder" },
-        primaryNeed: { label: "Necesidad principal", placeholder: "Selecciona una opcion" },
-        teamSize: { label: "Tamano del equipo", placeholder: "Selecciona una opcion" },
-        timeframe: { label: "Plazo deseado", placeholder: "Selecciona una opcion" },
+        primaryNeed: { label: "Necesidad principal", placeholder: "Selecciona una opción" },
+        teamSize: { label: "Tamaño del equipo", placeholder: "Selecciona una opción" },
+        timeframe: { label: "Plazo deseado", placeholder: "Selecciona una opción" },
         message: {
           label: "Contexto y objetivo",
           placeholder:
-            "Describe el proceso, el cuello de botella actual y que resultado quieres conseguir.",
+            "Describe el proceso, el cuello de botella actual y qué resultado quieres conseguir.",
         },
       },
       options: {
         primaryNeed: [
           { value: "agents", label: "Agentes o copilotos" },
-          { value: "automation", label: "Automatizacion e integraciones" },
+          { value: "automation", label: "Automatización e integraciones" },
           { value: "app", label: "App o portal con IA" },
-          { value: "knowledge", label: "Conocimiento o analitica asistida" },
+          { value: "knowledge", label: "Conocimiento o analítica asistida" },
           { value: "other", label: "Otro / no estoy seguro" },
         ],
         teamSize: [
@@ -473,14 +473,14 @@ const siteContent: Record<Locale, SiteContent> = {
         ],
         timeframe: [
           { value: "asap", label: "Lo antes posible" },
-          { value: "30-days", label: "En los proximos 30 dias" },
+          { value: "30-days", label: "En los próximos 30 días" },
           { value: "quarter", label: "Este trimestre" },
           { value: "exploring", label: "Estoy explorando opciones" },
         ],
       },
       validation: {
-        email: "Ingresa un correo valido.",
-        message: "Describe un poco mas el contexto (min. 10 caracteres).",
+        email: "Ingresa un correo válido.",
+        message: "Describe un poco más el contexto (min. 10 caracteres).",
       },
     },
   },

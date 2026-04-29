@@ -1,11 +1,12 @@
 import "./globals.css";
 import Navbar from "./common/Navbar";
 import Footer from "./common/Footer";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import LocaleHtmlController from "./components/LocaleHtmlController";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://automiq.click"),
+  applicationName: "AutomIQ",
   title: {
     default: "AutomIQ",
     template: "%s | AutomIQ",
@@ -22,6 +23,10 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#020617",
 };
 
 export default function RootLayout({

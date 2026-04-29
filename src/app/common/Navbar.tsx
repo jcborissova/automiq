@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import Button from "../components/ui/Button";
+import BrandLogo from "../components/BrandLogo";
 import {
   getLocaleFromPathname,
   getLocalizedPath,
@@ -40,12 +41,12 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const menuLabel = locale === "es" ? "Abrir menu" : "Open menu";
-  const closeLabel = locale === "es" ? "Cerrar menu" : "Close menu";
-  const navSectionLabel = locale === "es" ? "Navegacion" : "Navigation";
+  const menuLabel = locale === "es" ? "Abrir menú" : "Open menu";
+  const closeLabel = locale === "es" ? "Cerrar menú" : "Close menu";
+  const navSectionLabel = locale === "es" ? "Navegación" : "Navigation";
   const contactHint =
     locale === "es"
-      ? "Respondemos en menos de 24 horas habiles."
+      ? "Respondemos en menos de 24 horas hábiles."
       : "We reply within one business day.";
 
   return (
@@ -68,25 +69,16 @@ export default function Navbar() {
           <nav className="flex min-h-[68px] items-center justify-between gap-4 sm:min-h-[76px] lg:min-h-[84px] lg:gap-8">
             <Link
               href={getLocalizedPath(locale)}
-              className="group relative flex shrink-0 items-center gap-2.5"
+              className="group relative flex shrink-0 items-center"
               aria-label="AutomIQ"
             >
-              <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-[var(--ink-950)] shadow-[var(--shadow-sm)] transition group-hover:shadow-[var(--shadow-md)] sm:h-10 sm:w-10">
-                <span
-                  aria-hidden
-                  className="absolute inset-0 bg-[linear-gradient(135deg,rgba(8,145,178,0.25),transparent_55%,rgba(249,115,22,0.18))] opacity-70"
-                />
-                <span className="relative text-[0.95rem] font-bold leading-none tracking-tight text-white sm:text-base">
-                  A
-                </span>
-                <span
-                  aria-hidden
-                  className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[var(--accent)] ring-2 ring-[var(--background)]"
-                />
-              </span>
-              <span className="text-[1.45rem] font-semibold leading-none tracking-[-0.025em] text-[var(--ink-950)] sm:text-[1.65rem] lg:text-[1.75rem]">
-                AutomIQ
-              </span>
+              <BrandLogo
+                theme="dark"
+                alt=""
+                priority
+                className="h-auto w-[164px] transition-transform duration-200 group-hover:scale-[1.01] sm:w-[176px] lg:w-[188px]"
+                sizes="(max-width: 640px) 164px, (max-width: 1024px) 176px, 188px"
+              />
             </Link>
 
             <div className="hidden flex-1 items-center justify-center gap-8 xl:gap-10 lg:flex">
@@ -166,13 +158,15 @@ export default function Navbar() {
           <Link
             href={getLocalizedPath(locale)}
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2"
+            className="flex items-center"
             aria-label="AutomIQ"
           >
-            <span className="text-xl font-semibold leading-none tracking-tight">
-              AutomIQ
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+            <BrandLogo
+              theme="light"
+              alt=""
+              className="h-auto w-[158px] sm:w-[168px]"
+              sizes="(max-width: 640px) 158px, 168px"
+            />
           </Link>
           <button
             type="button"
