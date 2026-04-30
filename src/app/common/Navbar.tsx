@@ -43,11 +43,6 @@ export default function Navbar() {
 
   const menuLabel = locale === "es" ? "Abrir menú" : "Open menu";
   const closeLabel = locale === "es" ? "Cerrar menú" : "Close menu";
-  const navSectionLabel = locale === "es" ? "Navegación" : "Navigation";
-  const contactHint =
-    locale === "es"
-      ? "Respondemos en menos de 24 horas hábiles."
-      : "We reply within one business day.";
 
   return (
     <>
@@ -126,7 +121,7 @@ export default function Navbar() {
       <div
         aria-hidden={!open}
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[60] bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[60] bg-slate-950/40 transition-opacity duration-200 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -136,25 +131,11 @@ export default function Navbar() {
         role="dialog"
         aria-modal="true"
         aria-label={menuLabel}
-        className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-sm flex-col overflow-hidden bg-[var(--surface-inverse)] text-white shadow-[var(--shadow-xl)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-xs flex-col bg-[var(--background)] shadow-[var(--shadow-xl)] transition-transform duration-200 ease-out lg:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.15]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
-            backgroundSize: "44px 44px",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-32 -right-24 h-80 w-80 rounded-full bg-[var(--accent)]/20 blur-3xl"
-        />
-
-        <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-5">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-4">
           <Link
             href={getLocalizedPath(locale)}
             onClick={() => setOpen(false)}
@@ -162,64 +143,41 @@ export default function Navbar() {
             aria-label="AutomIQ"
           >
             <BrandLogo
-              theme="light"
+              theme="dark"
               alt=""
-              className="h-auto w-[158px] sm:w-[168px]"
-              sizes="(max-width: 640px) 158px, 168px"
+              className="h-auto w-[148px]"
+              sizes="148px"
             />
           </Link>
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:border-white/30 hover:bg-white/10"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-[var(--ink-700)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-950)]"
             aria-label={closeLabel}
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="relative flex-1 overflow-y-auto px-6 pb-6 pt-7">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
-            {navSectionLabel}
-          </p>
+        <nav className="flex-1 overflow-y-auto px-2 py-4">
+          {content.nav.items.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className="block rounded-lg px-3 py-3 text-[15px] font-medium text-[var(--ink-800)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-950)]"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
-          <nav className="mt-4 flex flex-col divide-y divide-white/5 border-y border-white/5">
-            {content.nav.items.map((item, index) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                style={{
-                  transitionDelay: open ? `${120 + index * 55}ms` : "0ms",
-                }}
-                className={`group flex items-center justify-between py-4 transition-all duration-500 ease-out ${
-                  open ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
-                }`}
-              >
-                <span className="flex items-baseline gap-4">
-                  <span className="w-6 text-[11px] font-mono font-medium text-white/35">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-lg font-semibold tracking-tight text-white transition group-hover:text-[var(--accent)]">
-                    {item.label}
-                  </span>
-                </span>
-                <ArrowUpRight className="h-4 w-4 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" />
-              </a>
-            ))}
-          </nav>
-
-          <p className="mt-8 text-sm leading-relaxed text-white/55">
-            {content.nav.brandTagline}. {contactHint}
-          </p>
-        </div>
-
-        <div className="relative border-t border-white/10 bg-black/20 px-6 py-5">
+        <div className="border-t border-[var(--border)] px-5 py-4">
           <Button
             as="a"
             href="#contact"
             onClick={() => setOpen(false)}
-            size="lg"
+            size="md"
             full
             rightIcon={<ArrowUpRight className="h-4 w-4" />}
           >
