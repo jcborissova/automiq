@@ -3,6 +3,7 @@ import Navbar from "./common/Navbar";
 import Footer from "./common/Footer";
 import type { Metadata, Viewport } from "next";
 import LocaleHtmlController from "./components/LocaleHtmlController";
+import ChatWidget from "./components/chat/ChatWidget";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://automiq.click"),
@@ -50,6 +51,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ChatWidget />
         <div id="portal-root" />
       </body>
     </html>
