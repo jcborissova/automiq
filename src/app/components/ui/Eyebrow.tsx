@@ -26,7 +26,7 @@ export default function Eyebrow({
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] sm:px-3 sm:text-[11px] ${toneStyles[tone]} ${className}`}
     >
       {icon ? <span className="shrink-0 opacity-80">{icon}</span> : null}
-      <span>{children}</span>
+      <span className="min-w-0">{children}</span>
     </span>
   );
 }

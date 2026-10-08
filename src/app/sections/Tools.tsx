@@ -27,7 +27,7 @@ function ArchitectureNode({
   index: number;
 }) {
   return (
-    <article className="relative rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)] transition hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-md)] sm:p-5">
+    <article className="relative rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)] transition hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-md)] sm:p-5">
       <div className="grid gap-3 sm:grid-cols-[44px_1fr] sm:gap-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--ink-950)] sm:h-11 sm:w-11">
           <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -61,53 +61,48 @@ function EngineCard({
   note: string;
 }) {
   return (
-    <article className="relative overflow-hidden rounded-xl border border-white/10 bg-[var(--surface-inverse)] p-5 text-white shadow-[var(--shadow-xl)] sm:p-7 lg:p-8">
+    <article className="relative overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] p-5 text-[var(--ink-950)] shadow-[var(--shadow-md)] sm:p-7 lg:p-8">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(8,145,178,0.18),rgba(255,255,255,0)_38%,rgba(249,115,22,0.1))]"
+        className="pointer-events-none absolute inset-y-0 left-0 w-1 bg-[var(--accent)]"
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 -right-16 h-60 w-60 rounded-full bg-[var(--accent)]/20 blur-3xl"
-      />
-
       <div className="relative flex items-start gap-3 sm:gap-4">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--accent)] text-white sm:h-12 sm:w-12">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--surface-inverse)] text-white sm:h-12 sm:w-12">
           <Bot className="h-5 w-5 sm:h-6 sm:w-6" />
         </span>
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-200">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
             {architecture.core.label}
           </p>
-          <h3 className="mt-1.5 text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:mt-2 sm:text-3xl lg:text-[2.25rem]">
+          <h3 className="mt-1.5 text-2xl font-semibold leading-tight tracking-[-0.02em] text-[var(--ink-950)] sm:mt-2 sm:text-3xl lg:text-[2.25rem]">
             {architecture.core.title}
           </h3>
         </div>
       </div>
 
-      <p className="relative mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:mt-5 sm:text-base sm:leading-7">
+      <p className="relative mt-4 max-w-2xl text-sm leading-6 text-[var(--ink-700)] sm:mt-5 sm:text-base sm:leading-7">
         {architecture.core.detail}
       </p>
 
       <div className="relative mt-6 grid gap-x-6 gap-y-4 sm:mt-7 sm:gap-y-5 sm:grid-cols-2">
         {architecture.core.modules.map((module, index) => (
-          <div key={module.title} className="border-t border-white/10 pt-3 sm:pt-4">
+          <div key={module.title} className="border-t border-[var(--border)] pt-3 sm:pt-4">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] font-semibold text-cyan-300">
+              <span className="font-mono text-[10px] font-semibold text-[var(--accent-text)]">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <p className="text-sm font-semibold text-white">{module.title}</p>
+              <p className="text-sm font-semibold text-[var(--ink-950)]">{module.title}</p>
             </div>
-            <p className="mt-1.5 text-sm leading-6 text-slate-400 sm:mt-2">
+            <p className="mt-1.5 text-sm leading-6 text-[var(--ink-500)] sm:mt-2">
               {module.detail}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="relative mt-6 flex items-start gap-3 border-t border-white/10 pt-4 sm:mt-7 sm:pt-5">
-        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400 sm:h-5 sm:w-5" />
-        <p className="text-sm leading-6 text-slate-300 sm:leading-7">{note}</p>
+      <div className="relative mt-6 flex items-start gap-3 border-t border-[var(--border)] pt-4 sm:mt-7 sm:pt-5">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)] sm:h-5 sm:w-5" />
+        <p className="text-sm leading-6 text-[var(--ink-700)] sm:leading-7">{note}</p>
       </div>
     </article>
   );
@@ -125,7 +120,7 @@ export default function Tools({ content }: ToolsProps) {
   return (
     <section
       id="tools"
-      className="relative scroll-mt-24 overflow-hidden bg-[var(--surface)] py-16 sm:py-24 lg:py-28"
+      className="relative scroll-mt-24 overflow-hidden bg-[var(--surface-raised)] py-16 sm:py-20 lg:py-24"
     >
       <div
         aria-hidden

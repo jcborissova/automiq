@@ -19,6 +19,7 @@ type DemoFormProps = {
 type DemoFormData = {
   name: string;
   email: string;
+  company: string;
   message: string;
   _trap: string;
 };
@@ -26,11 +27,13 @@ type DemoFormData = {
 const INITIAL_FORM: DemoFormData = {
   name: "",
   email: "",
+  company: "",
   message: "",
   _trap: "",
 };
 
-const CONTACT_EMAIL = "automiq@hotmail.com";
+const PUBLIC_CONTACT_EMAIL = "hola@automiq.click";
+const DELIVERY_EMAIL = "automiq@hotmail.com";
 const MESSAGE_MIN_LENGTH = 10;
 
 function getEmailJsConfig() {
@@ -59,6 +62,7 @@ function buildMailtoHref({
   const lines = [
     `${labels.fields.name.label}: ${form.name.trim()}`,
     `${labels.fields.email.label}: ${form.email.trim()}`,
+    `${labels.fields.company.label}: ${form.company.trim() || "-"}`,
     "",
     labels.fields.message.label,
     form.message.trim(),
@@ -72,7 +76,7 @@ function buildMailtoHref({
     body: lines.join("\n"),
   });
 
-  return `mailto:${CONTACT_EMAIL}?${params.toString()}`;
+  return `mailto:${PUBLIC_CONTACT_EMAIL}?${params.toString()}`;
 }
 
 function getSubmissionErrorMessage(
@@ -150,10 +154,12 @@ export default function DemoForm({
       const name = form.name.trim();
       const email = form.email.trim();
       const message = form.message.trim();
+      const company = form.company.trim();
       const time = new Date().toLocaleString(locale === "es" ? "es-DO" : "en-US");
       const formattedMessage = [
         `${labels.fields.name.label}: ${name}`,
         `${labels.fields.email.label}: ${email}`,
+        `${labels.fields.company.label}: ${company || "-"}`,
         "",
         labels.fields.message.label,
         message,
@@ -173,16 +179,18 @@ export default function DemoForm({
           user_name: name,
           from_name: name,
           email,
+          company,
+          user_company: company,
           user_email: email,
           reply_to: email,
           message: formattedMessage,
           raw_message: message,
           time,
-          to_email: CONTACT_EMAIL,
-          recipient_email: CONTACT_EMAIL,
+          to_email: DELIVERY_EMAIL,
+          recipient_email: DELIVERY_EMAIL,
           to_name: "AutomIQ",
-          from_email: CONTACT_EMAIL,
-          website_email: CONTACT_EMAIL,
+          from_email: PUBLIC_CONTACT_EMAIL,
+          website_email: PUBLIC_CONTACT_EMAIL,
         },
         { publicKey: emailJsConfig.publicKey }
       );
@@ -301,6 +309,17 @@ export default function DemoForm({
             {labels.validation.email}
           </p>
         )}
+      </Field>
+
+      <Field label={labels.fields.company.label}>
+        <input
+          name="company"
+          value={form.company}
+          onChange={onChange}
+          placeholder={labels.fields.company.placeholder}
+          autoComplete="organization"
+          className={fieldBase}
+        />
       </Field>
 
       <Field label={labels.fields.message.label}>

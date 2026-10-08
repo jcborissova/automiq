@@ -21,7 +21,7 @@ type HandoffPayload = {
 
 const WHATSAPP_NUMBER = "18297071293";
 const NUDGE_DISMISSED_KEY = "automiq:nudge-dismissed";
-const NUDGE_FIRST_DELAY_MS = 7000;
+const NUDGE_FIRST_DELAY_MS = 14000;
 const NUDGE_ROTATE_MS = 28000;
 const MAX_USER_MESSAGES = 8;
 
@@ -58,10 +58,10 @@ const COPY: Record<Locale, Copy> = {
     placeholderCapped: "Conversación cerrada · continúa por WhatsApp",
     greetingIntro: "Hola, soy Tomy, el asistente de AutomIQ.",
     greeting:
-      "¿En qué proceso de tu operación quieres ahorrar trabajo: automatización, agente IA, una app interna, o búsqueda sobre tus documentos?",
+      "¿Qué proceso de tu operación quieres ordenar o automatizar: documentos, aprobaciones, integraciones, reportes o una app interna?",
     quickReplies: [
       "Automatizar un proceso manual",
-      "Quiero un agente IA para soporte",
+      "Conectar sistemas o herramientas",
       "Necesito una app interna a medida",
     ],
     whatsappCta: "Continuar por WhatsApp",
@@ -78,7 +78,7 @@ const COPY: Record<Locale, Copy> = {
     nudges: [
       "¿Tienes un proceso manual que quieras automatizar?",
       "Cuéntame tu caso · te respondo al instante.",
-      "Pregúntame sobre agentes IA, automatización o apps a medida.",
+      "Pregúntame sobre integraciones, automatización o apps a medida.",
     ],
     limitNotice:
       "Para profundizar en tu caso, conversemos directo por WhatsApp. Te respondo en minutos.",
@@ -93,10 +93,10 @@ const COPY: Record<Locale, Copy> = {
     placeholderCapped: "Conversation closed · continue on WhatsApp",
     greetingIntro: "Hi, I'm Tomy, AutomIQ's assistant.",
     greeting:
-      "Which part of your operation do you want to free up: automation, an AI agent, an internal app, or knowledge search over your docs?",
+      "Which workflow do you want to organize or automate: documents, approvals, integrations, reporting, or an internal app?",
     quickReplies: [
       "Automate a manual process",
-      "I want an AI agent for support",
+      "Connect systems or tools",
       "I need a custom internal app",
     ],
     whatsappCta: "Continue on WhatsApp",
@@ -113,7 +113,7 @@ const COPY: Record<Locale, Copy> = {
     nudges: [
       "Got a manual process you'd like to automate?",
       "Tell me your case — I reply instantly.",
-      "Ask me about AI agents, automation, or custom apps.",
+      "Ask me about integrations, automation, or custom apps.",
     ],
     limitNotice:
       "To dig into your case, let's talk directly on WhatsApp. I'll reply in minutes.",
@@ -135,6 +135,7 @@ export default function ChatWidget() {
   const [rateLimited, setRateLimited] = useState(false);
   const [nudgeIdx, setNudgeIdx] = useState<number | null>(null);
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -200,6 +201,22 @@ export default function ChatWidget() {
       sessionStorage.setItem(NUDGE_DISMISSED_KEY, "1");
     }
   }, [open]);
+
+  useEffect(() => {
+    const syncMobileNavState = () => {
+      const isOpen = document.body.classList.contains("mobile-nav-open");
+      setMobileNavOpen(isOpen);
+      if (isOpen) setOpen(false);
+    };
+
+    syncMobileNavState();
+    const observer = new MutationObserver(syncMobileNavState);
+    observer.observe(document.body, {
+      attributeFilter: ["class"],
+      attributes: true,
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -317,7 +334,7 @@ export default function ChatWidget() {
   }
 
   const showQuickReplies = messages.length === 0 && !streaming;
-  const nudgeVisible = nudgeIdx !== null && !open;
+  const nudgeVisible = false;
 
   return (
     <>
@@ -325,7 +342,7 @@ export default function ChatWidget() {
       {nudgeVisible && (
         <div
           key={nudgeIdx}
-          className="fixed bottom-[7rem] right-4 z-[80] max-w-[260px] lg:right-6"
+          className="fixed bottom-[7rem] right-4 z-[80] hidden max-w-[260px] sm:block lg:right-6"
           style={{ animation: "chat-nudge-in 320ms cubic-bezier(0.22,1,0.36,1) both" }}
         >
           <div className="relative">
@@ -342,7 +359,7 @@ export default function ChatWidget() {
               onClick={() => setOpen(true)}
               className="relative block w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-left shadow-[var(--shadow-lg)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)]"
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-text)]">
                 {labels.nudgeLabel}
               </p>
               <p className="mt-1 text-[13.5px] font-medium leading-snug text-[var(--ink-950)]">
@@ -364,30 +381,33 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? labels.close : labels.open}
         aria-expanded={open}
-        className={`group fixed bottom-5 right-5 z-[80] inline-flex h-16 w-16 items-center justify-center rounded-full transition-all duration-300 active:scale-95 lg:bottom-6 lg:right-6 ${
+        aria-hidden={mobileNavOpen}
+        tabIndex={mobileNavOpen ? -1 : 0}
+        style={{ display: mobileNavOpen ? "none" : undefined }}
+        className={`group fixed right-3 z-[90] inline-flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 active:scale-95 sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 lg:bottom-6 lg:right-6 ${
           open
-            ? "bg-[var(--ink-950)] text-white shadow-[0_18px_38px_-12px_rgba(2,6,23,0.55)] rotate-90"
-            : "bg-[var(--ink-950)] shadow-[0_22px_44px_-12px_rgba(249,115,22,0.45)] hover:scale-[1.06] hover:shadow-[0_26px_52px_-12px_rgba(249,115,22,0.65)]"
-        }`}
+            ? "bottom-3 bg-[var(--ink-950)] text-white shadow-[0_18px_38px_-12px_rgba(2,6,23,0.55)] rotate-90"
+            : "bottom-4 bg-[var(--ink-950)] shadow-[0_22px_44px_-12px_rgba(32,38,36,0.42)] hover:scale-[1.06] hover:shadow-[0_26px_52px_-12px_rgba(32,38,36,0.55)]"
+        } ${mobileNavOpen ? "pointer-events-none invisible opacity-0 scale-95" : ""}`}
       >
         {/* Pulse ring (closed state) */}
         {!open && (
           <>
             <span
               aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-full bg-[var(--accent)]/45 animate-ping"
+              className="pointer-events-none absolute inset-0 hidden rounded-full bg-[var(--accent)]/45 animate-ping sm:block"
               style={{ animationDuration: "2.4s" }}
             />
             <span
               aria-hidden
-              className="pointer-events-none absolute -inset-1 rounded-full ring-1 ring-[var(--accent)]/25"
+              className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-[var(--accent)]/25"
             />
           </>
         )}
         {open ? (
           <X className="relative h-5 w-5" />
         ) : (
-          <RobotMascot className="relative h-9 w-9" />
+          <RobotMascot className="relative h-5 w-5 sm:h-8 sm:w-8" />
         )}
       </button>
 
@@ -396,18 +416,19 @@ export default function ChatWidget() {
         role="dialog"
         aria-label={labels.title}
         aria-hidden={!open}
-        className={`fixed bottom-[6.25rem] right-3 z-[80] flex w-[calc(100%-1.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl bg-[var(--background)] shadow-[0_36px_72px_-24px_rgba(2,6,23,0.45),0_2px_8px_rgba(2,6,23,0.08)] ring-1 ring-black/5 transition-all duration-200 ease-out lg:bottom-24 lg:right-6 ${
+        inert={!open}
+        className={`fixed right-2 bottom-20 z-[80] flex w-[calc(100%-1rem)] max-w-sm flex-col overflow-hidden rounded-lg bg-[var(--background)] shadow-[0_36px_72px_-24px_rgba(2,6,23,0.45),0_2px_8px_rgba(2,6,23,0.08)] ring-1 ring-black/5 transition-all duration-200 ease-out sm:bottom-[6.25rem] sm:right-3 sm:w-[calc(100%-1.5rem)] sm:rounded-2xl lg:bottom-24 lg:right-6 ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0"
         }`}
-        style={{ height: "min(620px, calc(100dvh - 7rem))" }}
+        style={{ height: "min(620px, calc(100dvh - 6rem))" }}
       >
         {/* Header — dark navy */}
         <header className="relative overflow-hidden bg-[var(--ink-950)] px-4 pt-4 pb-4 text-white">
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-16 -right-12 h-40 w-40 rounded-full bg-[var(--accent)]/20 blur-3xl"
+            className="pointer-events-none absolute -top-16 right-0 h-40 w-40 rounded-full bg-[var(--accent)]/20 blur-3xl"
           />
           <div className="relative flex items-center gap-3">
             <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15">
@@ -589,16 +610,16 @@ function RobotMascot({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="robotBody" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fb923c" />
-          <stop offset="100%" stopColor="#ea6c0e" />
+          <stop offset="0%" stopColor="#b4c6b9" />
+          <stop offset="100%" stopColor="#5f7868" />
         </linearGradient>
         <linearGradient id="robotVisor" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#0f172a" />
           <stop offset="100%" stopColor="#020617" />
         </linearGradient>
         <radialGradient id="robotEyeGlow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor="#fdba74" />
-          <stop offset="100%" stopColor="#f97316" />
+          <stop offset="0%" stopColor="#dfe6e0" />
+          <stop offset="100%" stopColor="#a4b8aa" />
         </radialGradient>
       </defs>
 
@@ -656,7 +677,7 @@ function RobotMascot({ className }: { className?: string }) {
         height="21"
         rx="9.5"
         fill="none"
-        stroke="rgba(249,115,22,0.2)"
+        stroke="rgba(164,184,170,0.32)"
         strokeWidth="1"
       />
 
