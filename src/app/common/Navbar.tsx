@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "../components/ui/Button";
 import BrandLogo from "../components/BrandLogo";
 import {
@@ -18,6 +18,13 @@ export default function Navbar() {
   const content = useMemo(() => getSiteContent(locale), [locale]);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenu = () => {
+    setOpen(false);
+    window.setTimeout(() => menuButtonRef.current?.focus(), 0);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
@@ -31,12 +38,15 @@ export default function Navbar() {
     const { body } = document;
     const previousOverflow = body.style.overflow;
     body.style.overflow = "hidden";
+    body.classList.add("mobile-nav-open");
+    closeButtonRef.current?.focus();
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
     window.addEventListener("keydown", onKey);
     return () => {
       body.style.overflow = previousOverflow;
+      body.classList.remove("mobile-nav-open");
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -47,10 +57,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
           scrolled
-            ? "border-[var(--border)] bg-white/90 shadow-[var(--shadow-sm)] backdrop-blur-xl"
-            : "border-transparent bg-[var(--background)]/70 backdrop-blur-sm"
+            ? "border-white/10 bg-[#091829]/95 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.7)]"
+            : "border-white/10 bg-[#091829]/92"
         }`}
       >
         <div
@@ -61,32 +71,32 @@ export default function Navbar() {
         />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav className="flex min-h-[68px] items-center justify-between gap-4 sm:min-h-[76px] lg:min-h-[84px] lg:gap-8">
+          <nav className="flex min-h-[64px] items-center justify-between gap-4 sm:min-h-[68px] lg:min-h-[72px] lg:gap-8">
             <Link
               href={getLocalizedPath(locale)}
               className="group relative flex shrink-0 items-center"
               aria-label="AutomIQ"
             >
               <BrandLogo
-                theme="dark"
+                theme="light"
                 alt=""
                 priority
-                className="h-auto w-[164px] transition-transform duration-200 group-hover:scale-[1.01] sm:w-[176px] lg:w-[188px]"
-                sizes="(max-width: 640px) 164px, (max-width: 1024px) 176px, 188px"
+                className="h-auto w-[136px] transition-opacity duration-200 group-hover:opacity-90 sm:w-[148px] lg:w-[158px]"
+                sizes="(max-width: 640px) 136px, (max-width: 1024px) 148px, 158px"
               />
             </Link>
 
-            <div className="hidden flex-1 items-center justify-center gap-8 xl:gap-10 lg:flex">
+            <div className="hidden flex-1 items-center justify-end gap-7 lg:flex">
               {content.nav.items.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="group relative py-2 text-[14px] font-semibold tracking-tight text-[var(--ink-700)] transition hover:text-[var(--ink-950)]"
+                  className="group relative py-2 text-[13px] font-semibold tracking-normal !text-white/72 transition hover:!text-white"
                 >
                   {item.label}
                   <span
                     aria-hidden
-                    className="absolute -bottom-0.5 left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[var(--accent)] transition-transform duration-300 ease-out group-hover:scale-x-100"
+                    className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/70 transition-transform duration-200 group-hover:scale-x-100"
                   />
                 </a>
               ))}
@@ -98,16 +108,17 @@ export default function Navbar() {
                 href="#contact"
                 size="md"
                 rightIcon={<ArrowUpRight className="h-4 w-4" />}
-                className="shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)]"
+                className="h-10 border border-white/12 bg-white/10 px-4 text-[13px] shadow-none hover:bg-white/14"
               >
                 {content.nav.primaryCta}
               </Button>
             </div>
 
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setOpen((current) => !current)}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--ink-950)] shadow-[var(--shadow-xs)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-raised)] lg:hidden"
+              className="z-10 ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/8 !text-white shadow-[var(--shadow-xs)] transition hover:border-white/25 hover:bg-white/12 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-navigation"
               aria-label={open ? closeLabel : menuLabel}
@@ -118,65 +129,64 @@ export default function Navbar() {
         </div>
       </header>
 
-      <div
-        aria-hidden={!open}
-        onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[60] bg-slate-950/40 transition-opacity duration-200 lg:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      />
+      {open && (
+        <div
+          onClick={closeMenu}
+          className="fixed inset-0 z-[60] bg-slate-950/40 transition-opacity duration-200 lg:hidden"
+        />
+      )}
 
-      <aside
-        id="mobile-navigation"
-        role="dialog"
-        aria-modal="true"
-        aria-label={menuLabel}
-        className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-xs flex-col bg-[var(--background)] shadow-[var(--shadow-xl)] transition-transform duration-200 ease-out lg:hidden ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-4">
+      {open && (
+        <aside
+          id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
+          aria-label={closeLabel}
+          className="fixed inset-y-0 right-0 z-[70] flex w-full max-w-xs flex-col border-l border-white/10 bg-[#091829] text-white shadow-[var(--shadow-xl)] transition-transform duration-200 ease-out lg:hidden"
+        >
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <Link
             href={getLocalizedPath(locale)}
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
             className="flex items-center"
             aria-label="AutomIQ"
           >
             <BrandLogo
-              theme="dark"
+              theme="light"
               alt=""
-              className="h-auto w-[148px]"
-              sizes="148px"
+              className="h-auto w-[136px]"
+              sizes="136px"
             />
           </Link>
           <button
+            ref={closeButtonRef}
             type="button"
-            onClick={() => setOpen(false)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-[var(--ink-700)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-950)]"
+            onClick={closeMenu}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg !text-white/70 transition hover:bg-white/10 hover:!text-white"
             aria-label={closeLabel}
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-2 py-4">
+        <nav className="flex-1 overflow-y-auto px-5 py-5">
           {content.nav.items.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-3 text-[15px] font-medium text-[var(--ink-800)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-950)]"
+              onClick={closeMenu}
+              className="block border-b border-white/10 py-4 text-[15px] font-semibold !text-white/84 transition hover:!text-white"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="border-t border-[var(--border)] px-5 py-4">
+        <div className="border-t border-white/10 px-5 py-4">
           <Button
             as="a"
             href="#contact"
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
             size="md"
             full
             rightIcon={<ArrowUpRight className="h-4 w-4" />}
@@ -184,7 +194,8 @@ export default function Navbar() {
             {content.nav.primaryCta}
           </Button>
         </div>
-      </aside>
+        </aside>
+      )}
     </>
   );
 }

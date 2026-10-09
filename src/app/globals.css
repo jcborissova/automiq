@@ -2,35 +2,37 @@
 
 :root {
   /* Surfaces */
-  --background: #f6f8fb;
+  --background: #f8fbff;
   --surface: #ffffff;
-  --surface-raised: #f8fafc;
-  --surface-inverse: #020617;
-  --surface-inverse-raised: #0f172a;
+  --surface-raised: #eef6fc;
+  --surface-inverse: #0d1b2e;
+  --surface-inverse-raised: #12304a;
 
   /* Ink */
-  --ink-950: #020617;
-  --ink-900: #0f172a;
-  --ink-700: #334155;
-  --ink-500: #64748b;
-  --ink-400: #94a3b8;
-  --ink-300: #cbd5e1;
+  --ink-950: #0d1b2e;
+  --ink-900: #132840;
+  --ink-800: #213c58;
+  --ink-700: #40566f;
+  --ink-500: #6f8396;
+  --ink-400: #9aadbd;
+  --ink-300: #c9d8e5;
 
   /* Borders */
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --border-subtle: rgba(148, 163, 184, 0.28);
+  --border: #d8e7f2;
+  --border-strong: #b6d2e7;
+  --border-subtle: rgba(53, 117, 188, 0.18);
 
   /* Accent — brand action */
-  --accent: #f97316;
-  --accent-hover: #fb923c;
-  --accent-soft: rgba(249, 115, 22, 0.1);
-  --accent-ring: rgba(249, 115, 22, 0.22);
+  --accent: #3575bc;
+  --accent-text: #255b96;
+  --accent-hover: #2f68a8;
+  --accent-soft: rgba(53, 117, 188, 0.14);
+  --accent-ring: rgba(53, 117, 188, 0.34);
 
   /* Support — tech/data */
-  --support: #0891b2;
-  --support-soft: rgba(8, 145, 178, 0.1);
-  --support-ring: rgba(8, 145, 178, 0.22);
+  --support: #f97316;
+  --support-soft: rgba(249, 115, 22, 0.12);
+  --support-ring: rgba(249, 115, 22, 0.24);
 
   /* States */
   --success: #059669;
@@ -52,7 +54,7 @@
   --shadow-md: 0 10px 24px -12px rgba(15, 23, 42, 0.18);
   --shadow-lg: 0 24px 48px -24px rgba(15, 23, 42, 0.22);
   --shadow-xl: 0 40px 80px -32px rgba(15, 23, 42, 0.3);
-  --shadow-accent: 0 20px 40px -18px rgba(249, 115, 22, 0.45);
+  --shadow-accent: 0 18px 36px -20px rgba(53, 117, 188, 0.55);
 
   /* Typography */
   --font-display: "Space Grotesk", "Inter", "Segoe UI", sans-serif;
@@ -72,11 +74,13 @@
   --color-ink: var(--ink-950);
   --color-ink-900: var(--ink-900);
   --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
   --color-ink-500: var(--ink-500);
   --color-ink-400: var(--ink-400);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
   --color-accent-hover: var(--accent-hover);
   --color-support: var(--support);
 
@@ -112,10 +116,16 @@
   50% { transform: scale(1.25); opacity: 1; }
 }
 
+@keyframes tool-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 4px)); }
+}
+
 html {
   scroll-behavior: smooth;
   background: var(--background);
   color-scheme: light;
+  overflow-x: clip;
 }
 
 * {
@@ -127,6 +137,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-body);
   min-height: 100vh;
+  overflow-x: clip;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

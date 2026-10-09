@@ -14,11 +14,6 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-white/5 bg-[var(--surface-inverse)] text-white">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(8,145,178,0.12),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(249,115,22,0.1),transparent_30%)]"
-      />
-
       <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 sm:gap-12 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
           <div>
@@ -70,8 +65,8 @@ export default function Footer() {
             <FooterDetail
               icon={<Mail className="h-4 w-4" />}
               label="Email"
-              value="automiq@hotmail.com"
-              href="mailto:automiq@hotmail.com"
+              value="hola@automiq.click"
+              href="mailto:hola@automiq.click"
             />
             <FooterDetail
               icon={<Phone className="h-4 w-4" />}
