@@ -112,6 +112,7 @@ export type SiteContent = {
     eyebrow: string;
     title: string;
     description: string;
+    cta: string;
     cards: ServiceCard[];
   };
   capabilities: {
@@ -243,61 +244,39 @@ const siteContent: Record<Locale, SiteContent> = {
     },
     services: {
       eyebrow: "Qué hacemos",
-      title: "Apps, integraciones y automatización para operar mejor",
-      description:
-        "Ordenamos procesos completos: dónde entra la información, quién la revisa, qué sistema se actualiza y cómo queda visible el siguiente paso.",
+      title: "Soluciones a medida",
+      description: "",
+      cta: "Hablemos de tu proyecto",
       cards: [
         {
           id: "agents",
-          eyebrow: "Aplicaciones internas",
-          title: "Solicitudes, aprobaciones y seguimiento en un solo flujo",
-          description:
-            "Cuando las solicitudes viven entre correos, hojas y mensajes, el equipo pierde estado, responsables y contexto.",
+          eyebrow: "",
+          title: "Apps a medida",
+          description: "Centraliza tu operación en una app hecha para ti.",
           outcomes: [
-            "Un lugar claro para capturar solicitudes, revisar documentación, aprobar pasos y ver qué falta por hacer.",
-            "Roles, validaciones y aprobaciones según la forma de trabajar de la empresa.",
-            "Diseño claro para usuarios no técnicos.",
+            "Centraliza tu operación en una app hecha para ti.",
           ],
-          tags: ["Portales", "Dashboards", "Formularios", "Roles"],
+          tags: [],
         },
         {
           id: "automation",
-          eyebrow: "Automatización e integraciones",
-          title: "Información que pasa entre sistemas sin volver a registrarla",
-          description:
-            "Cuando los datos se copian a mano entre herramientas, aparecen duplicados, errores y versiones distintas de la misma operación.",
+          eyebrow: "",
+          title: "Integraciones",
+          description: "Conecta tus herramientas y mantén tus datos sincronizados.",
           outcomes: [
-            "Conexiones entre formularios, hojas, CRM, ERP, correo, documentos y APIs para que cada sistema reciba lo que necesita.",
-            "Validaciones antes de ejecutar acciones sensibles.",
-            "Alertas y excepciones visibles para el equipo.",
+            "Conecta tus herramientas y mantén tus datos sincronizados.",
           ],
-          tags: ["APIs", "n8n", "Make", "Power Platform"],
+          tags: [],
         },
         {
           id: "apps",
-          eyebrow: "Automatización documental",
-          title: "Tareas repetibles con revisión de excepciones",
-          description:
-            "Cuando el trabajo depende de revisar archivos, facturas, correos o formularios uno por uno, lo urgente desplaza lo importante.",
+          eyebrow: "",
+          title: "Automatización",
+          description: "Agiliza procesos completos y reduce tareas manuales.",
           outcomes: [
-            "Flujos que reciben, clasifican, validan y escalan excepciones para revisión humana antes de registrar o reportar.",
-            "Aprobaciones humanas donde el negocio lo necesita.",
-            "Historial claro de lo recibido, revisado y completado.",
+            "Agiliza procesos completos y reduce tareas manuales.",
           ],
-          tags: ["Facturas", "Documentos", "Aprobaciones", "Reportes"],
-        },
-        {
-          id: "knowledge",
-          eyebrow: "IA aplicada con criterio",
-          title: "Asistentes y búsqueda cuando realmente ayudan al flujo",
-          description:
-            "Usamos IA para clasificar, resumir, buscar o asistir respuestas solo cuando mejora un proceso concreto y puede revisarse con control humano.",
-          outcomes: [
-            "Consultas sobre políticas, documentos o historial operativo.",
-            "Borradores y resúmenes revisables antes de enviarse.",
-            "Reglas claras para escalar decisiones sensibles.",
-          ],
-          tags: ["Búsqueda", "Resumen", "Clasificación", "Revisión"],
+          tags: [],
         },
       ],
     },
@@ -560,61 +539,39 @@ const siteContent: Record<Locale, SiteContent> = {
     },
     services: {
       eyebrow: "What we do",
-      title: "Apps, integrations, and automation for better operations",
-      description:
-        "We organize complete workflows: where information enters, who reviews it, which system updates, and how the next step stays visible.",
+      title: "Tailored solutions",
+      description: "",
+      cta: "Let's talk about your project",
       cards: [
         {
           id: "agents",
-          eyebrow: "Internal applications",
-          title: "Requests, approvals, and follow-up in one flow",
-          description:
-            "When requests live across email, spreadsheets, and messages, teams lose status, owners, and context.",
+          eyebrow: "",
+          title: "Custom apps",
+          description: "Centralize your operation in an app built for you.",
           outcomes: [
-            "A clear place to capture requests, review documentation, approve steps, and see what still needs attention.",
-            "Roles, validations, and approvals matched to how the company works.",
-            "Clear experiences for non-technical users.",
+            "Centralize your operation in an app built for you.",
           ],
-          tags: ["Portals", "Dashboards", "Forms", "Roles"],
+          tags: [],
         },
         {
           id: "automation",
-          eyebrow: "Automation and integrations",
-          title: "Information moves between systems without re-entry",
-          description:
-            "When data is copied by hand between tools, duplicates, errors, and competing versions of the operation appear.",
+          eyebrow: "",
+          title: "Integrations",
+          description: "Connect your tools and keep your data in sync.",
           outcomes: [
-            "Connections between forms, sheets, CRM, ERP, email, documents, and APIs so each system receives what it needs.",
-            "Validations before sensitive actions run.",
-            "Alerts and exceptions visible to the team.",
+            "Connect your tools and keep your data in sync.",
           ],
-          tags: ["APIs", "n8n", "Make", "Power Platform"],
+          tags: [],
         },
         {
           id: "apps",
-          eyebrow: "Document automation",
-          title: "Repeatable tasks with exception review",
-          description:
-            "When work depends on reviewing files, invoices, emails, or forms one by one, urgent tasks push important control aside.",
+          eyebrow: "",
+          title: "Automation",
+          description: "Streamline complete processes and reduce manual tasks.",
           outcomes: [
-            "Flows that receive, classify, validate, and escalate exceptions for human review before recording or reporting.",
-            "Human approvals where the business needs them.",
-            "A clear history of what was received, reviewed, and completed.",
+            "Streamline complete processes and reduce manual tasks.",
           ],
-          tags: ["Invoices", "Documents", "Approvals", "Reports"],
-        },
-        {
-          id: "knowledge",
-          eyebrow: "Applied AI with judgment",
-          title: "Assistants and search when they truly help the workflow",
-          description:
-            "We use AI to classify, summarize, search, or assist responses only when it improves a concrete process and can be reviewed with human control.",
-          outcomes: [
-            "Questions over policies, documents, or operational history.",
-            "Drafts and summaries that are reviewed before sending.",
-            "Clear rules for escalating sensitive decisions.",
-          ],
-          tags: ["Search", "Summary", "Classification", "Review"],
+          tags: [],
         },
       ],
     },
