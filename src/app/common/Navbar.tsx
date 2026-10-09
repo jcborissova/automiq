@@ -86,18 +86,20 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className="hidden flex-1 items-center justify-center lg:flex">
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.055] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+            <div className="hidden flex-1 items-center justify-end gap-7 lg:flex">
               {content.nav.items.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                    className="rounded-full px-4 py-2 text-[13px] font-semibold tracking-normal !text-white/74 transition hover:bg-white/8 hover:!text-white"
+                  className="group relative py-2 text-[13px] font-semibold tracking-normal !text-white/72 transition hover:!text-white"
                 >
                   {item.label}
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/70 transition-transform duration-200 group-hover:scale-x-100"
+                  />
                 </a>
               ))}
-              </div>
             </div>
 
             <div className="hidden lg:flex">
@@ -106,7 +108,7 @@ export default function Navbar() {
                 href="#contact"
                 size="md"
                 rightIcon={<ArrowUpRight className="h-4 w-4" />}
-                className="h-10 px-4 text-[13px] shadow-none"
+                className="h-10 border border-white/12 bg-white/10 px-4 text-[13px] shadow-none hover:bg-white/14"
               >
                 {content.nav.primaryCta}
               </Button>
@@ -140,7 +142,7 @@ export default function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label={closeLabel}
-          className="fixed inset-y-0 right-0 z-[70] flex w-full max-w-xs flex-col bg-[var(--surface-inverse)] text-white shadow-[var(--shadow-xl)] transition-transform duration-200 ease-out lg:hidden"
+          className="fixed inset-y-0 right-0 z-[70] flex w-full max-w-xs flex-col border-l border-white/10 bg-[#091829] text-white shadow-[var(--shadow-xl)] transition-transform duration-200 ease-out lg:hidden"
         >
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <Link
@@ -167,13 +169,13 @@ export default function Navbar() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-2 py-4">
+        <nav className="flex-1 overflow-y-auto px-5 py-5">
           {content.nav.items.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={closeMenu}
-              className="block rounded-xl px-3 py-3 text-[15px] font-semibold !text-white/84 transition hover:bg-white/10 hover:!text-white"
+              className="block border-b border-white/10 py-4 text-[15px] font-semibold !text-white/84 transition hover:!text-white"
             >
               {item.label}
             </a>

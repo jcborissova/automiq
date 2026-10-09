@@ -1,10 +1,15 @@
 import { ArrowRight, Bot, FileCheck2, LayoutDashboard } from "lucide-react";
+import Image from "next/image";
 import type { Locale } from "../lib/site-content";
 
 type Example = {
   title: string;
   description: string;
-  technologies: string[];
+  image: string;
+  technologies: {
+    name: string;
+    logo: string;
+  }[];
   Icon: typeof LayoutDashboard;
 };
 
@@ -14,21 +19,36 @@ const examples: Record<Locale, Example[]> = {
       title: "Panel operativo para solicitudes",
       description:
         "Entrada de casos, estados, responsables y seguimiento en una sola vista para el equipo.",
-      technologies: ["Next.js", "React", "TypeScript", "Power Platform"],
+      image: "/assets/services/web.png",
+      technologies: [
+        { name: "Next.js", logo: "/assets/techs/nextjs.png" },
+        { name: "React", logo: "/assets/techs/react.png" },
+        { name: "TypeScript", logo: "/assets/techs/typescript.png" },
+      ],
       Icon: LayoutDashboard,
     },
     {
       title: "Flujo documental con revisión",
       description:
         "Recepción, validación y escalamiento de documentos antes de registrar o reportar.",
-      technologies: ["n8n", "Make", "APIs", "Tailwind"],
+      image: "/assets/services/auto.png",
+      technologies: [
+        { name: "n8n", logo: "/assets/techs/n8n.png" },
+        { name: "Make", logo: "/assets/techs/make.png" },
+        { name: "Tailwind", logo: "/assets/techs/tailwind.png" },
+      ],
       Icon: FileCheck2,
     },
     {
       title: "Asistente de llamadas y handoff",
       description:
         "Captura de intención, resumen de conversación y traspaso a equipo humano cuando aplica.",
-      technologies: ["Retell", "OpenAI", "Zapier", "CRM"],
+      image: "/assets/cases/Case2.png",
+      technologies: [
+        { name: "Retell", logo: "/assets/techs/retell.png" },
+        { name: "Zapier", logo: "/assets/techs/zapier.png" },
+        { name: "Automation Anywhere", logo: "/assets/techs/automationanywhere.png" },
+      ],
       Icon: Bot,
     },
   ],
@@ -37,21 +57,36 @@ const examples: Record<Locale, Example[]> = {
       title: "Operations dashboard for requests",
       description:
         "Case intake, statuses, owners, and follow-up in one clear view for the team.",
-      technologies: ["Next.js", "React", "TypeScript", "Power Platform"],
+      image: "/assets/services/web.png",
+      technologies: [
+        { name: "Next.js", logo: "/assets/techs/nextjs.png" },
+        { name: "React", logo: "/assets/techs/react.png" },
+        { name: "TypeScript", logo: "/assets/techs/typescript.png" },
+      ],
       Icon: LayoutDashboard,
     },
     {
       title: "Document workflow with review",
       description:
         "Document intake, validation, and escalation before recording or reporting.",
-      technologies: ["n8n", "Make", "APIs", "Tailwind"],
+      image: "/assets/services/auto.png",
+      technologies: [
+        { name: "n8n", logo: "/assets/techs/n8n.png" },
+        { name: "Make", logo: "/assets/techs/make.png" },
+        { name: "Tailwind", logo: "/assets/techs/tailwind.png" },
+      ],
       Icon: FileCheck2,
     },
     {
       title: "Call assistant and handoff",
       description:
         "Intent capture, conversation summary, and handoff to a human team when needed.",
-      technologies: ["Retell", "OpenAI", "Zapier", "CRM"],
+      image: "/assets/cases/Case2.png",
+      technologies: [
+        { name: "Retell", logo: "/assets/techs/retell.png" },
+        { name: "Zapier", logo: "/assets/techs/zapier.png" },
+        { name: "Automation Anywhere", logo: "/assets/techs/automationanywhere.png" },
+      ],
       Icon: Bot,
     },
   ],
@@ -67,31 +102,41 @@ export default function Examples({ locale }: { locale: Locale }) {
       className="scroll-mt-24 bg-[var(--surface)] py-14 text-[var(--ink-950)] sm:py-16 lg:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 border-t border-[var(--border-strong)] pt-8 sm:pt-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-12">
-          <div>
+        <div className="border-t border-[var(--border-strong)] pt-8 sm:pt-10">
+          <div className="max-w-3xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--support)]">
-              {isEnglish ? "Work examples" : "Ejemplos de trabajo"}
+              {isEnglish ? "Solution examples" : "Ejemplos de soluciones"}
             </p>
             <h2 className="mt-3 text-[2rem] font-semibold leading-[1.05] tracking-normal sm:text-[2.4rem] lg:text-[2.75rem]">
-              {isEnglish ? "What this looks like in practice" : "Cómo se ve en la práctica"}
+              {isEnglish ? "Work that feels concrete" : "Trabajo que se entiende rápido"}
             </h2>
             <p className="mt-4 max-w-md text-sm leading-7 text-[var(--ink-700)]">
               {isEnglish
-                ? "Concrete delivery patterns, shown without invented clients or inflated metrics."
-                : "Patrones concretos de entrega, sin inventar clientes ni métricas infladas."}
+                ? "Visual examples with the technologies that usually sit behind each flow."
+                : "Ejemplos visuales con las tecnologías que suelen sostener cada flujo."}
             </p>
           </div>
 
-          <div className="grid gap-3">
-            {items.map(({ title, description, technologies, Icon }) => (
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            {items.map(({ title, description, image, technologies, Icon }) => (
               <article
                 key={title}
-                className="grid gap-4 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-[var(--shadow-xs)] sm:grid-cols-[48px_1fr_auto] sm:items-center sm:p-5"
+                className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)]"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-[var(--accent-text)]">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-[var(--border)] bg-[var(--ink-950)]">
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover opacity-76"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.04),rgba(13,27,46,0.42))]" />
+                  <div className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/12 text-white backdrop-blur">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
                 </div>
-                <div>
+                <div className="p-4 sm:p-5">
                   <h3 className="text-lg font-semibold tracking-normal text-[var(--ink-950)]">
                     {title}
                   </h3>
@@ -101,21 +146,28 @@ export default function Examples({ locale }: { locale: Locale }) {
                   <div className="mt-3 flex flex-wrap gap-2">
                     {technologies.map((tech) => (
                       <span
-                        key={tech}
-                        className="rounded-full border border-[var(--border-subtle)] bg-white px-2.5 py-1 text-[11px] font-semibold text-[var(--ink-700)]"
+                        key={tech.name}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-white px-2.5 py-1 text-[11px] font-semibold text-[var(--ink-700)]"
                       >
-                        {tech}
+                        <Image
+                          src={tech.logo}
+                          alt=""
+                          width={18}
+                          height={18}
+                          className="h-3.5 w-3.5 object-contain"
+                        />
+                        {tech.name}
                       </span>
                     ))}
                   </div>
+                  <a
+                    href="#contact"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-text)]"
+                  >
+                    {isEnglish ? "Discuss this" : "Conversar esto"}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
                 </div>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-text)]"
-                >
-                  {isEnglish ? "Discuss this" : "Conversar esto"}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
               </article>
             ))}
           </div>
