@@ -1,4 +1,5 @@
 import { ArrowRight, Blocks, Plug, Workflow } from "lucide-react";
+import Image from "next/image";
 import type { SiteContent } from "../lib/site-content";
 import Button from "../components/ui/Button";
 
@@ -9,6 +10,16 @@ type ServicesProps = {
 export default function Services({ content }: ServicesProps) {
   const cards = content.cards.slice(0, 3);
   const icons = [Blocks, Plug, Workflow];
+  const isEnglish = content.eyebrow.toLowerCase().includes("what");
+  const toolsLabel = isEnglish ? "Tools we work with" : "Herramientas que usamos";
+  const tools = [
+    { name: "n8n", src: "/assets/techs/n8n.png" },
+    { name: "Make", src: "/assets/techs/make.png" },
+    { name: "Power Platform", src: "/assets/techs/powerplatform.png" },
+    { name: "Zapier", src: "/assets/techs/zapier.png" },
+    { name: "Next.js", src: "/assets/techs/nextjs.png" },
+    { name: "React", src: "/assets/techs/react.png" },
+  ];
 
   return (
     <section
@@ -61,6 +72,33 @@ export default function Services({ content }: ServicesProps) {
                 </article>
               );
             })}
+          </div>
+
+          <div className="border-b border-[var(--border)] py-6 lg:py-7">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-500)]">
+              {toolsLabel}
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+              {tools.map((tool) => (
+                <div
+                  key={tool.name}
+                  className="flex h-[72px] flex-col items-center justify-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-white/55 px-4"
+                  title={tool.name}
+                >
+                  <Image
+                    src={tool.src}
+                    alt={tool.name}
+                    width={130}
+                    height={48}
+                    sizes="(max-width: 640px) 120px, 130px"
+                    className="max-h-7 w-auto max-w-[104px] object-contain opacity-85 saturate-[0.95] transition hover:opacity-100 hover:saturate-100"
+                  />
+                  <span className="text-[11px] font-semibold leading-none text-[var(--ink-500)]">
+                    {tool.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

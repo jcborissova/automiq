@@ -57,10 +57,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
           scrolled
-            ? "border-white/10 bg-[var(--surface-inverse)] shadow-[var(--shadow-sm)]"
-            : "border-white/10 bg-[var(--surface-inverse)]"
+            ? "border-white/10 bg-[#091829]/95 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.7)]"
+            : "border-white/10 bg-[#091829]/92"
         }`}
       >
         <div
@@ -71,7 +71,7 @@ export default function Navbar() {
         />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav className="flex min-h-[68px] items-center justify-between gap-4 sm:min-h-[76px] lg:min-h-[84px] lg:gap-8">
+          <nav className="flex min-h-[64px] items-center justify-between gap-4 sm:min-h-[68px] lg:min-h-[72px] lg:gap-8">
             <Link
               href={getLocalizedPath(locale)}
               className="group relative flex shrink-0 items-center"
@@ -81,22 +81,22 @@ export default function Navbar() {
                 theme="light"
                 alt=""
                 priority
-                className="h-auto w-[164px] transition-transform duration-200 group-hover:scale-[1.01] sm:w-[176px] lg:w-[188px]"
-                sizes="(max-width: 640px) 164px, (max-width: 1024px) 176px, 188px"
+                className="h-auto w-[136px] transition-opacity duration-200 group-hover:opacity-90 sm:w-[148px] lg:w-[158px]"
+                sizes="(max-width: 640px) 136px, (max-width: 1024px) 148px, 158px"
               />
             </Link>
 
-            <div className="hidden flex-1 items-center justify-center gap-8 xl:gap-10 lg:flex">
+            <div className="hidden flex-1 items-center justify-center gap-7 xl:gap-9 lg:flex">
               {content.nav.items.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="group relative py-2 text-[14px] font-semibold tracking-tight !text-white transition hover:!text-white"
+                  className="group relative py-2 text-[13px] font-semibold tracking-normal !text-white/78 transition hover:!text-white"
                 >
                   {item.label}
                   <span
                     aria-hidden
-                    className="absolute -bottom-0.5 left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[var(--accent)] transition-transform duration-300 ease-out group-hover:scale-x-100"
+                    className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 rounded-full bg-[var(--support)] transition-transform duration-300 ease-out group-hover:scale-x-100"
                   />
                 </a>
               ))}
@@ -108,7 +108,7 @@ export default function Navbar() {
                 href="#contact"
                 size="md"
                 rightIcon={<ArrowUpRight className="h-4 w-4" />}
-                className="shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)]"
+                className="h-10 px-4 text-[13px] shadow-none"
               >
                 {content.nav.primaryCta}
               </Button>
@@ -154,8 +154,8 @@ export default function Navbar() {
             <BrandLogo
               theme="light"
               alt=""
-              className="h-auto w-[148px]"
-              sizes="148px"
+              className="h-auto w-[136px]"
+              sizes="136px"
             />
           </Link>
           <button

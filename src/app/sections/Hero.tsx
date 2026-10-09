@@ -26,10 +26,11 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
         className="relative min-h-[660px] scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] text-white sm:min-h-[700px] lg:min-h-[760px]"
       >
         <Image
-          src="/assets/hero/operations-laptop-cc0.jpg"
+          src="/assets/hero/operations-laptop-optimized.jpg"
           alt=""
           fill
           priority
+          quality={78}
           sizes="100vw"
           className="object-cover object-[55%_52%]"
         />
