@@ -1,4 +1,7 @@
+"use client";
+
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useEffect, useRef } from "react";
 import DemoForm from "../components/DemoForm";
 import type { LeadFormLabels, Locale, SiteContent } from "../lib/site-content";
 
@@ -16,6 +19,57 @@ const detailIcons = {
 };
 
 export default function Contact({ locale, content, leadForm }: ContactProps) {
+  const mobileFormRef = useRef<HTMLDetailsElement>(null);
+  const desktopFormRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const firstFieldSelector =
+      "input:not([type='hidden']):not([name='_trap']):not([tabindex='-1']), textarea:not([name='_trap'])";
+
+    const focusContactForm = () => {
+      const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+      const container = isMobile ? mobileFormRef.current : desktopFormRef.current;
+
+      if (isMobile && mobileFormRef.current) {
+        mobileFormRef.current.open = true;
+      }
+
+      window.setTimeout(() => {
+        const firstField =
+          container?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+            firstFieldSelector
+          );
+        firstField?.focus({ preventScroll: true });
+      }, 180);
+    };
+
+    const handleHashNavigation = () => {
+      if (window.location.hash.startsWith("#contact")) {
+        focusContactForm();
+      }
+    };
+
+    const handleContactClick = (event: MouseEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) return;
+
+      const link = target.closest<HTMLAnchorElement>("a[href='#contact']");
+      if (!link) return;
+
+      window.setTimeout(focusContactForm, 420);
+    };
+
+    handleHashNavigation();
+    window.addEventListener("hashchange", handleHashNavigation);
+    document.addEventListener("click", handleContactClick, true);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashNavigation);
+      document.removeEventListener("click", handleContactClick, true);
+    };
+  }, []);
+
   return (
     <section
       id="contact"
@@ -72,7 +126,29 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
             </p>
           </div>
 
-          <div className="border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-7 lg:p-8">
+          <details
+            ref={mobileFormRef}
+            className="rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] lg:hidden"
+          >
+            <summary className="flex cursor-pointer items-center justify-between gap-3 px-5 py-4 text-base font-semibold text-[var(--ink-950)]">
+              {locale === "es" ? "Enviar contexto" : "Send context"}
+              <span className="text-sm font-semibold text-[var(--accent-text)]">
+                {locale === "es" ? "Abrir" : "Open"}
+              </span>
+            </summary>
+            <div className="border-t border-[var(--border)] p-5">
+              <DemoForm
+                locale={locale}
+                labels={leadForm}
+                source="contact-section"
+              />
+            </div>
+          </details>
+
+          <div
+            ref={desktopFormRef}
+            className="hidden border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-7 lg:block lg:p-8"
+          >
             <DemoForm
               locale={locale}
               labels={leadForm}

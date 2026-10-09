@@ -23,7 +23,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
       <section
         id="home"
         aria-label={locale === "es" ? "Hero de AutomIQ" : "AutomIQ hero"}
-        className="relative min-h-[660px] scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] text-white sm:min-h-[700px] lg:min-h-[760px]"
+        className="relative min-h-[590px] scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] text-white sm:min-h-[700px] lg:min-h-[760px]"
       >
         <Image
           src="/assets/hero/operations-laptop-optimized.jpg"
@@ -43,7 +43,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.20)_0%,rgba(13,27,46,0.20)_100%)]"
         />
 
-        <div className="relative mx-auto flex min-h-[660px] max-w-7xl flex-col justify-center px-4 pb-20 pt-14 sm:min-h-[700px] sm:px-6 sm:pb-24 sm:pt-20 lg:min-h-[760px] lg:px-8 lg:pb-32">
+        <div className="relative mx-auto flex min-h-[590px] max-w-7xl flex-col justify-center px-4 pb-12 pt-8 sm:min-h-[700px] sm:px-6 sm:pb-24 sm:pt-20 lg:min-h-[760px] lg:px-8 lg:pb-32">
           <div className="max-w-4xl min-w-0">
               <Eyebrow
                 tone="dark"
@@ -54,8 +54,13 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
               </Eyebrow>
 
               <h1 className="mt-5 max-w-[22rem] text-[2.24rem] font-semibold leading-[1.02] tracking-normal text-white sm:max-w-5xl sm:text-[4.35rem] sm:leading-[0.98] lg:text-[5.45rem]">
-                {hero.title}
-                <span className="block text-white">{hero.highlight}</span>
+                <span className="sm:hidden">
+                  {locale === "es"
+                    ? "Automatizamos procesos y conectamos tus sistemas."
+                    : "We automate workflows and connect your systems."}
+                </span>
+                <span className="hidden sm:inline">{hero.title}</span>
+                <span className="hidden text-white sm:block">{hero.highlight}</span>
               </h1>
 
               <span
@@ -79,11 +84,25 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
                 </Button>
                 <Button
                   as="a"
+                  href={`mailto:hola@automiq.click?subject=${encodeURIComponent(
+                    locale === "es"
+                      ? "Quiero conversar sobre un proceso"
+                      : "I want to discuss a workflow",
+                  )}`}
+                  size="lg"
+                  variant="inverse"
+                  full
+                  className="sm:hidden"
+                >
+                  hola@automiq.click
+                </Button>
+                <Button
+                  as="a"
                   href="#services"
                   size="lg"
                   variant="inverse"
                   full
-                  className="sm:w-auto"
+                  className="!hidden sm:!inline-flex sm:w-auto"
                 >
                   {hero.secondaryCta}
                 </Button>

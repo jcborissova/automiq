@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import type { Locale } from "../lib/site-content";
 
 type Technology = {
@@ -138,7 +140,7 @@ const useCases: Record<Locale, UseCase[]> = {
 function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: boolean }) {
   if (type === "documents") {
     return (
-      <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+      <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
         <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
         <div className="mt-4 rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
           <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center">
@@ -158,7 +160,7 @@ function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: b
 
   if (type === "handoff") {
     return (
-      <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+      <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
         <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
         <div className="mt-4 grid gap-3">
           <div className="rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
@@ -195,7 +197,7 @@ function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: b
   }
 
   return (
-    <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+    <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
       <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
       <div className="mt-4 rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
         <div className="mb-3 flex items-center justify-between gap-3">
@@ -260,6 +262,16 @@ function FlowArrow() {
   return <div className="hidden h-px w-8 bg-[var(--accent)] sm:block" aria-hidden="true" />;
 }
 
+function toggleDetailsWithKeyboard(event: KeyboardEvent<HTMLElement>) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  const details = event.currentTarget.closest("details");
+  if (!details) return;
+
+  event.preventDefault();
+  details.open = !details.open;
+}
+
 export default function Examples({ locale }: { locale: Locale }) {
   const isEnglish = locale === "en";
   const items = useCases[locale];
@@ -287,11 +299,59 @@ export default function Examples({ locale }: { locale: Locale }) {
             </p>
           </div>
 
-          <div className="mt-8 space-y-4">
+          <div className="mt-7 grid gap-2 sm:hidden">
+            {items.map((item) => (
+              <details
+                key={item.title}
+                className="rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 shadow-[var(--shadow-xs)]"
+              >
+                <summary
+                  className="cursor-pointer list-none"
+                  onKeyDown={toggleDetailsWithKeyboard}
+                >
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
+                    {item.eyebrow}
+                  </p>
+                  <h3 className="mt-1 text-base font-semibold leading-snug tracking-normal text-[var(--ink-950)]">
+                    {item.title}
+                  </h3>
+                </summary>
+                <p className="mt-3 text-sm leading-6 text-[var(--ink-700)]">
+                  {item.summary}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {item.technologies.map((tech) => (
+                    <span
+                      key={tech.name}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-white px-2.5 py-1 text-[11px] font-semibold text-[var(--ink-700)]"
+                    >
+                      <Image
+                        src={tech.logo}
+                        alt=""
+                        width={18}
+                        height={18}
+                        className="h-3.5 w-3.5 object-contain"
+                      />
+                      {tech.name}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="#contact"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-text)]"
+                >
+                  {isEnglish ? "Scope this" : "Conversar este flujo"}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </details>
+            ))}
+          </div>
+
+          <div className="mt-8 hidden space-y-4 sm:block">
             {items.map((item, index) => (
               <article
                 key={item.title}
-                className="grid overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)] lg:grid-cols-[0.92fr_1.08fr]"
+                className="grid w-[86vw] max-w-[360px] shrink-0 snap-start overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)] sm:w-auto sm:max-w-none lg:grid-cols-[0.92fr_1.08fr]"
               >
                 <div
                   className={`${index % 2 === 1 ? "lg:order-2" : ""} border-b border-[var(--border)] lg:border-b-0`}
@@ -299,18 +359,18 @@ export default function Examples({ locale }: { locale: Locale }) {
                   <DemoVisual type={item.visual} isEnglish={isEnglish} />
                 </div>
 
-                <div className="p-5 sm:p-6 lg:p-8">
+                <div className="p-4 sm:p-6 lg:p-8">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
                     {item.eyebrow}
                   </p>
-                  <h3 className="mt-3 max-w-2xl text-2xl font-semibold leading-tight tracking-normal text-[var(--ink-950)]">
+                  <h3 className="mt-3 max-w-2xl text-xl font-semibold leading-tight tracking-normal text-[var(--ink-950)] sm:text-2xl">
                     {item.title}
                   </h3>
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--ink-700)]">
                     {item.summary}
                   </p>
 
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-6 hidden gap-3 sm:grid sm:grid-cols-2">
                     <div className="border-l-2 border-[var(--accent)] pl-3">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-500)]">
                         {item.problemLabel}
