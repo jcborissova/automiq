@@ -188,7 +188,7 @@ const siteContent: Record<Locale, SiteContent> = {
       items: [
         { label: "Inicio", href: "#home" },
         { label: "Soluciones", href: "#services" },
-        { label: "Ejemplos", href: "#examples" },
+        { label: "Casos de uso", href: "#examples" },
         { label: "Contacto", href: "#contact" },
       ],
       primaryCta: "Agenda un diagnóstico",
@@ -484,7 +484,7 @@ const siteContent: Record<Locale, SiteContent> = {
       items: [
         { label: "Home", href: "#home" },
         { label: "Solutions", href: "#services" },
-        { label: "Examples", href: "#examples" },
+        { label: "Use cases", href: "#examples" },
         { label: "Contact", href: "#contact" },
       ],
       primaryCta: "Book a diagnostic",
