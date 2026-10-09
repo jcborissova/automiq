@@ -16,6 +16,7 @@ type UseCase = {
   buildLabel: string;
   build: string;
   image: string;
+  visual: "screenshot" | "photo";
   technologies: Technology[];
 };
 
@@ -33,6 +34,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Aplicación interna con estados, responsables, historial, filtros y notificaciones para mantener el flujo visible.",
       image: "/assets/services/web.png",
+      visual: "screenshot",
       technologies: [
         { name: "Next.js", logo: "/assets/techs/nextjs.png" },
         { name: "React", logo: "/assets/techs/react.png" },
@@ -51,6 +53,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Automatización con reglas, lectura de datos, rutas de revisión y registro final en las herramientas existentes.",
       image: "/assets/services/auto.png",
+      visual: "screenshot",
       technologies: [
         { name: "n8n", logo: "/assets/techs/n8n.png" },
         { name: "Make", logo: "/assets/techs/make.png" },
@@ -69,6 +72,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Flujo conectado a voz, CRM y mensajería para clasificar, resumir, asignar y dejar trazabilidad.",
       image: "/assets/cases/Case2.png",
+      visual: "photo",
       technologies: [
         { name: "Retell", logo: "/assets/techs/retell.png" },
         { name: "Zapier", logo: "/assets/techs/zapier.png" },
@@ -89,6 +93,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Internal app with statuses, owners, history, filters, and notifications to keep the workflow visible.",
       image: "/assets/services/web.png",
+      visual: "screenshot",
       technologies: [
         { name: "Next.js", logo: "/assets/techs/nextjs.png" },
         { name: "React", logo: "/assets/techs/react.png" },
@@ -107,6 +112,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Automation with rules, data extraction, review routes, and final registration in the existing tools.",
       image: "/assets/services/auto.png",
+      visual: "screenshot",
       technologies: [
         { name: "n8n", logo: "/assets/techs/n8n.png" },
         { name: "Make", logo: "/assets/techs/make.png" },
@@ -125,6 +131,7 @@ const useCases: Record<Locale, UseCase[]> = {
       build:
         "Flow connected to voice, CRM, and messaging to classify, summarize, assign, and keep a traceable record.",
       image: "/assets/cases/Case2.png",
+      visual: "photo",
       technologies: [
         { name: "Retell", logo: "/assets/techs/retell.png" },
         { name: "Zapier", logo: "/assets/techs/zapier.png" },
@@ -167,15 +174,25 @@ export default function Examples({ locale }: { locale: Locale }) {
                 key={item.title}
                 className="grid overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)] lg:grid-cols-[0.92fr_1.08fr]"
               >
-                <div className={`${index % 2 === 1 ? "lg:order-2" : ""} relative min-h-[240px] border-b border-[var(--border)] bg-[var(--ink-950)] lg:border-b-0`}>
+                <div
+                  className={`${index % 2 === 1 ? "lg:order-2" : ""} relative min-h-[260px] border-b border-[var(--border)] ${
+                    item.visual === "screenshot" ? "bg-[#f4f7fb]" : "bg-[var(--ink-950)]"
+                  } lg:min-h-full lg:border-b-0`}
+                >
                   <Image
                     src={item.image}
                     alt=""
                     fill
                     sizes="(max-width: 1024px) 100vw, 44vw"
-                    className="object-cover opacity-88"
+                    className={
+                      item.visual === "screenshot"
+                        ? "object-contain p-4 sm:p-6"
+                        : "object-cover opacity-92"
+                    }
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.02),rgba(13,27,46,0.34))]" />
+                  {item.visual === "photo" && (
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.02),rgba(13,27,46,0.3))]" />
+                  )}
                 </div>
 
                 <div className="p-5 sm:p-6 lg:p-8">
