@@ -30,7 +30,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
           alt=""
           fill
           priority
-          quality={78}
+          quality={75}
           sizes="100vw"
           className="object-cover object-[55%_52%]"
         />
