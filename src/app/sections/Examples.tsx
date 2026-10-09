@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import type { Locale } from "../lib/site-content";
 
 type Technology = {
@@ -260,6 +262,16 @@ function FlowArrow() {
   return <div className="hidden h-px w-8 bg-[var(--accent)] sm:block" aria-hidden="true" />;
 }
 
+function toggleDetailsWithKeyboard(event: KeyboardEvent<HTMLElement>) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  const details = event.currentTarget.closest("details");
+  if (!details) return;
+
+  event.preventDefault();
+  details.open = !details.open;
+}
+
 export default function Examples({ locale }: { locale: Locale }) {
   const isEnglish = locale === "en";
   const items = useCases[locale];
@@ -293,7 +305,10 @@ export default function Examples({ locale }: { locale: Locale }) {
                 key={item.title}
                 className="rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 shadow-[var(--shadow-xs)]"
               >
-                <summary className="cursor-pointer list-none">
+                <summary
+                  className="cursor-pointer list-none"
+                  onKeyDown={toggleDetailsWithKeyboard}
+                >
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
                     {item.eyebrow}
                   </p>
