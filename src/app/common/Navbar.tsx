@@ -86,20 +86,18 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className="hidden flex-1 items-center justify-center gap-7 xl:gap-9 lg:flex">
+            <div className="hidden flex-1 items-center justify-center lg:flex">
+              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.055] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
               {content.nav.items.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="group relative py-2 text-[13px] font-semibold tracking-normal !text-white/78 transition hover:!text-white"
+                    className="rounded-full px-4 py-2 text-[13px] font-semibold tracking-normal !text-white/74 transition hover:bg-white/8 hover:!text-white"
                 >
                   {item.label}
-                  <span
-                    aria-hidden
-                    className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 rounded-full bg-[var(--support)] transition-transform duration-300 ease-out group-hover:scale-x-100"
-                  />
                 </a>
               ))}
+              </div>
             </div>
 
             <div className="hidden lg:flex">
@@ -175,7 +173,7 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               onClick={closeMenu}
-              className="block rounded-lg px-3 py-3 text-[15px] font-medium !text-white transition hover:bg-white/10 hover:!text-white"
+              className="block rounded-xl px-3 py-3 text-[15px] font-semibold !text-white/84 transition hover:bg-white/10 hover:!text-white"
             >
               {item.label}
             </a>

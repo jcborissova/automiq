@@ -15,11 +15,16 @@ export default function Services({ content }: ServicesProps) {
   const tools = [
     { name: "n8n", src: "/assets/techs/n8n.png" },
     { name: "Make", src: "/assets/techs/make.png" },
+    { name: "Retell", src: "/assets/techs/retell.png" },
+    { name: "Automation Anywhere", src: "/assets/techs/automationanywhere.png" },
     { name: "Power Platform", src: "/assets/techs/powerplatform.png" },
     { name: "Zapier", src: "/assets/techs/zapier.png" },
     { name: "Next.js", src: "/assets/techs/nextjs.png" },
     { name: "React", src: "/assets/techs/react.png" },
+    { name: "TypeScript", src: "/assets/techs/typescript.png" },
+    { name: "Tailwind", src: "/assets/techs/tailwind.png" },
   ];
+  const carouselTools = [...tools, ...tools];
 
   return (
     <section
@@ -74,30 +79,40 @@ export default function Services({ content }: ServicesProps) {
             })}
           </div>
 
-          <div className="border-b border-[var(--border)] py-6 lg:py-7">
+          <div className="overflow-hidden border-b border-[var(--border)] py-6 lg:py-7">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-500)]">
               {toolsLabel}
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-              {tools.map((tool) => (
-                <div
-                  key={tool.name}
-                  className="flex h-[72px] flex-col items-center justify-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-white/55 px-4"
-                  title={tool.name}
-                >
-                  <Image
-                    src={tool.src}
-                    alt={tool.name}
-                    width={130}
-                    height={48}
-                    sizes="(max-width: 640px) 120px, 130px"
-                    className="max-h-7 w-auto max-w-[104px] object-contain opacity-85 saturate-[0.95] transition hover:opacity-100 hover:saturate-100"
-                  />
-                  <span className="text-[11px] font-semibold leading-none text-[var(--ink-500)]">
-                    {tool.name}
-                  </span>
-                </div>
-              ))}
+            <div className="relative mt-4 overflow-hidden">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[var(--background)] to-transparent"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[var(--background)] to-transparent"
+              />
+              <div className="flex w-max animate-[tool-marquee_34s_linear_infinite] gap-2 hover:[animation-play-state:paused] motion-reduce:animate-none">
+                {carouselTools.map((tool, index) => (
+                  <div
+                    key={`${tool.name}-${index}`}
+                    className="flex h-[72px] w-[176px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-white/62 px-4 shadow-[var(--shadow-xs)]"
+                    title={tool.name}
+                  >
+                    <Image
+                      src={tool.src}
+                      alt={tool.name}
+                      width={150}
+                      height={54}
+                      sizes="150px"
+                      className="max-h-7 w-auto max-w-[118px] object-contain opacity-85 saturate-[0.95] transition hover:opacity-100 hover:saturate-100"
+                    />
+                    <span className="text-[11px] font-semibold leading-none text-[var(--ink-500)]">
+                      {tool.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

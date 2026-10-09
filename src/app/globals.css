@@ -116,6 +116,11 @@
   50% { transform: scale(1.25); opacity: 1; }
 }
 
+@keyframes tool-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 4px)); }
+}
+
 html {
   scroll-behavior: smooth;
   background: var(--background);

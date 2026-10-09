@@ -1,6 +1,7 @@
 import { getSiteContent, type Locale } from "@/app/lib/site-content";
 import Hero from "@/app/sections/Hero";
 import Services from "@/app/sections/Services";
+import Examples from "@/app/sections/Examples";
 import Contact from "@/app/sections/Contact";
 
 type SitePageProps = {
@@ -14,6 +15,7 @@ export default function SitePage({ locale }: SitePageProps) {
     <>
       <Hero locale={locale} hero={content.hero} leadForm={content.leadForm} />
       <Services content={content.services} />
+      <Examples locale={locale} />
       <Contact
         locale={locale}
         content={content.contact}
