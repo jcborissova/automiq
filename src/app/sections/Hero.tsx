@@ -1,10 +1,5 @@
-"use client";
-
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import DemoForm from "../components/DemoForm";
-import Modal from "../components/ui/Modal";
 import Button from "../components/ui/Button";
 import Eyebrow from "../components/ui/Eyebrow";
 import type { LeadFormLabels, Locale, SiteContent } from "../lib/site-content";
@@ -15,33 +10,30 @@ type HeroProps = {
   leadForm: LeadFormLabels;
 };
 
-export default function Hero({ locale, hero, leadForm }: HeroProps) {
-  const [openLeadForm, setOpenLeadForm] = useState(false);
-
+export default function Hero({ locale, hero }: HeroProps) {
   return (
-    <>
-      <section
-        id="home"
-        aria-label={locale === "es" ? "Hero de AutomIQ" : "AutomIQ hero"}
-        className="relative min-h-[590px] scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] text-white sm:min-h-[700px] lg:min-h-[760px]"
-      >
-        <Image
-          src="/assets/hero/operations-laptop-optimized.jpg"
-          alt=""
-          fill
-          priority
-          quality={75}
-          sizes="100vw"
-          className="object-cover object-[55%_52%]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,27,46,0.94)_0%,rgba(13,27,46,0.88)_42%,rgba(13,27,46,0.58)_72%,rgba(13,27,46,0.26)_100%)]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.20)_0%,rgba(13,27,46,0.20)_100%)]"
-        />
+    <section
+      id="home"
+      aria-label={locale === "es" ? "Hero de AutomIQ" : "AutomIQ hero"}
+      className="relative min-h-[590px] scroll-mt-24 overflow-hidden bg-[var(--surface-inverse)] text-white sm:min-h-[700px] lg:min-h-[760px]"
+    >
+      <Image
+        src="/assets/hero/operations-laptop-optimized.jpg"
+        alt=""
+        fill
+        priority
+        quality={75}
+        sizes="100vw"
+        className="object-cover object-[55%_52%]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,27,46,0.94)_0%,rgba(13,27,46,0.88)_42%,rgba(13,27,46,0.58)_72%,rgba(13,27,46,0.26)_100%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.20)_0%,rgba(13,27,46,0.20)_100%)]"
+      />
 
         <div className="relative mx-auto flex min-h-[590px] max-w-7xl flex-col justify-center px-4 pb-12 pt-8 sm:min-h-[700px] sm:px-6 sm:pb-24 sm:pt-20 lg:min-h-[760px] lg:px-8 lg:pb-32">
           <div className="max-w-4xl min-w-0">
@@ -74,7 +66,8 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
 
               <div className="mt-5 flex max-w-[22rem] flex-col gap-2 sm:mt-7 sm:max-w-none sm:flex-row sm:items-center sm:gap-3">
                 <Button
-                  onClick={() => setOpenLeadForm(true)}
+                  as="a"
+                  href="#contact"
                   size="lg"
                   full
                   rightIcon={<ArrowRight className="h-4 w-4" />}
@@ -110,15 +103,6 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
 
           </div>
         </div>
-      </section>
-
-      <Modal
-        open={openLeadForm}
-        onClose={() => setOpenLeadForm(false)}
-        title={hero.primaryCta}
-      >
-        <DemoForm locale={locale} labels={leadForm} source="hero-modal" compact />
-      </Modal>
-    </>
+    </section>
   );
 }
