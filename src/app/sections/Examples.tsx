@@ -287,7 +287,52 @@ export default function Examples({ locale }: { locale: Locale }) {
             </p>
           </div>
 
-          <div className="-mx-4 mt-8 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:block sm:space-y-4 sm:overflow-visible sm:px-0 sm:pb-0">
+          <div className="mt-7 grid gap-2 sm:hidden">
+            {items.map((item) => (
+              <details
+                key={item.title}
+                className="rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 shadow-[var(--shadow-xs)]"
+              >
+                <summary className="cursor-pointer list-none">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
+                    {item.eyebrow}
+                  </p>
+                  <h3 className="mt-1 text-base font-semibold leading-snug tracking-normal text-[var(--ink-950)]">
+                    {item.title}
+                  </h3>
+                </summary>
+                <p className="mt-3 text-sm leading-6 text-[var(--ink-700)]">
+                  {item.summary}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {item.technologies.map((tech) => (
+                    <span
+                      key={tech.name}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-white px-2.5 py-1 text-[11px] font-semibold text-[var(--ink-700)]"
+                    >
+                      <Image
+                        src={tech.logo}
+                        alt=""
+                        width={18}
+                        height={18}
+                        className="h-3.5 w-3.5 object-contain"
+                      />
+                      {tech.name}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="#contact"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-text)]"
+                >
+                  {isEnglish ? "Scope this" : "Conversar este flujo"}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </details>
+            ))}
+          </div>
+
+          <div className="mt-8 hidden space-y-4 sm:block">
             {items.map((item, index) => (
               <article
                 key={item.title}

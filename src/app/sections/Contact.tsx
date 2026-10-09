@@ -74,7 +74,7 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
 
           <details className="rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] lg:hidden">
             <summary className="flex cursor-pointer items-center justify-between gap-3 px-5 py-4 text-base font-semibold text-[var(--ink-950)]">
-              {content.panelTitle}
+              {locale === "es" ? "Enviar contexto" : "Send context"}
               <span className="text-sm font-semibold text-[var(--accent-text)]">
                 {locale === "es" ? "Abrir" : "Open"}
               </span>

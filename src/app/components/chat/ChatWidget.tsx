@@ -136,6 +136,7 @@ export default function ChatWidget() {
   const [nudgeIdx, setNudgeIdx] = useState<number | null>(null);
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileChatReady, setMobileChatReady] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -216,6 +217,24 @@ export default function ChatWidget() {
       attributes: true,
     });
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const syncMobileChatReady = () => {
+      if (window.matchMedia("(min-width: 640px)").matches) {
+        setMobileChatReady(true);
+        return;
+      }
+      setMobileChatReady(window.scrollY > 520);
+    };
+
+    syncMobileChatReady();
+    window.addEventListener("scroll", syncMobileChatReady, { passive: true });
+    window.addEventListener("resize", syncMobileChatReady);
+    return () => {
+      window.removeEventListener("scroll", syncMobileChatReady);
+      window.removeEventListener("resize", syncMobileChatReady);
+    };
   }, []);
 
   useEffect(() => {
@@ -381,14 +400,14 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? labels.close : labels.open}
         aria-expanded={open}
-        aria-hidden={mobileNavOpen}
-        tabIndex={mobileNavOpen ? -1 : 0}
+        aria-hidden={mobileNavOpen || !mobileChatReady}
+        tabIndex={mobileNavOpen || !mobileChatReady ? -1 : 0}
         style={{ display: mobileNavOpen ? "none" : undefined }}
         className={`group fixed right-3 z-[90] inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 active:scale-95 sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 lg:bottom-6 lg:right-6 ${
           open
             ? "bottom-3 bg-[var(--ink-950)] text-white shadow-[0_18px_38px_-12px_rgba(2,6,23,0.55)] rotate-90"
             : "bottom-3 bg-[var(--ink-950)] shadow-[0_18px_34px_-14px_rgba(32,38,36,0.5)] hover:scale-[1.06] hover:shadow-[0_26px_52px_-12px_rgba(32,38,36,0.55)]"
-        } ${mobileNavOpen ? "pointer-events-none invisible opacity-0 scale-95" : ""}`}
+        } ${mobileNavOpen || !mobileChatReady ? "pointer-events-none invisible opacity-0 scale-95" : ""}`}
       >
         {/* Pulse ring (closed state) */}
         {!open && (

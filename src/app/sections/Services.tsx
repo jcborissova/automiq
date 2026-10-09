@@ -54,14 +54,36 @@ export default function Services({ content }: ServicesProps) {
             </Button>
           </div>
 
-          <div className="mt-7 -mx-4 flex snap-x gap-3 overflow-x-auto border-y border-[var(--border)] px-4 py-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-8 lg:grid lg:gap-0 lg:overflow-visible lg:border-t lg:border-b-0 lg:px-0 lg:py-0 lg:grid-cols-3">
+          <div className="mt-7 grid gap-3 border-y border-[var(--border)] py-4 lg:hidden">
+            {cards.map((card, index) => {
+              const Icon = icons[index] ?? Blocks;
+
+              return (
+                <article key={card.id} className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--support)]">
+                    <Icon size={17} strokeWidth={1.8} aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold tracking-normal text-[var(--ink-950)]">
+                      {card.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-6 text-[var(--ink-700)]">
+                      {card.description}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 hidden border-t border-[var(--border)] lg:grid lg:grid-cols-3">
             {cards.map((card, index) => {
               const Icon = icons[index] ?? Blocks;
 
               return (
                 <article
                   key={card.id}
-                  className="flex min-h-[164px] w-[82vw] max-w-[320px] shrink-0 snap-start flex-col justify-between rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)] lg:w-auto lg:max-w-none lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:border-0 lg:border-b lg:border-r lg:bg-transparent lg:px-6 lg:py-7 lg:last:border-r-0"
+                  className="flex min-h-[148px] gap-4 border-b border-[var(--border)] py-5 lg:border-r lg:px-6 lg:py-7 lg:last:border-r-0"
                 >
                   <div className="flex items-start gap-3 lg:gap-4">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--support)]">
@@ -85,7 +107,25 @@ export default function Services({ content }: ServicesProps) {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-500)]">
               {toolsLabel}
             </p>
-            <div className="relative mt-4 overflow-hidden">
+            <div className="mt-4 grid grid-cols-3 gap-2 lg:hidden">
+              {tools.slice(0, 6).map((tool) => (
+                <div
+                  key={tool.name}
+                  className="flex h-[58px] items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-white px-2 shadow-[var(--shadow-xs)]"
+                  title={tool.name}
+                >
+                  <Image
+                    src={tool.src}
+                    alt={tool.name}
+                    width={118}
+                    height={42}
+                    sizes="90px"
+                    className="max-h-6 w-auto max-w-[86px] object-contain opacity-90"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="relative mt-4 hidden overflow-hidden lg:block">
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[var(--background)] to-transparent"
