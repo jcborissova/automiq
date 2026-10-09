@@ -44,7 +44,7 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
     };
 
     const handleHashNavigation = () => {
-      if (window.location.hash === "#contact") {
+      if (window.location.hash.startsWith("#contact")) {
         focusContactForm();
       }
     };
