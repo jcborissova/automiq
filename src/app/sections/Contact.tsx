@@ -72,7 +72,23 @@ export default function Contact({ locale, content, leadForm }: ContactProps) {
             </p>
           </div>
 
-          <div className="border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-7 lg:p-8">
+          <details className="rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] lg:hidden">
+            <summary className="flex cursor-pointer items-center justify-between gap-3 px-5 py-4 text-base font-semibold text-[var(--ink-950)]">
+              {content.panelTitle}
+              <span className="text-sm font-semibold text-[var(--accent-text)]">
+                {locale === "es" ? "Abrir" : "Open"}
+              </span>
+            </summary>
+            <div className="border-t border-[var(--border)] p-5">
+              <DemoForm
+                locale={locale}
+                labels={leadForm}
+                source="contact-section"
+              />
+            </div>
+          </details>
+
+          <div className="hidden border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-7 lg:block lg:p-8">
             <DemoForm
               locale={locale}
               labels={leadForm}

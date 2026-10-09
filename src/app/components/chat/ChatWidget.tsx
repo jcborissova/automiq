@@ -384,10 +384,10 @@ export default function ChatWidget() {
         aria-hidden={mobileNavOpen}
         tabIndex={mobileNavOpen ? -1 : 0}
         style={{ display: mobileNavOpen ? "none" : undefined }}
-        className={`group fixed right-3 z-[90] inline-flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 active:scale-95 sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 lg:bottom-6 lg:right-6 ${
+        className={`group fixed right-3 z-[90] inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 active:scale-95 sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 lg:bottom-6 lg:right-6 ${
           open
             ? "bottom-3 bg-[var(--ink-950)] text-white shadow-[0_18px_38px_-12px_rgba(2,6,23,0.55)] rotate-90"
-            : "bottom-4 bg-[var(--ink-950)] shadow-[0_22px_44px_-12px_rgba(32,38,36,0.42)] hover:scale-[1.06] hover:shadow-[0_26px_52px_-12px_rgba(32,38,36,0.55)]"
+            : "bottom-3 bg-[var(--ink-950)] shadow-[0_18px_34px_-14px_rgba(32,38,36,0.5)] hover:scale-[1.06] hover:shadow-[0_26px_52px_-12px_rgba(32,38,36,0.55)]"
         } ${mobileNavOpen ? "pointer-events-none invisible opacity-0 scale-95" : ""}`}
       >
         {/* Pulse ring (closed state) */}
@@ -407,7 +407,7 @@ export default function ChatWidget() {
         {open ? (
           <X className="relative h-5 w-5" />
         ) : (
-          <RobotMascot className="relative h-5 w-5 sm:h-8 sm:w-8" />
+          <RobotMascot className="relative h-[18px] w-[18px] sm:h-8 sm:w-8" />
         )}
       </button>
 
@@ -417,7 +417,7 @@ export default function ChatWidget() {
         aria-label={labels.title}
         aria-hidden={!open}
         inert={!open}
-        className={`fixed right-2 bottom-20 z-[80] flex w-[calc(100%-1rem)] max-w-sm flex-col overflow-hidden rounded-lg bg-[var(--background)] shadow-[0_36px_72px_-24px_rgba(2,6,23,0.45),0_2px_8px_rgba(2,6,23,0.08)] ring-1 ring-black/5 transition-all duration-200 ease-out sm:bottom-[6.25rem] sm:right-3 sm:w-[calc(100%-1.5rem)] sm:rounded-2xl lg:bottom-24 lg:right-6 ${
+        className={`fixed right-2 bottom-16 z-[80] flex w-[calc(100%-1rem)] max-w-sm flex-col overflow-hidden rounded-lg bg-[var(--background)] shadow-[0_36px_72px_-24px_rgba(2,6,23,0.45),0_2px_8px_rgba(2,6,23,0.08)] ring-1 ring-black/5 transition-all duration-200 ease-out sm:bottom-[6.25rem] sm:right-3 sm:w-[calc(100%-1.5rem)] sm:rounded-2xl lg:bottom-24 lg:right-6 ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0"

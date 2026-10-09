@@ -43,7 +43,7 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,46,0.20)_0%,rgba(13,27,46,0.20)_100%)]"
         />
 
-        <div className="relative mx-auto flex min-h-[660px] max-w-7xl flex-col justify-center px-4 pb-20 pt-14 sm:min-h-[700px] sm:px-6 sm:pb-24 sm:pt-20 lg:min-h-[760px] lg:px-8 lg:pb-32">
+        <div className="relative mx-auto flex min-h-[660px] max-w-7xl flex-col justify-center px-4 pb-14 pt-10 sm:min-h-[700px] sm:px-6 sm:pb-24 sm:pt-20 lg:min-h-[760px] lg:px-8 lg:pb-32">
           <div className="max-w-4xl min-w-0">
               <Eyebrow
                 tone="dark"
@@ -87,6 +87,28 @@ export default function Hero({ locale, hero, leadForm }: HeroProps) {
                 >
                   {hero.secondaryCta}
                 </Button>
+              </div>
+
+              <div className="mt-5 max-w-[22rem] rounded-lg border border-white/14 bg-white/10 p-3 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.55)] backdrop-blur sm:hidden">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/62">
+                  {locale === "es" ? "Flujo típico" : "Typical flow"}
+                </p>
+                <div className="mt-3 grid gap-2">
+                  {(locale === "es"
+                    ? ["Solicitud", "Automatización", "Panel claro"]
+                    : ["Request", "Automation", "Clear dashboard"]
+                  ).map((label, index) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between rounded-md border border-white/12 bg-white/8 px-3 py-2"
+                    >
+                      <span className="text-sm font-semibold text-white">{label}</span>
+                      <span className="text-xs font-semibold text-white/50">
+                        0{index + 1}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
           </div>

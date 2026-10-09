@@ -54,25 +54,27 @@ export default function Services({ content }: ServicesProps) {
             </Button>
           </div>
 
-          <div className="mt-8 grid border-t border-[var(--border)] lg:grid-cols-3">
+          <div className="mt-7 -mx-4 flex snap-x gap-3 overflow-x-auto border-y border-[var(--border)] px-4 py-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-8 lg:grid lg:gap-0 lg:overflow-visible lg:border-t lg:border-b-0 lg:px-0 lg:py-0 lg:grid-cols-3">
             {cards.map((card, index) => {
               const Icon = icons[index] ?? Blocks;
 
               return (
                 <article
                   key={card.id}
-                  className="flex min-h-[148px] gap-4 border-b border-[var(--border)] py-5 lg:border-r lg:px-6 lg:py-7 lg:last:border-r-0"
+                  className="flex min-h-[164px] w-[82vw] max-w-[320px] shrink-0 snap-start flex-col justify-between rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)] lg:w-auto lg:max-w-none lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:border-0 lg:border-b lg:border-r lg:bg-transparent lg:px-6 lg:py-7 lg:last:border-r-0"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--support)]">
-                    <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
-                  </div>
-                  <div className="pt-1">
-                    <h3 className="text-lg font-semibold tracking-normal text-[var(--ink-950)]">
-                      {card.title}
-                    </h3>
-                    <p className="mt-2 max-w-[24rem] text-sm leading-6 text-[var(--ink-700)]">
-                      {card.description}
-                    </p>
+                  <div className="flex items-start gap-3 lg:gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--support)]">
+                      <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
+                    </div>
+                    <div className="pt-1">
+                      <h3 className="text-lg font-semibold tracking-normal text-[var(--ink-950)]">
+                        {card.title}
+                      </h3>
+                      <p className="mt-2 max-w-[24rem] text-sm leading-6 text-[var(--ink-700)]">
+                        {card.description}
+                      </p>
+                    </div>
                   </div>
                 </article>
               );

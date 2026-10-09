@@ -138,7 +138,7 @@ const useCases: Record<Locale, UseCase[]> = {
 function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: boolean }) {
   if (type === "documents") {
     return (
-      <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+      <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
         <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
         <div className="mt-4 rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
           <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center">
@@ -158,7 +158,7 @@ function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: b
 
   if (type === "handoff") {
     return (
-      <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+      <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
         <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
         <div className="mt-4 grid gap-3">
           <div className="rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
@@ -195,7 +195,7 @@ function DemoVisual({ type, isEnglish }: { type: UseCase["visual"]; isEnglish: b
   }
 
   return (
-    <div className="flex h-full min-h-[300px] flex-col justify-center bg-[#f4f7fb] p-5 sm:p-6">
+    <div className="flex h-full min-h-[236px] flex-col justify-center bg-[#f4f7fb] p-4 sm:min-h-[300px] sm:p-6">
       <DemoLabel>{isEnglish ? "Demo view" : "Vista de demostración"}</DemoLabel>
       <div className="mt-4 rounded-lg border border-[var(--border)] bg-white p-4 shadow-[var(--shadow-xs)]">
         <div className="mb-3 flex items-center justify-between gap-3">
@@ -287,11 +287,11 @@ export default function Examples({ locale }: { locale: Locale }) {
             </p>
           </div>
 
-          <div className="mt-8 space-y-4">
+          <div className="-mx-4 mt-8 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:block sm:space-y-4 sm:overflow-visible sm:px-0 sm:pb-0">
             {items.map((item, index) => (
               <article
                 key={item.title}
-                className="grid overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)] lg:grid-cols-[0.92fr_1.08fr]"
+                className="grid w-[86vw] max-w-[360px] shrink-0 snap-start overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow-xs)] sm:w-auto sm:max-w-none lg:grid-cols-[0.92fr_1.08fr]"
               >
                 <div
                   className={`${index % 2 === 1 ? "lg:order-2" : ""} border-b border-[var(--border)] lg:border-b-0`}
@@ -299,18 +299,18 @@ export default function Examples({ locale }: { locale: Locale }) {
                   <DemoVisual type={item.visual} isEnglish={isEnglish} />
                 </div>
 
-                <div className="p-5 sm:p-6 lg:p-8">
+                <div className="p-4 sm:p-6 lg:p-8">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--support)]">
                     {item.eyebrow}
                   </p>
-                  <h3 className="mt-3 max-w-2xl text-2xl font-semibold leading-tight tracking-normal text-[var(--ink-950)]">
+                  <h3 className="mt-3 max-w-2xl text-xl font-semibold leading-tight tracking-normal text-[var(--ink-950)] sm:text-2xl">
                     {item.title}
                   </h3>
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--ink-700)]">
                     {item.summary}
                   </p>
 
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-6 hidden gap-3 sm:grid sm:grid-cols-2">
                     <div className="border-l-2 border-[var(--accent)] pl-3">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-500)]">
                         {item.problemLabel}
